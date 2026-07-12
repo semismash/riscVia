@@ -1,6 +1,7 @@
-module register_file #(
-    parameter DATA_WIDTH = 32,
-    parameter ADDR_WIDTH = 5    // five bits = 32 registers for RISC-V
+module register_file 
+#(
+    parameter DATA_WIDTH = rv32i::DATA_WIDTH,
+    parameter ADDR_WIDTH = rv32i::ADDR_WIDTH    // five bits = 32 registers for RISC-V
 )(
     input logic clk,
     input logic rst_n,                      //active low reset
