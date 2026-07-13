@@ -17,7 +17,7 @@ module decoder #(
 
     output logic reg_write,     // if it writes back to a register
     output logic mem_write,     // if writes to data memory (for OP_S)
-    output logic mem_to_reg,    // chooses between routing alu output (0) and data mem output (1) to reg file
+    output logic mem_to_reg,    // chooses between routing alu output (0) and data mem output from load (1) to reg file
     output Word imm_out,        // output by immediate generator (to be moved into different file later, likely)
 
     output logic pcinc_in1_pcor,    // PC inc input 1, default PC (0) or rs1 (1)
