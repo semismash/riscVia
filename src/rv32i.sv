@@ -16,12 +16,6 @@ package rv32i;
         OP_I_E    = 7'b1110011
     } OpCode;
 
-    // typedef enum logic [1:0] {
-    //     ALU_OP_ADD,
-    //     ALU_OP_SUB,
-    //     ALU_OP_CHECK
-    // } ALUOpType;
-
     typedef enum logic [3:0] { 
         ADD  = 4'b0000,
         SUB  = 4'b0001,
