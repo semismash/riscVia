@@ -19,7 +19,7 @@ module decoder #(
 
     output ALUOpType alu_op,    // alu specific operation
     output logic alu_in1_ropc,  // picks between alu first input being reg(0) or pc(1)
-    output logic alu_in2_moi,   // picks between alu second input being reg(0) or imm(1)
+    output logic alu_in2_roi,   // picks between alu second input being reg(0) or imm(1)
 
     output logic mem_to_reg,    // chooses between routing alu output (0) and data mem output (1) to reg file
     output Word imm_out,        // output by immediate generator (to be moved into different file later, likely)
@@ -39,7 +39,7 @@ module decoder #(
     );
 
     function AluOp calc_alu_op();
-        logic funct3 = instr[14:12];
+        logic [2:0] funct3 = instr[14:12];
         AluOp return_op = ADD;  //default add for safety
         case (funct3)
             3'b000: begin
@@ -62,53 +62,65 @@ module decoder #(
             end
             3'b010: return_op = SLT;
             3'b011: return_op = SLTU;
+            default: return_op = ADD;
         endcase
         return return_op;
+    endfunction
+
+    function void bypass(); // bypass alu
+        alu_op = ADD;
+        alu_in1_ropc = 1'bX; 
+        alu_in2_roi = 1'bX;
     endfunction
 
     always_comb begin
         opcode = OpCode'(instr[6:0]);
         alu_in2_ropc = 1'b0;    // by default, take alu 1 from register
-        alu_in2_moi  = 1'b1;    // by default, take alu 2 from imm gen
+        alu_in2_roi  = 1'b1;    // by default, take alu 2 from imm gen
         reg_write    = 1'b1;    // by default, write back to reg
         mem_write    = 1'b0;    // by default, don't write to mem
         mem_to_reg   = 1'b0;    // by default, always take from alu output to reg file
         pc_target    = 1'b0;    // by default, pc always incremented by 4
         case (opcode)
             OP_R: begin
-                reg_write = 1'b0;
                 alu_op = calc_alu_op();
-                alu_in2_moi = 1'b0; // reg in this case
+                alu_in2_roi = 1'b0; // take alu 2 reg in this case
             end
             OP_I: begin
-                
+                alu_op = calc_alu_op();
             end
             OP_I_L: begin
-                
+                alu_op = ADD;
             end
-            OP_I_E: begin
-                
+            OP_I_E: begin   
+                bypass();
             end
             OP_S: begin
-                
+                alu_op = ADD;
             end
             OP_B: begin
-                
+                logic [2:0] funct3 = instr[14:12];
+                case (funct3)
+                    3'b000, 3'b001: alu_op = XOR;
+                    3'b100, 3'b101: alu_op = SLT;
+                    3'b110, 3'b111: alu_op = SLTU;
+                    default: alu_op = ADD;
+                endcase
             end
             OP_J: begin
-                
+                bypass();
             end
             OP_I_J: begin
-                
+                alu_op = ADD;
             end
             OP_LUI: begin
-                
+                bypass();
             end
             OP_AUIPC: begin
-                
+                alu_op = ADD;
             end
             default: begin
-                
+                alu_op = ADD;
             end
         endcase
     end
