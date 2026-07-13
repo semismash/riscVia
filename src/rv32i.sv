@@ -2,7 +2,10 @@ package rv32i;
     
     localparam DATA_WIDTH = 32;
     localparam ADDR_WIDTH = 5;
-    localparam PC_WIDTH = DATA_WIDTH;
+
+    typedef logic [rv32i::DATA_WIDTH-1:0] Instruction;
+    typedef logic [rv32i::DATA_WIDTH-1:0] Word;
+
 
     typedef enum logic [6:0] {  //7 bits for opcode
         OP_R      = 7'b0110011,
