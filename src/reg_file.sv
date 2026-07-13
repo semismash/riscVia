@@ -3,18 +3,18 @@ module reg_file
     parameter DATA_WIDTH = rv32i::DATA_WIDTH,
     parameter ADDR_WIDTH = rv32i::ADDR_WIDTH    // five bits = 32 registers for RISC-V
 )(
-    input logic clk,
-    input logic rst_n,                       //active low reset
+    input logic clk,            // CPU clock
+    input logic rst_n,          // active low reset
 
-    input logic w_enable,                    //write enable
-    input logic [ADDR_WIDTH-1:0] w_addr,     //write address
-    input Word w_data,                      //write data
+    input logic w_enable,       // write enable
+    input RegAddr w_addr,       // write address
+    input Word w_data,          // write data
 
-    input logic [ADDR_WIDTH-1:0] r_addr1,    //read address 1
-    input logic [ADDR_WIDTH-1:0] r_addr2,    //read address 2
+    input RegAddr r_addr1,      // read address 1
+    input RegAddr r_addr2,      // read address 2
 
-    output Word r_data1,   //address 1 data out
-    output Word r_data2    //address 2 data out
+    output Word r_data1,        // address 1 data out
+    output Word r_data2         // address 2 data out
 );
 
     Word registers [2**ADDR_WIDTH - 1:0];
