@@ -17,7 +17,7 @@ module decoder #(
     output logic reg_write,     // if it writes back to a register
     output logic mem_write,     // if writes to data memory (for OP_S)
 
-    output ALUOp alu_op,    // alu specific operation
+    output ALUOp alu_op,        // alu specific operation
     output logic alu_in1_ropc,  // picks between alu first input being reg(0) or pc(1)
     output logic alu_in2_roi,   // picks between alu second input being reg(0) or imm(1)
 
