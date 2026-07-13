@@ -11,15 +11,18 @@ module decoder #(
     input Instruction instr,    // instruction
     input logic alu_zero,       // feedback from ALU to resolve branch conditions
 
+    // ALU
     output ALUOp alu_op,        // alu specific operation
     output logic alu_in1_ropc,  // picks between alu first input being reg(0) or pc(1)
     output logic alu_in2_roi,   // picks between alu second input being reg(0) or imm(1)
 
+    // LSU
     output logic reg_write,     // if it writes back to a register
     output logic mem_write,     // if writes to data memory (for OP_S)
     output logic mem_to_reg,    // chooses between routing alu output (0) and data mem output from load (1) to reg file
     output Word imm_out,        // output by immediate generator (to be moved into different file later, likely)
 
+    // PC
     output logic pcinc_in1_pcor,    // PC inc input 1, default PC (0) or rs1 (1)
     output logic pcinc_in2_doi      // PC inc input 2, default 4 (0) or IMM (1); PC = in1 + in2
 );
