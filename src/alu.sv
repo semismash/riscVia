@@ -10,13 +10,17 @@ module alu #(
     input Word r_data2,
 
     input Word pc,
-    input logic use_pc,  // switch between in r_data1 (0) or pc (1) for data1
+    input logic use_pc,     // switch between r_data1 (0) or pc (1) for data1
 
-    output Word r_out,
+    input Word imm,
+    input logic use_imm,    // switch between r_data2 (0) or imm (1) for data2
+
+    output Word alu_out,
     output logic out_zero
 );
 
     Word data1;
+    Word data2;
 
     always_comb begin
         if (use_pc == 1'b0) data1 = r_data1;

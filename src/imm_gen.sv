@@ -1,3 +1,5 @@
+import rv32i::*;
+
 module imm_gen (
     input Instruction instr,
     input ImmPackFmt imm_type,

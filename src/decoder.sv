@@ -1,7 +1,3 @@
-typedef enum logic [2:0] { 
-    I, S, B, U, J, N // default
-} ImmPackFmt;
-
 import rv32i::*;
 
 module decoder #(
@@ -33,12 +29,6 @@ module decoder #(
 
     OpCode opcode;
     ImmPackFmt imm_type;
-
-    // immediate_generator imm_gen (
-    //     .instr   (instr),
-    //     .imm_type(imm_type),
-    //     .imm_out (imm_out)
-    // );
 
     function AluOp calc_alu_op();
         logic [2:0] funct3 = instr[14:12];

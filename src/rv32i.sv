@@ -6,6 +6,7 @@ package rv32i;
     typedef logic [rv32i::DATA_WIDTH-1:0] Instruction;
     typedef logic [rv32i::DATA_WIDTH-1:0] Word;
     typedef logic [7:0] Byte;
+    typedef logic logic [ADDR_WIDTH-1:0] RegAddr;
 
     localparam BITS_FIT = $clog2(DATA_WIDTH>>3) + 1;    // 3
     typedef enum logic [BITS_FIT - 1:0] {  // to be shared between LSU and mem module
@@ -40,5 +41,9 @@ package rv32i;
         STL  = 4'b1101,
         STLU = 4'b1100
     } AluOP;
+
+    typedef enum logic [2:0] { 
+        I, S, B, U, J, N // default
+    } ImmPackFmt;
 
 endpackage
