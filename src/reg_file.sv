@@ -1,23 +1,23 @@
-module register_file 
+module reg_file 
 #(
     parameter DATA_WIDTH = rv32i::DATA_WIDTH,
     parameter ADDR_WIDTH = rv32i::ADDR_WIDTH    // five bits = 32 registers for RISC-V
 )(
     input logic clk,
-    input logic rst_n,                      //active low reset
+    input logic rst_n,                       //active low reset
 
-    input logic w_enable,                   //write enable
+    input logic w_enable,                    //write enable
     input logic [ADDR_WIDTH-1:0] w_addr,     //write address
-    input logic [DATA_WIDTH-1:0] w_data,     //write data
+    input Word w_data,                      //write data
 
     input logic [ADDR_WIDTH-1:0] r_addr1,    //read address 1
     input logic [ADDR_WIDTH-1:0] r_addr2,    //read address 2
 
-    output logic [DATA_WIDTH-1:0] r_data1,   //address 1 data out
-    output logic [DATA_WIDTH-1:0] r_data2    //address 2 data out
+    output Word r_data1,   //address 1 data out
+    output Word r_data2    //address 2 data out
 );
 
-    logic [DATA_WIDTH - 1:0] registers [2**ADDR_WIDTH - 1:0];
+    Word registers [2**ADDR_WIDTH - 1:0];
 
     //hardwire zero register r0 to 0
     assign r_data1 = (r_addr1 == {ADDR_WIDTH{1'b0}}) ? {DATA_WIDTH{1'b0}} : registers[r_addr1];
