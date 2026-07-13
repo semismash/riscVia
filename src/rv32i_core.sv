@@ -15,7 +15,7 @@ module rv32i_core (
     output logic write_en,      // write enable (LSU)
     output ReqBytes req_bytes,  // requested bytes amount (LSU)
 
-    output logic halt,          // halt on panic
+    output logic halt           // halt on panic
 );
 
     // fetch
@@ -24,10 +24,10 @@ module rv32i_core (
 
     // Reg File
     logic   w_enable;
-    RegAddr rdst_addr = RegAddr'(instr[11:7]);
+    RegAddr rdst_addr;
     Word    rdst_data;
-    RegAddr rs1_addr = RegAddr'(instr[19:15]);
-    RegAddr rs2_addr = RegAddr'(instr[24:20]);
+    RegAddr rs1_addr;
+    RegAddr rs2_addr;
     Word    rs1_data;
     Word    rs2_data;
 
@@ -54,6 +54,11 @@ module rv32i_core (
     logic [2:0] funct3 = instr[14:12];
     logic mem_write;
     Word reg_write_data;
+
+    // uncore logic
+    assign rdst_addr = RegAddr'(instr[11:7]);
+    assign rs1_addr = RegAddr'(instr[19:15]);
+    assign rs2_addr = RegAddr'(instr[24:20]);
 
     // route reg data input write based on alu output or mem write output
     always_comb begin
@@ -85,7 +90,7 @@ module rv32i_core (
         .pcinc_in1_pcor (pc_in1_sel),
         .pcinc_in2_doi  (pc_in2_sel),
         // from reg and imm gen, based on decoder signal
-        .rs1_in         (rs1_addr),
+        .rs1_in         (rs1_data),
         .imm_in         (imm_val),
         // out
         .pc_out         (pc)
