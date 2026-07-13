@@ -11,13 +11,12 @@ module decoder #(
     input Instruction instr,    // instruction
     input logic alu_zero,       // feedback from ALU to resolve branch conditions
 
-    output logic reg_write,     // if it writes back to a register
-    output logic mem_write,     // if writes to data memory (for OP_S)
-
     output ALUOp alu_op,        // alu specific operation
     output logic alu_in1_ropc,  // picks between alu first input being reg(0) or pc(1)
     output logic alu_in2_roi,   // picks between alu second input being reg(0) or imm(1)
 
+    output logic reg_write,     // if it writes back to a register
+    output logic mem_write,     // if writes to data memory (for OP_S)
     output logic mem_to_reg,    // chooses between routing alu output (0) and data mem output (1) to reg file
     output Word imm_out,        // output by immediate generator (to be moved into different file later, likely)
 
