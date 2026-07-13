@@ -2,10 +2,7 @@ typedef enum logic [2:0] {
     I, S, B, U, J, N // default
 } ImmPackFmt;
 
-typedef logic [rv32i::DATA_WIDTH-1:0] Instruction;
-typedef logic [rv32i::DATA_WIDTH-1:0] Word;
-
-import rv32i::ALUOp;
+import rv32i::*;
 
 module decoder #(
     parameter DATA_WIDTH = rv32i::DATA_WIDTH,
