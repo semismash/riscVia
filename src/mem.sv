@@ -18,7 +18,7 @@ module mem #(
     input Word data_in,             // write to address of lsu_addr, write req_bytes bytes
 
     output logic if_not_found,      // instruction not found 
-    output logic lsu_not_found,     // data not found
+    output logic lsu_not_found      // data not found
 );
     localparam INST_SIZE_BYTES = DATA_WIDTH >> 3;
 
