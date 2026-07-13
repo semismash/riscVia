@@ -5,7 +5,15 @@ package rv32i;
 
     typedef logic [rv32i::DATA_WIDTH-1:0] Instruction;
     typedef logic [rv32i::DATA_WIDTH-1:0] Word;
+    typedef logic [7:0] Byte;
 
+    localparam BITS_FIT = $clog2(DATA_WIDTH>>3) + 1;    // 3
+    typedef enum logic [BITS_FIT - 1:0] {  // to be shared between LSU and mem module
+        ZERO = 'd0,
+        ONE  = 'd1,
+        TWO  = 'd2,
+        FOUR = 'd4,
+    } ReqBytes;
 
     typedef enum logic [6:0] {  //7 bits for opcode
         OP_R      = 7'b0110011,
