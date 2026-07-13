@@ -26,8 +26,8 @@ module register_file
     integer i;
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin   // if reset high, set all registers back to zero
-            for (i = 0; i < DATA_WIDTH; i = i + 1) begin
-                registers[i] = '0;
+            for (i = 0; i < 2**ADDR_WIDTH; i = i + 1) begin
+                registers[i] <= '0;
             end
         end else if (w_enable && (w_addr != {ADDR_WIDTH{1'b0}})) begin  // write only if w_enable
             registers[w_addr] <= w_data;
