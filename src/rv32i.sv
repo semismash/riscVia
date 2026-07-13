@@ -10,15 +10,29 @@ package rv32i;
         OP_S      = 7'b0100011,
         OP_B      = 7'b1100011,
         OP_J      = 7'b1101111,
+        OP_I_J    = 7'b1100111,
         OP_LUI    = 7'b0110111,
         OP_AUIPC  = 7'b0010111,
         OP_I_E    = 7'b1110011
     } OpCode;
 
-    typedef enum logic [1:0] {
-        ALU_OP_ADD,
-        ALU_OP_SUB,
-        ALU_OP_LOOK
-    } ALUOpType;
+    // typedef enum logic [1:0] {
+    //     ALU_OP_ADD,
+    //     ALU_OP_SUB,
+    //     ALU_OP_CHECK
+    // } ALUOpType;
+
+    typedef enum logic [3:0] { 
+        ADD  = 4'b0000,
+        SUB  = 4'b0001,
+        XOR  = 4'b0100,
+        OR   = 4'b0101,
+        AND  = 4'b0110,
+        SLL  = 4'b1000,
+        SRL  = 4'b1010,
+        SRA  = 4'b1011,
+        STL  = 4'b1101,
+        STLU = 4'b1100
+    } AluOP;
 
 endpackage
