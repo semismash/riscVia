@@ -8,7 +8,7 @@ module decoder #(
     input logic alu_zero,       // feedback from ALU to resolve branch conditions
 
     // ALU
-    output ALUOp alu_op,        // alu specific operation
+    output AluOp alu_op,        // alu specific operation
     output logic alu_in1_ropc,  // picks between alu first input being reg(0) or pc(1)
     output logic alu_in2_roi,   // picks between alu second input being reg(0) or imm(1)
 
@@ -28,9 +28,8 @@ module decoder #(
     import rv32i::*;
 
     OpCode opcode;
-    ImmPackFmt imm_type;
 
-    function AluOp calc_alu_op();
+    function automatic AluOp calc_alu_op();
         logic [2:0] funct3 = instr[14:12];
         AluOp return_op = ADD;  //default add for safety
         case (funct3)

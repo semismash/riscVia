@@ -3,15 +3,15 @@ import rv32i::*;
 module top(
     input logic clk,    // clock
     input logic rst_n,  // active low reset
-    output logic halt,  // halt detect
+    output logic halt   // halt detect
 );
 
     // from CPU
-    Word if_addr;
-    Word data_addr;
-    Word write_data;
-    logic write_enable;
-    ReqBytes req_bytes;
+    Word if_addr        /* verilator public_flat_rw */;
+    Word data_addr      /* verilator public_flat_rw */;
+    Word write_data     /* verilator public_flat_rw */;
+    logic write_enable  /* verilator public_flat_rw */;
+    ReqBytes req_bytes  /* verilator public_flat_rw */;
 
     // to CPU
     Instruction instr;
