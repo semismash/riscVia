@@ -29,32 +29,37 @@ module mem #(
         instr_out = '0;
         if_not_found = 1'b0;
         if (if_addr >= MEM_SIZE_BYTES - INST_SIZE_BYTES) if_not_found = 1'b1;
-        else instr_out = {  container[if_addr + 3], // do INST_SIZE_BYTES times
-                            container[if_addr + 2], 
-                            container[if_addr + 1], 
-                            container[if_addr] 
-                         };
+        else instr_out = 
+            {  container[if_addr + 3], // do INST_SIZE_BYTES times
+                container[if_addr + 2], 
+                container[if_addr + 1], 
+                container[if_addr] 
+                };
     end
 
     // data read
     always_comb begin
         data_out = '0;
         lsu_not_found = 1'b0;
-        if ((lsu_addr + req_bytes) > MEM_SIZE_BYTES) begin
+        if (req_bytes == ZERO) begin    // dont do anything if zero
+        end else if ((lsu_addr + req_bytes) > MEM_SIZE_BYTES) begin
             lsu_not_found = 1'b1;
         end else begin
             case (req_bytes)    // DATA_WIDTH IN BYTES MUST BE >= THAN ALL ReqBytes CASES
-                ONE: data_out = {{(DATA_WIDTH - 8){1'b0}}, container[lsu_addr]};
-                TWO: data_out = {{(DATA_WIDTH - 16){1'b0}}, 
-                                container[lsu_addr + 1], 
-                                container[lsu_addr]
-                                };
-                FOUR: data_out = {{(DATA_WIDTH - 32){1'b0}}, 
-                                container[lsu_addr + 3], 
-                                container[lsu_addr + 2], 
-                                container[lsu_addr + 1], 
-                                container[lsu_addr]
-                                };
+                ONE: data_out = 
+                    {{(DATA_WIDTH - 8){1'b0}}, container[lsu_addr]};
+                TWO: data_out = 
+                    {{(DATA_WIDTH - 16){1'b0}}, 
+                        container[lsu_addr + 1], 
+                        container[lsu_addr]
+                        };
+                FOUR: data_out = 
+                    {{(DATA_WIDTH - 32){1'b0}}, 
+                        container[lsu_addr + 3], 
+                        container[lsu_addr + 2], 
+                        container[lsu_addr + 1], 
+                        container[lsu_addr]
+                        };
                 default: lsu_not_found = 1'b1;
             endcase
         end

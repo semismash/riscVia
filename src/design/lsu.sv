@@ -5,6 +5,7 @@ module lsu #(
 ) (
     input logic [2:0] funct3,   // RV32I uses funct3 to differentiate between req_bytes for loads and stores
     input Word alu_res,         // ALU result to calculate load/store location
+    input logic is_mem_read,    // if it is a mem read
     input logic is_mem_write,   // if write instruction to data memory
     input Word rs2_in,          // check rs2 if store
 
@@ -49,7 +50,7 @@ module lsu #(
                 end
                 default: begin end
             endcase
-        end else begin  // store
+        end else if (is_mem_read == 1'b1) begin  // store
             write_enable = 1'b1;
             case (funct3)
                 3'b000: begin   // sb

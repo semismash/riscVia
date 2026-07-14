@@ -7,7 +7,6 @@
 #include "Vtop.h"
 #include "Vtop___024root.h"
 
-// 128 KB boundary matching MEM_SIZE_BYTES param
 constexpr size_t RAM_SIZE = 131072;
 
 double sc_time_stamp() {
@@ -21,23 +20,15 @@ namespace std {
 }
 
 int main(int argc, char** argv) {
-
     Verilated::commandArgs(argc, argv);
-    
-    auto DUT = std::make_unique<Vtop>();
 
     std::ifstream file("program.bin", std::ios::binary | std::ios::ate);
     if (!file.is_open()) {
-        std::cerr << "[TB ERROR] Could not open program.bin! Did you create it?" << std::endl;
+        std::cerr << "[TB ERROR] Could not open program.bin!" << std::endl;
         return -1;
     }
 
     std::streamsize file_size = file.tellg();
-    if (file_size > RAM_SIZE) {
-        std::cerr << "[TB ERROR] Binary size (" << file_size << " bytes) exceeds 128KB limit!" << std::endl;
-        return -1;
-    }
-    
     file.seekg(0, std::ios::beg);
     std::vector<char> ram_buffer(file_size);
     if (!file.read(ram_buffer.data(), file_size)) {
@@ -45,55 +36,82 @@ int main(int argc, char** argv) {
         return -1;
     }
 
+    std::cout << "========================================================" << std::endl;
+    std::cout << "[TB] VERIFYING PROGRAM.BIN BYTES (LITTLE-ENDIAN WORDS):" << std::endl;
+    std::cout << "--------------------------------------------------------" << std::endl;
+    for (size_t i = 0; i < ram_buffer.size(); i += 4) {
+        std::cout << "Addr 0x" << std::hex << std::setw(8) << std::setfill('0') << i << ": 0x";
+        for (int b = 3; b >= 0; --b) {
+            if (i + b < ram_buffer.size()) {
+                std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)(uint8_t)ram_buffer[i + b];
+            } else {
+                std::cout << "00";
+            }
+        }
+        std::cout << std::endl;
+    }
+    std::cout << "========================================================\n" << std::endl;
+
+    auto DUT = std::make_unique<Vtop>();
+
+    if (file_size > RAM_SIZE) {
+        std::cerr << "[TB ERROR] Binary size exceeds 128KB limit!" << std::endl;
+        return -1;
+    }
+    
     for (size_t i = 0; i < ram_buffer.size(); ++i) {
         DUT->rootp->top__DOT__u_mem__DOT__container[i] = ram_buffer[i];
     }
-    std::cout << "[TB] Backdoor loaded " << ram_buffer.size() << " bytes into Unified RAM." << std::endl;
 
     DUT->rst_n = 0;
     DUT->clk = 0;
     DUT->eval(); 
-    
     DUT->clk = 1;
     DUT->eval(); 
-    
     DUT->rst_n = 1;
+    
     std::cout << "[TB] Reset de-asserted. Commencing execution loop..." << std::endl;
-    std::cout << "--------------------------------------------------------" << std::endl;
 
     uint64_t cycles = 0;
     while (!Verilated::gotFinish() && !DUT->halt) {
-        // falling edge
         DUT->clk = 0;
         DUT->eval();
 
-        // rising edge
         DUT->clk = 1;
         DUT->eval();
         cycles++;
 
-        // logger
-        std::cout << "[CYCLE " << std::dec << cycles << "] "
-                  << "PC: 0x" << std::hex << std::setw(8) << std::setfill('0') 
-                  << DUT->rootp->top__DOT__if_addr << " | "
-                  << "Writeback EN: " << (int)DUT->rootp->top__DOT__write_enable
-                  << std::endl;
+        uint32_t current_pc    = DUT->rootp->top__DOT__if_addr;
+        uint32_t instruction   = DUT->rootp->top__DOT__instr;
+        uint32_t mem_data_addr = DUT->rootp->top__DOT__data_addr;
+        uint32_t mem_wdata     = DUT->rootp->top__DOT__write_data;
+        bool     mem_we        = DUT->rootp->top__DOT__write_enable;
+        uint32_t alu_out       = DUT->rootp->top__DOT__u_cpu__DOT__alu_out;
+        uint32_t next_pc_calc  = DUT->rootp->top__DOT__u_cpu__DOT__u_pc__DOT__pc_next;
 
-        // infinite loop breakout
+        std::cout << "\n========================================================" << std::endl;
+        std::cout << "[CYCLE " << std::dec << cycles << "]  Executing at PC: 0x" 
+                  << std::hex << std::setw(8) << std::setfill('0') << current_pc << std::endl;
+        std::cout << " -> Raw Instruction Hex:  0x" << std::setw(8) << instruction << std::endl;
+        std::cout << " ----------------------- DATAPATH ----------------------" << std::endl;
+        std::cout << " -> ALU Result Output:    0x" << std::setw(8) << alu_out << std::endl;
+        std::cout << " -> Computed Next PC:     0x" << std::setw(8) << next_pc_calc << std::endl;
+        std::cout << " ----------------------- CONTROLS ----------------------" << std::endl;
+        std::cout << " -> Data Memory Access:   [" << (mem_we ? "WRITE" : "READ") << "] "
+                  << "Addr: 0x" << mem_data_addr << " | WData: 0x" << mem_wdata << std::endl;
+
         if (cycles > 1000) {
-            std::cout << "[TB WARNING] Safety simulation cutoff breached!" << std::endl;
+            std::cout << "\n[TB WARNING] Safety simulation cutoff breached!" << std::endl;
             break;
         }
     }
 
-    std::cout << "--------------------------------------------------------" << std::endl;
+    std::cout << "\n========================================================" << std::endl;
     if (DUT->halt) {
         std::cout << "[TB INFO] Core reached a global safe HALT signal." << std::endl;
-        
-        // print final address
         std::cout << "[FINAL STATUS]" << std::endl;
-        std::cout << " -> Final Target Address: 0x" << std::hex << DUT->rootp->top__DOT__data_addr << std::endl;
-        std::cout << " -> Final Output Data:   0x" << std::hex << DUT->rootp->top__DOT__write_data << std::endl;
+        std::cout << " -> Final Data Address: 0x" << std::hex << DUT->rootp->top__DOT__data_addr << std::endl;
+        std::cout << " -> Final Data Out:     0x" << std::hex << DUT->rootp->top__DOT__write_data << std::endl;
     } else {
         std::cout << "[TB INFO] Simulation finished processing." << std::endl;
     }
