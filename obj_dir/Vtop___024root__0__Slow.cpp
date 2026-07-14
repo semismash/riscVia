@@ -390,7 +390,6 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->top__DOT__u_cpu__DOT__w_enable = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1067586700560839279ull);
     vlSelf->top__DOT__u_cpu__DOT__rs1_data = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 14929891142440176797ull);
     vlSelf->top__DOT__u_cpu__DOT__rs2_data = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 1908695070480338884ull);
-    vlSelf->top__DOT__u_cpu__DOT__reg_write_link = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13353213264447230495ull);
     vlSelf->top__DOT__u_cpu__DOT__alu_or_mem_to_reg = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12789933475273004143ull);
     vlSelf->top__DOT__u_cpu__DOT__imm_val = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 3219742408583586275ull);
     vlSelf->top__DOT__u_cpu__DOT__imm_type = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 17771432074263927410ull);

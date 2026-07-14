@@ -89,6 +89,10 @@ int main(int argc, char** argv) {
         uint32_t alu_out       = DUT->rootp->top__DOT__u_cpu__DOT__alu_out;
         uint32_t next_pc_calc  = DUT->rootp->top__DOT__u_cpu__DOT__u_pc__DOT__pc_next;
 
+        bool     alu_in2_sel   = DUT->rootp->top__DOT__u_cpu__DOT__alu_in2_sel;
+        uint32_t rs2_data      = DUT->rootp->top__DOT__u_cpu__DOT__rs2_data;
+        //bool     alu_zero      = DUT->rootp->top__DOT__u_cpu__DOT__u_pc__DOT__pcinc_in2_doi;
+
         std::cout << "\n========================================================" << std::endl;
         std::cout << "[CYCLE " << std::dec << cycles << "]  Executing at PC: 0x" 
                   << std::hex << std::setw(8) << std::setfill('0') << current_pc << std::endl;
@@ -96,11 +100,14 @@ int main(int argc, char** argv) {
         std::cout << " ----------------------- DATAPATH ----------------------" << std::endl;
         std::cout << " -> ALU Result Output:    0x" << std::setw(8) << alu_out << std::endl;
         std::cout << " -> Computed Next PC:     0x" << std::setw(8) << next_pc_calc << std::endl;
+        std::cout << " -> Register rs2 Data:    0x" << std::setw(8) << rs2_data << std::endl;
         std::cout << " ----------------------- CONTROLS ----------------------" << std::endl;
         std::cout << " -> Data Memory Access:   [" << (mem_we ? "WRITE" : "READ") << "] "
                   << "Addr: 0x" << mem_data_addr << " | WData: 0x" << mem_wdata << std::endl;
+        std::cout << " -> ALU Input 2 Select:   " << (int)alu_in2_sel << std::endl;
+        //std::cout << " -> ALU Zero Indicator:   " << (int)alu_zero << std::endl;
 
-        if (cycles > 1000) {
+        if (cycles > 100) {
             std::cout << "\n[TB WARNING] Safety simulation cutoff breached!" << std::endl;
             break;
         }

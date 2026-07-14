@@ -33,40 +33,29 @@ module decoder #(
 
     OpCode opcode;
 
-    function automatic AluOp calc_alu_op();
-
+    function automatic AluOp calc_alu_op(input logic is_r_type);
         logic [2:0] funct3;
         AluOp return_op;
-
         funct3 = instr[14:12];
-        return_op = ADD;  //default add for safety
-
+        return_op = ADD;
         case (funct3)
             3'b000: begin
-                if (instr[30] == 1'b0) begin  // check bit 30 to verify add/sub
-                    return_op = ADD;
-                end else begin
-                    return_op = SUB;
-                end
+                if (is_r_type && instr[30] == 1'b1) return_op = SUB;
+                else return_op = ADD;
             end
             3'b100: return_op = XOR;
             3'b110: return_op = OR;
             3'b111: return_op = AND;
             3'b001: return_op = SLL;
-            3'b101: begin
-                if (instr[30] == 1'b0) begin  // check bit 30 to verify srl/sra
-                    return_op = SRL;
-                end else begin
-                    return_op = SRA;
-                end
+            3'b101: begin  // SRLI/SRAI legitimately use instr[30] even for I-type
+                if (instr[30] == 1'b0) return_op = SRL;
+                else return_op = SRA;
             end
             3'b010: return_op = SLT;
             3'b011: return_op = SLTU;
             default: return_op = ADD;
         endcase
-
         return return_op;
-
     endfunction
 
     function void alu_bypass(); // alu_bypass alu
@@ -97,14 +86,14 @@ module decoder #(
         illegal_instr = 1'b0;
 
         case (opcode)
-            OP_R: begin // x
-                reg_write = 1'b1; // write to reg file
-                alu_op = calc_alu_op();
-                alu_in2_roi = 1'b0; // take alu 2 reg in this case
+            OP_R: begin
+                reg_write = 1'b1;
+                alu_op = calc_alu_op(1'b1);   // is_r_type = 1
+                alu_in2_roi = 1'b0;
             end
-            OP_I: begin // x
-                reg_write = 1'b1; 
-                alu_op = calc_alu_op();
+            OP_I: begin
+                reg_write = 1'b1;
+                alu_op = calc_alu_op(1'b0);   // is_r_type = 0
                 imm_type = I;
             end
             OP_I_L: begin   // x

@@ -21,7 +21,6 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
     CData/*2:0*/ top__DOT__req_bytes;
     CData/*0:0*/ top__DOT__data_fault;
     CData/*0:0*/ top__DOT__u_cpu__DOT__w_enable;
-    CData/*0:0*/ top__DOT__u_cpu__DOT__reg_write_link;
     CData/*0:0*/ top__DOT__u_cpu__DOT__alu_or_mem_to_reg;
     CData/*2:0*/ top__DOT__u_cpu__DOT__imm_type;
     CData/*3:0*/ top__DOT__u_cpu__DOT__alu_op;
