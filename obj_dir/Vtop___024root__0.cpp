@@ -464,41 +464,57 @@ void Vtop___024root___ico_comb__TOP__3(Vtop___024root* vlSelf) {
            + vlSelfRef.top__DOT__u_cpu__DOT__u_pc__DOT__unnamedblk1__DOT__in2);
     vlSelfRef.top__DOT__write_enable = 0U;
     vlSelfRef.top__DOT__write_data = 0U;
-    vlSelfRef.top__DOT__req_bytes = 0U;
-    if (vlSelfRef.top__DOT__u_cpu__DOT__mem_write) {
-        vlSelfRef.top__DOT__write_enable = 1U;
-        if ((0U == (7U & (vlSelfRef.top__DOT__instr 
-                          >> 0x0000000cU)))) {
-            vlSelfRef.top__DOT__write_data = (0x000000ffU 
-                                              & vlSelfRef.top__DOT__u_cpu__DOT__u_alu__DOT__r_data2);
-            vlSelfRef.top__DOT__req_bytes = 1U;
-        } else if ((1U == (7U & (vlSelfRef.top__DOT__instr 
-                                 >> 0x0000000cU)))) {
-            vlSelfRef.top__DOT__write_data = (0x0000ffffU 
-                                              & vlSelfRef.top__DOT__u_cpu__DOT__u_alu__DOT__r_data2);
-            vlSelfRef.top__DOT__req_bytes = 2U;
-        } else if ((2U == (7U & (vlSelfRef.top__DOT__instr 
-                                 >> 0x0000000cU)))) {
-            vlSelfRef.top__DOT__write_data = vlSelfRef.top__DOT__u_cpu__DOT__u_alu__DOT__r_data2;
-            vlSelfRef.top__DOT__req_bytes = 4U;
+    if ((1U & (~ (IData)(vlSelfRef.top__DOT__u_cpu__DOT__mem_read)))) {
+        if (vlSelfRef.top__DOT__u_cpu__DOT__mem_write) {
+            vlSelfRef.top__DOT__write_enable = 1U;
+            if ((0U == (7U & (vlSelfRef.top__DOT__instr 
+                              >> 0x0000000cU)))) {
+                vlSelfRef.top__DOT__write_data = (0x000000ffU 
+                                                  & vlSelfRef.top__DOT__u_cpu__DOT__u_alu__DOT__r_data2);
+            } else if ((1U == (7U & (vlSelfRef.top__DOT__instr 
+                                     >> 0x0000000cU)))) {
+                vlSelfRef.top__DOT__write_data = (0x0000ffffU 
+                                                  & vlSelfRef.top__DOT__u_cpu__DOT__u_alu__DOT__r_data2);
+            } else if ((2U == (7U & (vlSelfRef.top__DOT__instr 
+                                     >> 0x0000000cU)))) {
+                vlSelfRef.top__DOT__write_data = vlSelfRef.top__DOT__u_cpu__DOT__u_alu__DOT__r_data2;
+            }
         }
-    } else if ((0x00004000U & vlSelfRef.top__DOT__instr)) {
-        if ((1U & (~ (vlSelfRef.top__DOT__instr >> 0x0000000dU)))) {
+    }
+    vlSelfRef.top__DOT__req_bytes = 0U;
+    vlSelfRef.top__DOT__data_fault = 0U;
+    vlSelfRef.top__DOT__read_data = 0U;
+    if (vlSelfRef.top__DOT__u_cpu__DOT__mem_read) {
+        if ((0x00004000U & vlSelfRef.top__DOT__instr)) {
+            if ((1U & (~ (vlSelfRef.top__DOT__instr 
+                          >> 0x0000000dU)))) {
+                vlSelfRef.top__DOT__req_bytes = ((0x00001000U 
+                                                  & vlSelfRef.top__DOT__instr)
+                                                  ? 2U
+                                                  : 1U);
+            }
+        } else if ((0x00002000U & vlSelfRef.top__DOT__instr)) {
+            if ((1U & (~ (vlSelfRef.top__DOT__instr 
+                          >> 0x0000000cU)))) {
+                vlSelfRef.top__DOT__req_bytes = 4U;
+            }
+        } else {
             vlSelfRef.top__DOT__req_bytes = ((0x00001000U 
                                               & vlSelfRef.top__DOT__instr)
                                               ? 2U : 1U);
         }
-    } else if ((0x00002000U & vlSelfRef.top__DOT__instr)) {
-        if ((1U & (~ (vlSelfRef.top__DOT__instr >> 0x0000000cU)))) {
+    } else if (vlSelfRef.top__DOT__u_cpu__DOT__mem_write) {
+        if ((0U == (7U & (vlSelfRef.top__DOT__instr 
+                          >> 0x0000000cU)))) {
+            vlSelfRef.top__DOT__req_bytes = 1U;
+        } else if ((1U == (7U & (vlSelfRef.top__DOT__instr 
+                                 >> 0x0000000cU)))) {
+            vlSelfRef.top__DOT__req_bytes = 2U;
+        } else if ((2U == (7U & (vlSelfRef.top__DOT__instr 
+                                 >> 0x0000000cU)))) {
             vlSelfRef.top__DOT__req_bytes = 4U;
         }
-    } else {
-        vlSelfRef.top__DOT__req_bytes = ((0x00001000U 
-                                          & vlSelfRef.top__DOT__instr)
-                                          ? 2U : 1U);
     }
-    vlSelfRef.top__DOT__data_fault = 0U;
-    vlSelfRef.top__DOT__read_data = 0U;
     if ((0U != (IData)(vlSelfRef.top__DOT__req_bytes))) {
         if ((0x00020000U < (vlSelfRef.top__DOT__data_addr 
                             + (IData)(vlSelfRef.top__DOT__req_bytes)))) {
@@ -556,7 +572,7 @@ void Vtop___024root___ico_comb__TOP__3(Vtop___024root* vlSelf) {
                       | ((IData)(vlSelfRef.top__DOT__data_fault) 
                          | (IData)(vlSelfRef.top__DOT__u_cpu__DOT__illegal_instr)));
     vlSelfRef.top__DOT__u_cpu__DOT__reg_write_data = 0U;
-    if ((1U & (~ (IData)(vlSelfRef.top__DOT__u_cpu__DOT__mem_write)))) {
+    if (vlSelfRef.top__DOT__u_cpu__DOT__mem_read) {
         if ((0x00004000U & vlSelfRef.top__DOT__instr)) {
             if ((1U & (~ (vlSelfRef.top__DOT__instr 
                           >> 0x0000000dU)))) {
