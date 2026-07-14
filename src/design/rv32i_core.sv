@@ -38,6 +38,7 @@ module rv32i_core (
 
     // decoder
     logic alu_or_mem_to_reg;
+    logic illegal_instr;
 
     // imm
     Word imm_val;
@@ -124,7 +125,9 @@ module rv32i_core (
         .imm_type       (imm_type),
         // PC
         .pcinc_in1_pcor (pc_in1_sel),
-        .pcinc_in2_doi  (pc_in2_sel)
+        .pcinc_in2_doi  (pc_in2_sel),
+        // panic
+        .illegal_instr  (illegal_instr)
     );
 
     imm_gen u_imm_gen(  // x
@@ -167,6 +170,6 @@ module rv32i_core (
         .reg_data       (reg_write_data)
     );
 
-    assign halt = if_fault_out | data_fault;
+    assign halt = if_fault_out | data_fault | illegal_instr;
 
 endmodule

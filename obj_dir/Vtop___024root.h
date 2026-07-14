@@ -20,10 +20,10 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
     CData/*0:0*/ top__DOT__write_enable;
     CData/*2:0*/ top__DOT__req_bytes;
     CData/*0:0*/ top__DOT__data_fault;
-    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_4;
-    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_6;
-    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_14;
-    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_17;
+    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_7;
+    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_8;
+    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_18;
+    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_20;
     CData/*0:0*/ __VstlFirstIteration;
     CData/*0:0*/ __VstlPhaseResult;
     CData/*0:0*/ __VicoFirstIteration;
