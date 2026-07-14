@@ -50,7 +50,7 @@ module lsu #(
                 end
                 default: begin end
             endcase
-        end else if (is_mem_read == 1'b1) begin  // store
+        end else begin 
             write_enable = 1'b1;
             case (funct3)
                 3'b000: begin   // sb
@@ -63,7 +63,7 @@ module lsu #(
                 end
                 3'b010: begin   // sw
                     req_bytes = FOUR;
-                    write_data = {{(DATA_WIDTH - 32){1'b0}}, data_in[31:0]};
+                    write_data = {{(DATA_WIDTH - 32){1'b0}}, rs2_in[31:0]};
                 end
                 default: begin end
             endcase
