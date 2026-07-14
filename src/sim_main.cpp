@@ -4,6 +4,7 @@
 #include <memory>
 #include <iomanip>
 #include <verilated.h>
+#include <verilated_vcd_c.h>
 #include "Vtop.h"
 #include "Vtop___024root.h"
 
@@ -21,6 +22,7 @@ namespace std {
 
 int main(int argc, char** argv) {
     Verilated::commandArgs(argc, argv);
+    Verilated::traceEverOn(true);
 
     std::ifstream file("program.bin", std::ios::binary | std::ios::ate);
     if (!file.is_open()) {
@@ -53,6 +55,9 @@ int main(int argc, char** argv) {
     std::cout << "========================================================\n" << std::endl;
 
     auto DUT = std::make_unique<Vtop>();
+    auto trace = std::make_unique<VerilatedVcdC>();
+    DUT->trace(trace.get(), 99);
+    trace->open("waveform.vcd");
 
     if (file_size > RAM_SIZE) {
         std::cerr << "[TB ERROR] Binary size exceeds 128KB limit!" << std::endl;
@@ -66,19 +71,22 @@ int main(int argc, char** argv) {
     DUT->rst_n = 0;
     DUT->clk = 0;
     DUT->eval(); 
-    DUT->clk = 1;
-    DUT->eval(); 
-    DUT->rst_n = 1;
+    trace->dump(0);
     
+    DUT->rst_n = 1;
+    DUT->eval(); 
     std::cout << "[TB] Reset de-asserted. Commencing execution loop..." << std::endl;
 
     uint64_t cycles = 0;
+    uint64_t sim_time = 1;
     while (!Verilated::gotFinish() && !DUT->halt) {
         DUT->clk = 0;
         DUT->eval();
+        trace->dump(sim_time++);
 
         DUT->clk = 1;
         DUT->eval();
+        trace->dump(sim_time++);
         cycles++;
 
         uint32_t current_pc    = DUT->rootp->top__DOT__if_addr;
@@ -86,26 +94,22 @@ int main(int argc, char** argv) {
         uint32_t mem_data_addr = DUT->rootp->top__DOT__data_addr;
         uint32_t mem_wdata     = DUT->rootp->top__DOT__write_data;
         bool     mem_we        = DUT->rootp->top__DOT__write_enable;
-        uint32_t alu_out       = DUT->rootp->top__DOT__u_cpu__DOT__alu_out;
-        uint32_t next_pc_calc  = DUT->rootp->top__DOT__u_cpu__DOT__u_pc__DOT__pc_next;
 
-        bool     alu_in2_sel   = DUT->rootp->top__DOT__u_cpu__DOT__alu_in2_sel;
-        uint32_t rs2_data      = DUT->rootp->top__DOT__u_cpu__DOT__rs2_data;
-        //bool     alu_zero      = DUT->rootp->top__DOT__u_cpu__DOT__u_pc__DOT__pcinc_in2_doi;
+        uint32_t r1 = DUT->rootp->top__DOT__u_cpu__DOT__u_reg_file__DOT__registers[1];
+        uint32_t r2 = DUT->rootp->top__DOT__u_cpu__DOT__u_reg_file__DOT__registers[2];
+        uint32_t r3 = DUT->rootp->top__DOT__u_cpu__DOT__u_reg_file__DOT__registers[3];
+        uint32_t r4 = DUT->rootp->top__DOT__u_cpu__DOT__u_reg_file__DOT__registers[4];
 
         std::cout << "\n========================================================" << std::endl;
         std::cout << "[CYCLE " << std::dec << cycles << "]  Executing at PC: 0x" 
                   << std::hex << std::setw(8) << std::setfill('0') << current_pc << std::endl;
         std::cout << " -> Raw Instruction Hex:  0x" << std::setw(8) << instruction << std::endl;
-        std::cout << " ----------------------- DATAPATH ----------------------" << std::endl;
-        std::cout << " -> ALU Result Output:    0x" << std::setw(8) << alu_out << std::endl;
-        std::cout << " -> Computed Next PC:     0x" << std::setw(8) << next_pc_calc << std::endl;
-        std::cout << " -> Register rs2 Data:    0x" << std::setw(8) << rs2_data << std::endl;
+        std::cout << " -------------------- REGISTER FILE --------------------" << std::endl;
+        std::cout << " -> x1: 0x" << std::setw(8) << r1 << " | x2: 0x" << std::setw(8) << r2 << std::endl;
+        std::cout << " -> x3: 0x" << std::setw(8) << r3 << " | x4: 0x" << std::setw(8) << r4 << std::endl;
         std::cout << " ----------------------- CONTROLS ----------------------" << std::endl;
         std::cout << " -> Data Memory Access:   [" << (mem_we ? "WRITE" : "READ") << "] "
                   << "Addr: 0x" << mem_data_addr << " | WData: 0x" << mem_wdata << std::endl;
-        std::cout << " -> ALU Input 2 Select:   " << (int)alu_in2_sel << std::endl;
-        //std::cout << " -> ALU Zero Indicator:   " << (int)alu_zero << std::endl;
 
         if (cycles > 100) {
             std::cout << "\n[TB WARNING] Safety simulation cutoff breached!" << std::endl;
@@ -123,6 +127,7 @@ int main(int argc, char** argv) {
         std::cout << "[TB INFO] Simulation finished processing." << std::endl;
     }
 
+    trace->close();
     DUT->final();
     return 0;
 }

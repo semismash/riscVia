@@ -17,6 +17,7 @@ module decoder #(
     output logic mem_read,      // mem read signal to lsu
     output logic mem_write,     // if writes to data memory (for OP_S)
     output logic mem_to_reg,    // chooses between routing alu output (0) and data mem output from load (1) to reg file
+    output logic imm_to_reg,    // when high, write imm to reg directly, hence bypassing alu, used by lui
 
     // IMM GEN
     output ImmPackFmt imm_type, // output imm type for imm gen
@@ -75,9 +76,11 @@ module decoder #(
 
         reg_write    = 1'b0;    // by default, dont write back to reg file
         mem_write    = 1'b0;    // by default, don't write to mem
+        mem_read     = 1'b0;    // by default, don't mem read
 
         alu_op = ADD;           // default op is add
         mem_to_reg   = 1'b0;    // by default, always take from alu output to reg file
+        imm_to_reg   = 1'b0;    // only set by lui
 
         pcinc_in1_pcor   = 1'b0;    // by default, always increment pc instead of set
         pcinc_in2_doi    = 1'b0;    // by default, pc always incremented by 4
@@ -103,7 +106,7 @@ module decoder #(
                 imm_type = I;
             end
             OP_I_E: begin   
-                alu_bypass();  // don't write to reg
+                alu_bypass();  // don't write to reg, so garbage ALU inputs are harmless here
                 imm_type = I;
             end
             OP_S: begin 
@@ -139,7 +142,7 @@ module decoder #(
             end
             OP_LUI: begin
                 reg_write = 1'b1; 
-                alu_bypass();
+                imm_to_reg = 1'b1;   // route lui straight to reg file, remove alu bypass function
                 imm_type = U;
             end
             OP_AUIPC: begin

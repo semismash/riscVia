@@ -38,6 +38,7 @@ module rv32i_core (
 
     // decoder
     logic alu_or_mem_to_reg;
+    logic imm_to_reg;        
     logic illegal_instr;
 
     // imm
@@ -63,9 +64,10 @@ module rv32i_core (
     assign rs1_addr = RegAddr'(instr[19:15]);
     assign rs2_addr = RegAddr'(instr[24:20]);
 
-    // route reg data input write based on alu output or mem write output
+    // route reg data input write based on imm (LUI), alu output, or mem write output
     always_comb begin
-        if (alu_or_mem_to_reg == 1'b0) rdst_data = alu_out;
+        if (imm_to_reg == 1'b1) rdst_data = imm_val;          // lui now bypasses alu
+        else if (alu_or_mem_to_reg == 1'b0) rdst_data = alu_out;
         else rdst_data = reg_write_data;
     end
 
@@ -124,6 +126,7 @@ module rv32i_core (
         .mem_read       (mem_read),
         .mem_write      (mem_write),
         .mem_to_reg     (alu_or_mem_to_reg),
+        .imm_to_reg     (imm_to_reg),
         // IMM GEN
         .imm_type       (imm_type),
         // PC
