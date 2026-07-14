@@ -22,7 +22,10 @@ module decoder #(
 
     // PC
     output logic pcinc_in1_pcor,    // PC inc input 1, default PC (0) or rs1 (1)
-    output logic pcinc_in2_doi      // PC inc input 2, default 4 (0) or IMM (1); PC = in1 + in2
+    output logic pcinc_in2_doi,     // PC inc input 2, default 4 (0) or IMM (1); PC = in1 + in2
+
+    // panic
+    output logic illegal_instr      // detects illegal instr, panics respectively
 );
 
     import rv32i::*;
@@ -80,6 +83,7 @@ module decoder #(
         pcinc_in2_doi    = 1'b0;    // by default, pc always incremented by 4
 
         imm_type = N;
+        illegal_instr = 1'b0;
 
         case (opcode)
             OP_R: begin // x
@@ -141,7 +145,9 @@ module decoder #(
                 alu_in1_ropc = 1'b1;
                 imm_type = U;
             end
-            default: begin end
+            default: begin 
+                illegal_instr = 1'b1;
+            end
         endcase
     end
     
