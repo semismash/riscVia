@@ -1,7 +1,7 @@
 import rv32i::*;
 
 module rv32i_core (
-    input logic clk,           // CPU clock
+    input logic clk,            // CPU clock
     input logic rst_n,          // active low reset
 
     input Instruction instr_in, // next instruction (MEM -> FU)
@@ -55,7 +55,7 @@ module rv32i_core (
     logic mem_write;
     Word reg_write_data;
 
-    // uncore logic
+    // integrated
     assign rdst_addr = RegAddr'(instr[11:7]);
     assign rs1_addr = RegAddr'(instr[19:15]);
     assign rs2_addr = RegAddr'(instr[24:20]);

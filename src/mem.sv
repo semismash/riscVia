@@ -3,7 +3,7 @@
 import rv32i::*;
 
 module mem #(
-    parameter MEM_SIZE_BYTES = 131072;     //128 KB memory
+    parameter MEM_SIZE_BYTES = 131072   //128 KB memory
 )(
     input logic clk,
 
@@ -24,6 +24,7 @@ module mem #(
 
     Byte container [MEM_SIZE_BYTES - 1: 0];
 
+    // instruction read
     always_comb begin
         instr_out = '0;
         if_not_found = 1'b0;
@@ -31,6 +32,7 @@ module mem #(
         else instr_out = container[if_addr +: INST_SIZE_BYTES];
     end
 
+    // data read
     always_comb begin
         data_out = '0;
         lsu_not_found = 1'b0;
@@ -46,6 +48,7 @@ module mem #(
         end
     end
 
+    // data write
     always_ff @(posedge clk) begin
         if (write_enable && !lsu_not_found) begin
             case(req_bytes)
