@@ -25,6 +25,7 @@ module pc(
         if (pcinc_in2_doi == 1'b0) in2 = INST_BYTE_SIZE;    // default: 4
         else in2 = imm_in;
         pc_next = in1 + in2;
+        //pc_next = $unsigned($signed(in1) + $signed(in2));
     end
 
     always_ff @(posedge clk or negedge rst_n) begin

@@ -14,6 +14,7 @@ module decoder #(
 
     // LSU
     output logic reg_write,     // if it writes back to a register
+    output logic mem_read,      // mem read signal to lsu
     output logic mem_write,     // if writes to data memory (for OP_S)
     output logic mem_to_reg,    // chooses between routing alu output (0) and data mem output from load (1) to reg file
 
@@ -33,8 +34,13 @@ module decoder #(
     OpCode opcode;
 
     function automatic AluOp calc_alu_op();
-        logic [2:0] funct3 = instr[14:12];
-        AluOp return_op = ADD;  //default add for safety
+
+        logic [2:0] funct3;
+        AluOp return_op;
+
+        funct3 = instr[14:12];
+        return_op = ADD;  //default add for safety
+
         case (funct3)
             3'b000: begin
                 if (instr[30] == 1'b0) begin  // check bit 30 to verify add/sub
@@ -58,7 +64,9 @@ module decoder #(
             3'b011: return_op = SLTU;
             default: return_op = ADD;
         endcase
+
         return return_op;
+
     endfunction
 
     function void alu_bypass(); // alu_bypass alu
@@ -68,6 +76,9 @@ module decoder #(
     endfunction
 
     always_comb begin
+        
+        logic [2:0] funct3;
+
         opcode = OpCode'(instr[6:0]);
 
         alu_in1_ropc = 1'b0;    // by default, take alu 1 from register
@@ -99,6 +110,7 @@ module decoder #(
             OP_I_L: begin   // x
                 reg_write = 1'b1; 
                 mem_to_reg = 1'b1;  // route from data mem to reg file
+                mem_read = 1'b1;
                 imm_type = I;
             end
             OP_I_E: begin   
@@ -110,7 +122,8 @@ module decoder #(
                 imm_type = S;
             end
             OP_B: begin
-                logic [2:0] funct3 = instr[14:12];
+                alu_in2_roi = 1'b0;
+                funct3 = instr[14:12];
                 case (funct3)
                     3'b000:  begin alu_op = XOR;  pcinc_in2_doi = alu_zero;  end // BEQ: jump if A^B == 0
                     3'b001:  begin alu_op = XOR;  pcinc_in2_doi = !alu_zero; end // BNE: jump if A^B != 0

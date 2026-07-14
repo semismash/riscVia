@@ -52,11 +52,13 @@ module rv32i_core (
     Word alu_out;
 
     // lsu
-    logic [2:0] funct3 = instr[14:12];
+    logic [2:0] funct3;
+    logic mem_read;
     logic mem_write;
     Word reg_write_data;
 
     // integrated
+    assign funct3 = instr[14:12];
     assign rdst_addr = RegAddr'(instr[11:7]);
     assign rs1_addr = RegAddr'(instr[19:15]);
     assign rs2_addr = RegAddr'(instr[24:20]);
@@ -119,6 +121,7 @@ module rv32i_core (
         // REG FILE
         .reg_write      (w_enable),
         // LSU
+        .mem_read       (mem_read),
         .mem_write      (mem_write),
         .mem_to_reg     (alu_or_mem_to_reg),
         // IMM GEN
@@ -159,6 +162,7 @@ module rv32i_core (
         // IN
         .funct3         (funct3),
         .alu_res        (alu_out),
+        .is_mem_read    (mem_read),
         .is_mem_write   (mem_write),
         .rs2_in         (rs2_data),
         .data_in        (data_in),
