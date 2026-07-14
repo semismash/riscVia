@@ -132,7 +132,7 @@ module rv32i_core (
         .instr          (instr),
         .imm_type       (imm_type),
         // OUT
-        .imm_out        (imm_val),
+        .imm_out        (imm_val)
     );
 
     alu u_alu(  // x
