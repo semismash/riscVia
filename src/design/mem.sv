@@ -29,12 +29,12 @@ module mem #(
         instr_out = '0;
         if_not_found = 1'b0;
         if (if_addr >= MEM_SIZE_BYTES - INST_SIZE_BYTES) if_not_found = 1'b1;
-        else instr_out = 
-            {  container[if_addr + 3], // do INST_SIZE_BYTES times
-                container[if_addr + 2], 
-                container[if_addr + 1], 
-                container[if_addr] 
-                };
+        else instr_out =  {  
+            container[if_addr + 3], // do INST_SIZE_BYTES times
+            container[if_addr + 2], 
+            container[if_addr + 1], 
+            container[if_addr] 
+        };
     end
 
     // data read
