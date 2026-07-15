@@ -1,0 +1,239 @@
+SET 0 -
+0) printf "\x93\x00\x50\x00\x13\x01\xa0\x00\xb3\x81\x20\x00\x23\x20\x30\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 5     # Load 5 into x1
+addi x2, x0, 10    # Load 10 into x2
+add  x3, x1, x2    # x3 = x1 + x2 (15)
+sw   x3, 0(x0)     # Store result (15) at memory address 0
+nop                # Padding / End of program
+RESULT: PASSED
+
+1) printf "\x93\x00\x50\x00\x13\x01\xf0\xff\x93\x01\x00\x00\xb3\x81\x11\x00\xb3\x80\x20\x00\xe3\x9c\x00\xfe\x00\x00\x00\x00" > program.bin
+addi x1, x0, 5     # Load 5 into x1
+addi x2, x0, -1    # Load -1 into x2
+add  x3, x0, x0    # Clear x3 (x3 = 0)
+add  x2, x2, x1    # x2 = x2 + x1
+addi x2, x30, -1   # x2 = x30 - 1
+bne  x2, x0, -12   # If x2 != 0, branch backward 12 bytes
+nop                # Padding / End of program
+RESULT:
+
+2) printf "\x93\x00\xf0\x0f\x13\x11\x40\x00\x93\x01\xf0\xff\x33\x72\x31\x00\x13\x62\x12\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 255   # Load 255 into x1
+slli x2, x0, 4     # x2 = x0 << 4 (0)
+addi x3, x0, -1    # Load -1 into x3
+and  x4, x2, x3    # x4 = x2 & x3
+ori  x4, x4, 1     # x4 = x4 | 1
+nop                # Padding / End of program
+RESULT: PASSED
+
+3) printf "\x93\x00\xb0\xff\x13\x01\xa0\x00\x33\x21\x20\x00\x33\x32\x20\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, -5    # Load -5 into x1
+addi x2, x0, 10    # Load 10 into x2
+slt  x2, x0, x2    # x2 = (0 < x2) ? 1 : 0
+sltu x4, x0, x2    # x4 = (0 < x2 unsigned) ? 1 : 0
+nop                # Padding / End of program
+RESULT:
+
+4) printf "\x93\x00\xa0\x00\x13\x01\xb0\x00\x23\x06\x10\x06\x23\x06\x20\x06\x03\x11\x40\x06\x03\x22\x40\x06\x00\x00\x00\x00" > program.bin
+addi x1, x0, 10    # Load 10 into x1
+addi x2, x0, 11    # Load 11 into x2
+sb   x1, 108(x0)   # Store byte x1 at address 108
+sb   x2, 108(x0)   # Store byte x2 at address 108
+lh   x2, 100(x0)   # Load signed halfword from address 100 into x2
+lw   x4, 100(x0)   # Load word from address 100 into x4
+nop                # Padding / End of program
+RESULT: PASSED
+
+5) printf "\xef\x00\x80\x00\x13\x01\x30\x06\x13\x01\x40\x01\x67\x00\x00\x00\x00\x00\x00\x00" > program.bin
+jal  x1, 8         # Jump forward 8 bytes, save return address in x1
+addi x2, x0, 99    # Load 99 into x2
+addi x2, x0, 20    # Load 20 into x2
+jalr x0, 0(x0)     # Jump to address 0 (Reset/Loop)
+nop                # Padding / End of program
+RESULT:
+
+SET 1 -
+1)printf "\x93\x00\x50\x00\x13\x01\xa0\x00\xb3\x81\x20\x00\x23\x20\x30\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 5     # x1 = 5
+addi x2, x0, 10    # x2 = 10
+add  x3, x1, x2    # x3 = 15
+sw   x3, 0(x0)     # mem[0] = 15
+nop
+RESULT: PASSED
+2)printf "\x93\x00\x10\x00\x13\x81\x00\x00\xb3\x01\x11\x40\x00\x00\x00\x00" > program.bin
+addi x1, x0, 1     # x1 = 1
+addi x2, x1, 0     # x2 = x1 (mv)
+sub  x3, x2, x1    # x3 = x2 - x1 = 0
+nop
+RESULT: PASSED
+3)printf "\x93\x00\xf0\x0f\x13\x01\xf0\x0f\xb3\xf1\x20\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 255   # x1 = 0xFF
+addi x2, x0, 255   # x2 = 0xFF
+and  x3, x1, x2    # x3 = 0xFF & 0xFF = 0xFF
+nop
+RESULT: PASSED
+4)printf "\x93\x00\x00\x0f\x13\x01\xf0\x0f\xb3\xe1\x20\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 240   # x1 = 0xF0
+addi x2, x0, 255   # x2 = 0xFF
+or   x3, x1, x2    # x3 = 0xFF
+nop
+RESULT: PASSED
+5)printf "\x93\x00\x10\x00\x13\x91\x20\x00\xb3\x01\x11\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 1     # x1 = 1
+slli x2, x1, 2     # x2 = x1 << 2 = 4
+add  x3, x2, x1    # x3 = 5
+nop
+RESULT: PASSED
+6)printf "\x93\x00\x40\x00\x63\x08\x00\x00\x93\x01\x10\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 4     # x1 = 4
+beq  x0, x0, +16   # branch always taken, skip next instr
+addi x3, x0, 1     # SKIPPED
+nop
+RESULT: PASSED
+7)printf "\x93\x00\x50\x00\x13\x01\x30\x00\x63\x44\x11\x00\x93\x01\x10\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 5     # x1 = 5
+addi x2, x0, 3     # x2 = 3
+blt  x2, x1, +8    # 3 < 5, branch taken, skip next
+addi x3, x0, 1     # SKIPPED
+nop
+RESULT: PASSED
+8)printf "\x93\x00\x50\x00\x37\x11\x00\x00\xb3\x81\x20\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 5     # x1 = 5
+lui  x2, 1         # x2 = 1 << 12 = 4096
+add  x3, x1, x2    # x3 = 4101
+nop
+RESULT: PASSED
+9)printf "\x93\x00\x70\x00\x23\x20\x10\x00\x03\x21\x00\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 7     # x1 = 7
+sw   x1, 0(x0)     # mem[0] = 7
+lw   x2, 0(x0)     # x2 = mem[0] = 7
+nop
+RESULT: PASSED BUT FIX MEMORY SEGMENTATION ISSUE
+10)printf "\x93\x00\xa0\x00\x13\x01\xf0\xff\xb3\x01\x11\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 10    # x1 = 10
+addi x2, x0, -1    # x2 = -1
+add  x3, x2, x1    # x3 = 9
+nop
+RESULT: PASSED
+
+SET 2 -
+11)printf "\x93\x00\x00\x10\x13\x01\xb0\xff\x23\x80\x20\x00\x83\x81\x00\x00\x03\xc2\x00\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 256        # x1 = 0x100 (memory address)
+addi x2, x0, -5         # x2 = 0xFFFFFFFB <-- STOPPED HERE (before this executed)
+sb   x2, 0(x1)          # mem[0x100] = 0xFB
+lb   x3, 0(x1)          # x3 = 0xFFFFFFFB (sign extended)
+lbu  x4, 0(x1)          # x4 = 251 (0xFB)
+RESULT: FAILED (FAILS IN FIRST CYCLE AFTER LOADING EMPTY VALUE) (NOTE: REPLACING -5 WITH 5 OR A POSITIVE IMMEDIATE CAUSES THE TEST TO PASS)
+RESULT2: PASSED
+
+12)printf "\x93\x00\x00\x00\x37\x81\x00\x00\x23\x90\x20\x00\x83\x91\x00\x00\x03\xd2\x00\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 272        # x1 = 0x110
+lui  x2, 0x8            # x2 = 0x00008000
+sh   x2, 0(x1)          # mem[0x110]=00 mem[0x111]=80
+lh   x3, 0(x1)          # x3 = 0xFFFF8000
+lhu  x4, 0(x1)          # x4 = 0x00008000
+RESULT: PASSED
+
+13)printf "\x93\x00\x00\x00\x13\x01\x00\x00\x23\x80\x20\x00\x13\x01\x00\x00\xa3\x80\x20\x00\x83\x91\x00\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 288        # address = 0x120
+addi x2, x0, 18         # x2 = 18
+sb   x2, 0(x1)          # mem[0x120]=0x12
+addi x2, x0, 52         # x2 = 52
+sb   x2, 1(x1)          # mem[0x121]=0x34
+lh   x3, 0(x1)          # x3 = 0x3412
+RESULT: PASSED
+
+14)printf "\x93\x00\x00\x13\x13\x01\xf0\xff\x23\x80\x20\x00\x83\x81\x00\x00\x13\xa2\x01\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 304        # address = 0x130
+addi x2, x0, -1         # x2 = 0xFFFFFFFF
+sb   x2, 0(x1)          # mem[0x130]=0xFF
+lb   x3, 0(x1)          # x3 = -1
+slti x4, x3, 0          # x4 = 1
+RESULT: PASSED
+
+15)printf "\x97\x00\x00\x00\x13\x81\x80\x00\x97\x11\x00\x00\x33\x82\x11\x40\x00\x00\x00\x00" > program.bin
+auipc x1, 0             # x1 = address of this instruction
+addi  x2, x1, 8         # x2 = x1 + 8
+auipc x3, 1             # x3 = PC + 4096
+sub   x4, x3, x1        # x4 = 4096 + instruction spacing
+RESULT: PASSED (NOTE: DURING THE SIMULATION, AUIPC TAKES THE VALUE OF PC AS DISPLAYED IN THE PREVIOUS CYCLE, ASSUMED TO BE INTENTIONAL BEHAVIOUR)
+
+16)printf "\x93\x00\x10\x00\x6f\x01\x80\x00\x93\x80\x40\x06\x93\x80\x20\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 1          # x1 = 1
+jal  x2, target         # x2 = return address
+addi x1, x1, 100        # skipped
+target:
+addi x1, x1, 2          # x1 = 3
+RESULT: PASSED
+
+17)printf "\x17\x02\x00\x00\x13\x02\x02\x01\xe7\x00\x02\x00\x13\x01\x30\x06\x93\x01\xa0\x02\x00\x00\x00\x00" > program.bin
+auipc x4, 0             # x4 = current PC
+addi  x4, x4, 16        # x4 = label
+jalr  x1, 0(x4)         # jump, x1 = return address
+addi  x2, x0, 99        # skipped
+addi  x3, x0, 42        # x3 = 42
+RESULT: PASSED (NOTE: INSTRUCTION 4 GOT SKIPPED ONLY WHEN addi x4, x4, 12 WAS CHANGED TO addi x4, x4, 16, CHECK IF INTENTIONAL)
+
+18)printf "\x17\x02\x00\x00\x13\x02\xd2\x00\xe7\x00\x02\x00\x13\x01\x70\x03\x00\x00\x00\x00" > program.bin
+auipc x4, 0             # x4 = PC
+addi  x4, x4, 13        # intentionally odd
+jalr  x1, 0(x4)         # jump to (x4+0)&~1
+addi  x2, x0, 55        # skipped
+RESULT: PASSED
+
+19)printf "\x93\x00\xa0\x00\x13\x01\xc0\x00\xb3\xc1\x20\x00\x33\xe2\x20\x00\xb3\xf1\x20\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 10         # 1010
+addi x2, x0, 12         # 1100
+xor  x3, x1, x2         # 0110 = 6
+or   x4, x1, x2         # 1110 = 14
+and  x3, x1, x2         # x3 overwritten with 1000 = 8
+RESULT: PASSED
+
+20)printf "\x93\x00\xa0\x00\x13\xc1\xf0\x00\x93\xe1\x10\x00\x13\xf2\x60\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, 10         # 1010
+xori x2, x1, 15         # 0101 = 5
+ori  x3, x1, 1          # 1011 = 11
+andi x4, x1, 6          # 0010 = 2
+RESULT: PASSED
+
+21)printf "\x93\x00\xf0\xff\x13\x01\x10\x00\xb3\xa1\x20\x00\x33\xb2\x20\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, -1         # 0xFFFFFFFF
+addi x2, x0, 1          # 1
+slt  x3, x1, x2         # 1
+sltu x4, x1, x2         # 0
+RESULT: PASSED
+
+22)printf "\x93\x00\xd0\xff\x13\xa1\xe0\xff\x93\xa1\xc0\xff\x13\xb2\x50\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, -3         # -3 <-- STOPPED BEFORE THIS EVEN EXECTED
+slti  x2, x1, -2        # 1
+slti  x3, x1, -4        # 0
+sltiu x4, x1, 5         # 0
+RESULT: FAILED (DIDN'T EVEN EXECUTE ONE INSTRUCTION)
+RESULT2: PASSED
+
+23)printf "\x93\x00\xf0\xff\x13\x01\x10\x00\x63\xe4\x20\x00\x93\x01\x50\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, -1         # 0xFFFFFFFF
+addi x2, x0, 1          # 1
+bltu x1, x2, fail       # not taken
+addi x3, x0, 5          # x3 = 5
+fail:
+RESULT: PASSED
+
+24)printf "\x93\x00\xb0\xff\x13\x01\x30\x00\x63\xd4\x20\x00\x93\x01\x90\x00\x00\x00\x00\x00" > program.bin
+addi x1, x0, -5         # -5 <-- STOPPED BEFORE THIS EVEN EXECTED
+addi x2, x0, 3          # 3
+bge  x1, x2, skip       # not taken
+addi x3, x0, 9          # x3 = 9
+skip:
+RESULT: FAILED (DIDN'T EVEN EXECUTE ONE INSTRUCTION)
+RESULT2: PASSED
+
+25)printf "\x93\x00\x70\x00\x73\x00\x00\x00\x93\x80\x10\x00\x73\x00\x10\x00\x13\x81\x20\x00\x00\x00\x00\x00" > program.bin
+addi   x1, x0, 7        # x1 = 7
+ecall                   # no effect
+addi   x1, x1, 1        # x1 = 8
+ebreak                  # no effect
+addi   x2, x1, 2        # x2 = 10
+RESULT: PASSED
+
+SUSPECTED ISSUE: Negative immediates causing errors (except if its -1 for some reason)
