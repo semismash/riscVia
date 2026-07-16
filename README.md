@@ -65,7 +65,7 @@ To try it out yourself -
     ```bash
     cd path/to/your/repo
     make clean
-    printf `<your hex dump>` > program.bin
+    printf "<your hex dump>" > program.bin
     make run
     ```
 
