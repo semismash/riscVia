@@ -23,5 +23,69 @@ The CPU uses the IF -> ID -> EX -> MEM -> WB cycle. The main parts and modules o
 - [**LSU**](src/design/lsu.sv) - Load store unit of the CPU, responsible for communicating with the Reg File and Memory Unit, requesting and writing data, and initiating `LOAD` and `STORE` instructions. Uses signals from the decoder to determine if the instruction is a LOAD or a STORE, utilizes the `funct3` field to check the number of bytes to be requested, and uses the `alu_res` input from the ALU to forward the address to the memory unit. Uses the `is_mem_read` and `is_mem_write` fields to determine if the instruction is a `LOAD` or a `STORE`, and prevent the CPU from accidentally faulting if there is no mem access instruction. In addition, uses a `req_bytes` signal to request a certain number of bytes from the memory unit (1, 2, or 4 bytes), depending on the instruction.
 - [**CPU Core and Buses**](src/design/rv32i_core.sv) - Responsible for connecting all the aforementioned modules together, and maintaining functioning of the CPU. The core itself has multiple ports, including two for `CLOCK` and `RESET` (`clk` and `rst_n`), multiple signals from the FU/LSU to connect to the memory unit, and a port connecting to the `HALT` unit of the CPU, which is raised during a fault that causes the CPU to panic.
 - [**Main Memory**](src/design/mem.sv) - While not a part of the CPU core, the main memory plays an integral role by storing the instructions required by the CPU, and also the data required by the CPU during mem accesses. Upon requesting data from the CPU, depending on the number of bytes modeled by `req_bytes`, it will either read the memory from the given address from said byte to the nth offset byte from that, or will write the memory at the given address until the nth offset byte if the `write_enable` signal is high. In addition, the memory unit includes a provision for raising an `IF Fault` (in case of Instruction Access Faults) or a `Data Fault` (in case of Data Access Faults), if the requested access address or its following bytes go out of bounds.  
+NOTE: By default, there is 128 KB of memory, although this may be changed via parameterization.  
 
 The following mentioned modules are integrated and connected together in the `top.sv` module ([accessible through here](src/design/top.sv)), and are tested via the C++ Verilator testbench in the `sim_main.cpp` module ([accessible through here](src/sim_main.cpp)).
+
+## Installation and Testing
+
+The CPU above was tested using Verilator v5.048. The testbench for the CPU is accessible via `sim_main.cpp`.  
+
+To test the processor, the following toolchain(s) were used -
+
+- `Verilator v5.048`, built using the `GCC` compiler in `C++23`
+- `MSYS UCRT64 shell`
+- `GTKWave` (optional, accessible via `waveform.vcd`)
+- `Python 3.11.0` to build the RISC-V hex dump generator
+
+To try it out yourself -
+
+1. Install the aforementioned toolchains from the respective websites online.
+
+2. Go to your directory and clone the repository -
+  
+    ```bash
+    git clone https://github.com/semismash/riscVia
+    ```
+
+3. Using a basic program in RV32I, use an [online visualizer](https://risc-v-cpu-visualizer.vercel.app/) to convert the program into raw binary.
+
+4. Launch bingen.py via -
+
+    ```bash
+    py bingen.py
+    ```
+
+    Copy the binary into the terminal and press enter twice to get the `printf` hex-dump statement. This may be done multiple times, and can be exited by typing `exit` or `quit`.
+
+    (NOTE: Alternatives, if you already have an RV32I binary, you can just name it `program.bin` and place it in the project's root directory.)
+
+5. Open the `MSYS UCRT64` shell, and execute the following commands to clean the directory, place the hex-dump into the folder, and run the testbench.
+
+    ```bash
+    cd path/to/your/repo
+    make clean
+    printf `<your hex dump>` > program.bin
+    make run
+    ```
+
+6. After this, the testbench can be monitored as normal. Currently only monitoring the first 4 GPRs (`x1` - `x4`) is supported, although support for more advanced testing is coming in the future.
+
+## Example program  
+
+```bash
+printf "\x17\x02\x00\x00\x13\x02\x02\x01\xe7\x00\x02\x00\x13\x01\x30\x06\x93\x01\xa0\x02\x00\x00\x00\x00" > program.bin
+```
+
+For reference, the given program does the following -
+```riscv
+auipc x4, 0             # x4 = current PC
+addi  x4, x4, 16        # x4 = label
+jalr  x1, 0(x4)         # jump, x1 = return address
+addi  x2, x0, 99        # skipped
+addi  x3, x0, 42        # x3 = 42
+```
+
+### Message from the Developer
+
+Thanks for checking out my project! Stay tuned for more updates :D
