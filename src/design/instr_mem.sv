@@ -10,6 +10,6 @@ module instr_mem #(
     output logic instr_not_found, // if instruction not found, raise fault
 );
 
-
+    
 
 endmodule
