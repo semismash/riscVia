@@ -10,6 +10,27 @@ module instr_mem #(
     output logic instr_not_found, // if instruction not found, raise fault
 );
 
-    
+    localparam INST_SIZE_BYTES = DATA_WIDTH >> 3;
+
+    Byte container [MEM_SIZE_BYTES - 1: 0];
+    Word addr_reg; // address register to hold for cycle
+
+    always_ff @(posedge clk) begin 
+        addr_reg <= instr_addr;
+    end
+
+    always_comb begin
+        instr_out = '0;
+        instr_not_found = 1'b0;
+        if (if_addr >= MEM_SIZE_BYTES - INST_SIZE_BYTES) if_not_found = 1'b1;
+        else instr_out =  {  
+            container[if_addr + 3], // do INST_SIZE_BYTES times
+            container[if_addr + 2], 
+            container[if_addr + 1], 
+            container[if_addr] 
+        };
+    end
+
+    // add write port later when converting this to cache
 
 endmodule
