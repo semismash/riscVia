@@ -21,38 +21,59 @@ module top(
 
     rv32i_core u_cpu(
         //clk and reset
-        .clk(clk),
-        .rst_n(rst_n),
+        .clk        (clk),
+        .rst_n      (rst_n),
         // IN
-        .instr_in(instr),
-        .data_in(read_data),
-        .if_fault(if_fault),
-        .data_fault(data_fault),
+        .instr_in   (instr),
+        .data_in    (read_data),
+        .if_fault   (if_fault),
+        .data_fault (data_fault),
         // OUT
-        .if_addr(if_addr),
-        .data_addr(data_addr),
-        .data_out(write_data), 
-        .write_en(write_enable),
-        .req_bytes(req_bytes),
+        .if_addr    (if_addr),
+        .data_addr  (data_addr),
+        .data_out   (write_data), 
+        .write_en   (write_enable),
+        .req_bytes  (req_bytes),
         // HALT
-        .halt(halt)
+        .halt       (halt)
     );
 
-    mem u_mem(
-        // reset
-        .clk(clk),
-        // in
-        .if_addr(if_addr),
-        .lsu_addr(data_addr),
-        .req_bytes(req_bytes),
-        .write_enable(write_enable), 
-        .data_in(write_data),
-        // out
-        .instr_out(instr),
-        .data_out(read_data),
-        // mem faults
-        .if_not_found(if_fault),
-        .lsu_not_found(data_fault)
+    // mem u_mem(
+    //     // reset
+    //     .clk(clk),
+    //     // in
+    //     .if_addr(if_addr),
+    //     .lsu_addr(data_addr),
+    //     .req_bytes(req_bytes),
+    //     .write_enable(write_enable), 
+    //     .data_in(write_data),
+    //     // out
+    //     .instr_out(instr),
+    //     .data_out(read_data),
+    //     // mem faults
+    //     .if_not_found(if_fault),
+    //     .lsu_not_found(data_fault)
+    // );
+
+    instr_mem u_instr_mem(
+        //input
+        .clk                (clk),
+        .instr_addr         (if_addr),
+        //output
+        .instr_out          (instr),
+        .instr_not_found    (if_fault)
+    );
+    
+    data_mem u_data_mem(
+        .clk                (clk),
+
+        .data_addr          (data_addr),
+        .req_bytes          (req_bytes),
+
+        .write_enable       (write_enable),
+        .data_in            (write_data),
+
+        .data_not_found     (data_fault)
     );
 
 endmodule

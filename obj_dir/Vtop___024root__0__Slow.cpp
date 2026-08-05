@@ -170,22 +170,22 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
     // Body
     vlSelfRef.top__DOT__if_addr = vlSelfRef.top__DOT__u_cpu__DOT__u_pc__DOT__pc;
     vlSelfRef.top__DOT__instr = 0U;
-    if ((0x0001fffcU > vlSelfRef.top__DOT__if_addr)) {
-        vlSelfRef.top__DOT__instr = (((((IData)(vlSelfRef.top__DOT__u_mem__DOT__container
-                                                [(0x0001ffffU 
+    if ((0x0000fffcU > vlSelfRef.top__DOT__if_addr)) {
+        vlSelfRef.top__DOT__instr = (((((IData)(vlSelfRef.top__DOT__u_instr_mem__DOT__container
+                                                [(0x0000ffffU 
                                                   & ((IData)(3U) 
                                                      + vlSelfRef.top__DOT__if_addr))]) 
-                                        << 8U) | vlSelfRef.top__DOT__u_mem__DOT__container
-                                       [(0x0001ffffU 
+                                        << 8U) | vlSelfRef.top__DOT__u_instr_mem__DOT__container
+                                       [(0x0000ffffU 
                                          & ((IData)(2U) 
                                             + vlSelfRef.top__DOT__if_addr))]) 
                                       << 0x00000010U) 
-                                     | (((IData)(vlSelfRef.top__DOT__u_mem__DOT__container
-                                                 [(0x0001ffffU 
+                                     | (((IData)(vlSelfRef.top__DOT__u_instr_mem__DOT__container
+                                                 [(0x0000ffffU 
                                                    & ((IData)(1U) 
                                                       + vlSelfRef.top__DOT__if_addr))]) 
-                                         << 8U) | vlSelfRef.top__DOT__u_mem__DOT__container
-                                        [(0x0001ffffU 
+                                         << 8U) | vlSelfRef.top__DOT__u_instr_mem__DOT__container
+                                        [(0x0000ffffU 
                                           & vlSelfRef.top__DOT__if_addr)]));
     }
     vlSelfRef.top__DOT__u_cpu__DOT__u_alu__DOT__r_data2 
@@ -328,7 +328,6 @@ VL_ATTR_COLD void Vtop___024root____Vm_traceActivitySetAll(Vtop___024root* vlSel
     vlSelfRef.__Vm_traceActivity[3U] = 1U;
     vlSelfRef.__Vm_traceActivity[4U] = 1U;
     vlSelfRef.__Vm_traceActivity[5U] = 1U;
-    vlSelfRef.__Vm_traceActivity[6U] = 1U;
 }
 
 VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
@@ -374,8 +373,13 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->top__DOT__u_cpu__DOT__u_alu__DOT__alu_out = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 17273129919794626247ull);
     vlSelf->top__DOT__u_cpu__DOT__u_alu__DOT__data1 = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 14033296306717898790ull);
     vlSelf->top__DOT__u_cpu__DOT__u_alu__DOT__data2 = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12677144840115112110ull);
-    for (int __Vi0 = 0; __Vi0 < 131072; ++__Vi0) {
-        vlSelf->top__DOT__u_mem__DOT__container[__Vi0] = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 16390826160958245493ull);
+    for (int __Vi0 = 0; __Vi0 < 65536; ++__Vi0) {
+        vlSelf->top__DOT__u_instr_mem__DOT__container[__Vi0] = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 17838547526792547713ull);
+    }
+    vlSelf->top__DOT__u_instr_mem__DOT__addr_reg = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 17482381438776612688ull);
+    vlSelf->top__DOT__u_data_mem__DOT__data_out = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 5859491236094948111ull);
+    for (int __Vi0 = 0; __Vi0 < 65536; ++__Vi0) {
+        vlSelf->top__DOT__u_data_mem__DOT__container[__Vi0] = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 6583783866916463061ull);
     }
     vlSelf->__Vfunc_top__DOT__u_cpu__DOT__u_decoder__DOT__calc_alu_op__1__Vfuncout = 0;
     vlSelf->__Vfunc_top__DOT__u_cpu__DOT__u_decoder__DOT__calc_alu_op__1__funct3 = 0;
@@ -408,7 +412,7 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VnbaTriggered[__Vi0] = 0;
     }
-    for (int __Vi0 = 0; __Vi0 < 7; ++__Vi0) {
+    for (int __Vi0 = 0; __Vi0 < 6; ++__Vi0) {
         vlSelf->__Vm_traceActivity[__Vi0] = 0;
     }
 }

@@ -78,16 +78,19 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_alu__DOT__alu_out;
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_alu__DOT__data1;
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_alu__DOT__data2;
-        IData/*31:0*/ __VactIterCount;
-        VlUnpacked<IData/*31:0*/, 32> top__DOT__u_cpu__DOT__u_reg_file__DOT__registers;
+        IData/*31:0*/ top__DOT__u_instr_mem__DOT__addr_reg;
+        IData/*31:0*/ top__DOT__u_data_mem__DOT__data_out;
     };
     struct {
-        VlUnpacked<CData/*7:0*/, 131072> top__DOT__u_mem__DOT__container;
+        IData/*31:0*/ __VactIterCount;
+        VlUnpacked<IData/*31:0*/, 32> top__DOT__u_cpu__DOT__u_reg_file__DOT__registers;
+        VlUnpacked<CData/*7:0*/, 65536> top__DOT__u_instr_mem__DOT__container;
+        VlUnpacked<CData/*7:0*/, 65536> top__DOT__u_data_mem__DOT__container;
         VlUnpacked<QData/*63:0*/, 2> __VstlTriggered;
         VlUnpacked<QData/*63:0*/, 2> __VicoTriggered;
         VlUnpacked<QData/*63:0*/, 1> __VactTriggered;
         VlUnpacked<QData/*63:0*/, 1> __VnbaTriggered;
-        VlUnpacked<CData/*0:0*/, 7> __Vm_traceActivity;
+        VlUnpacked<CData/*0:0*/, 6> __Vm_traceActivity;
     };
 
     // INTERNAL VARIABLES
