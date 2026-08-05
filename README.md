@@ -8,7 +8,7 @@ The CPU is based on the RV32I architecture. It contains implementation the base 
 
 ## Diagram
 
-![RISC-V Processor Image](diagram/RISCVIA-CORE-V1.png)
+![RISC-V Processor Image](diagram/RISCVIA-CORE-V1.1.png)
 
 ## Modules and Working
 
