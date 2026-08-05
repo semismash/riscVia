@@ -38,23 +38,6 @@ module top(
         .halt       (halt)
     );
 
-    // mem u_mem(
-    //     // reset
-    //     .clk(clk),
-    //     // in
-    //     .if_addr(if_addr),
-    //     .lsu_addr(data_addr),
-    //     .req_bytes(req_bytes),
-    //     .write_enable(write_enable), 
-    //     .data_in(write_data),
-    //     // out
-    //     .instr_out(instr),
-    //     .data_out(read_data),
-    //     // mem faults
-    //     .if_not_found(if_fault),
-    //     .lsu_not_found(data_fault)
-    // );
-
     instr_mem u_instr_mem(
         //input
         .clk                (clk),
