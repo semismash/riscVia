@@ -22,12 +22,12 @@ module instr_mem #(
     always_comb begin
         instr_out = '0;
         instr_not_found = 1'b0;
-        if (if_addr >= MEM_SIZE_BYTES - INST_SIZE_BYTES) if_not_found = 1'b1;
+        if (instr_addr >= MEM_SIZE_BYTES - INST_SIZE_BYTES) instr_not_found = 1'b1;
         else instr_out =  {  
-            container[if_addr + 3], // do INST_SIZE_BYTES times
-            container[if_addr + 2], 
-            container[if_addr + 1], 
-            container[if_addr] 
+            container[instr_addr + 3], // do INST_SIZE_BYTES times
+            container[instr_addr + 2], 
+            container[instr_addr + 1], 
+            container[instr_addr] 
         };
     end
 

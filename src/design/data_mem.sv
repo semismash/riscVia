@@ -11,6 +11,7 @@ module data_mem #(
     input logic write_enable,       // enable write if high, only read by default
     input Word data_in,             // write to address of data_addr, write req_bytes bytes
 
+    output Word data_out,           // fetched data
     output logic data_not_found      // data not found
 
 );

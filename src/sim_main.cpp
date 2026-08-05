@@ -65,9 +65,10 @@ int main(int argc, char** argv) {
     }
     
     for (size_t i = 0; i < ram_buffer.size(); ++i) {
-        DUT->rootp->top__DOT__u_mem__DOT__container[i] = ram_buffer[i];
+        DUT->rootp->top__DOT__u_instr_mem__DOT__container[i] = ram_buffer[i];
     }
 
+    // reset in the beginning to initialize, and set clk to 0
     DUT->rst_n = 0;
     DUT->clk = 0;
     DUT->eval(); 
