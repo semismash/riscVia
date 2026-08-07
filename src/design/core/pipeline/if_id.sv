@@ -1,15 +1,15 @@
 import rv32i::*;
 
 module if_id (
-    input logic clk;
-    input logic rst_n;  // active low
-    input logic stall;
+    input logic clk,
+    input logic rst_n,  // active low
+    input logic stall,
 
-    input Instruction instr;
-    input Word pc;
+    input Word pc,
+    input Instruction instr,
 
-    output Instruction instr;
-    output Word pc;
+    output Word pc,
+    output Instruction instr
 );
 
     input logic [63:0] register;    // 64 bits = 32 (pc) + 32 (instr)
