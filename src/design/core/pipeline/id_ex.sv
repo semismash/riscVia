@@ -1,6 +1,8 @@
 import rv32i::*;
 
-module id_ex (
+module id_ex #(
+    parameter REG_WIDTH = 158    // 158 bits
+) (
     input logic clk,
     input logic rst_n,  // active low
     input logic stall,
@@ -40,8 +42,8 @@ module id_ex (
     output logic mem_to_reg
 );
 
-    input logic [157:0] register;    // 158 bits total
-    input logic [157:0] next;
+    logic [REG_WIDTH-1:0] register;
+    logic [REG_WIDTH-1:0] next;
 
     always_comb begin
         next = 

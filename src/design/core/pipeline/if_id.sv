@@ -1,6 +1,8 @@
 import rv32i::*;
 
-module if_id (
+module if_id #(
+    parameter REG_WIDTH = 64    // 64 bits = 32 (pc) + 32 (instr)
+) (
     input logic clk,
     input logic rst_n,  // active low
     input logic stall,
@@ -12,8 +14,8 @@ module if_id (
     output Instruction instr
 );
 
-    input logic [63:0] register;    // 64 bits = 32 (pc) + 32 (instr)
-    input logic [63:0] next;
+    logic [REG_WIDTH-1:0] register;
+    logic [REG_WIDTH-1:0] next;
 
     always_comb begin
         next = {pc, instr};
