@@ -4,39 +4,28 @@ module if_id #(
     parameter REG_WIDTH = 38    // 38 bits
 ) (
     input logic clk,
-    input logic rst_n,  // active low
+    input logic rst_n,  // asynchronous active low reset
     input logic stall,
+    input logic clear,  // synchronous active high clear
 
-    input RegAddr rd_addr,      // 5 bits
-    input Word rd_data,         // 32 bits
-    input logic reg_write,      // 1 bit
+    input RegAddr i_rd_addr,      // 5 bits
+    input Word i_rd_data,         // 32 bits
+    input logic i_reg_write,      // 1 bit
 
-    output RegAddr rd_addr,
-    output Word rd_data,
-    output logic reg_write
+    output RegAddr o_rd_addr,
+    output Word o_rd_data,
+    output logic o_reg_write
 );
 
-    logic [REG_WIDTH-1:0] register;
-    logic [REG_WIDTH-1:0] next;
-
-    always_comb begin
-        next = 
-        {rs2_val,
-        rd_addr,
-        result,
-        alu_zero,
-        mem_read,
-        mem_write,
-        funct3,
-        reg_write,
-        mem_to_reg};
-    end
-
     always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            register <= '0;
+        if (!rst_n || clear) begin
+            o_rd_addr   <= '0;
+            o_rd_data   <= '0;
+            o_reg_write <= '0;
         end else if (!stall) begin  // do normal logic if NOT a stall
-            register <= next;
+            o_rd_addr   <= i_rd_addr;
+            o_rd_data   <= i_rd_data;
+            o_reg_write <= i_reg_write;
         end
     end
 
