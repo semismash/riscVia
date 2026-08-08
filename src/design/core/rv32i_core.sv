@@ -50,23 +50,23 @@ module rv32i_core (
     ImmPackFmt imm_type;
 
     // ID/EX
-    Word if_ex_pc;
-    RegAddr if_ex_rs1_addr;
-    RegAddr if_ex_rs2_addr;
-    RegAddr if_ex_rd_addr;
-    Word if_ex_rs1_data;
-    Word if_ex_rs2_data;
-    logic if_ex_alu_in1_pcor;
-    logic if_ex_alu_in2_roi;    // reconsider this, replace with branch taken condition later on
-    AluOp if_ex_alu_op;
-    logic if_ex_alu_bypass;
-    logic if_ex_mem_read;
-    logic if_ex_mem_write;
-    logic [2:0] if_ex_funct3;
-    logic if_ex_is_branch;
-    logic if_ex_reg_write;
-    logic if_ex_imm_to_reg;
-    logic if_ex_mem_to_reg;
+    Word id_ex_pc;
+    RegAddr id_ex_rs1_addr;
+    RegAddr id_ex_rs2_addr;
+    RegAddr id_ex_rd_addr;
+    Word id_ex_rs1_data;
+    Word id_ex_rs2_data;
+    logic id_ex_alu_in1_pcor;
+    logic id_ex_alu_in2_roi;    // reconsider this, replace with branch taken condition later on
+    AluOp id_ex_alu_op;
+    logic id_ex_alu_bypass;
+    logic id_ex_mem_read;
+    logic id_ex_mem_write;
+    logic [2:0] id_ex_funct3;
+    logic id_ex_is_branch;
+    logic id_ex_reg_write;
+    logic id_ex_imm_to_reg;
+    logic id_ex_mem_to_reg;
 
     // alu
     AluOp alu_op;
@@ -274,7 +274,6 @@ module rv32i_core (
         .alu_zero     (  ),
         .branch_taken (  )
     );
-
 
     ex_mem u_ex_mem (
         // clk and reset
