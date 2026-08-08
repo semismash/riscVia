@@ -36,6 +36,10 @@ module rv32i_core (
     logic pc_in1_sel;
     logic pc_in2_sel;
 
+    // IF/ID
+    Word if_id_pc;
+    Instruction if_id_instr;
+
     // decoder
     logic alu_or_mem_to_reg;
     logic imm_to_reg;        
@@ -45,6 +49,25 @@ module rv32i_core (
     Word imm_val;
     ImmPackFmt imm_type;
 
+    // ID/EX
+    Word if_ex_pc;
+    RegAddr if_ex_rs1_addr;
+    RegAddr if_ex_rs2_addr;
+    RegAddr if_ex_rd_addr;
+    Word if_ex_rs1_data;
+    Word if_ex_rs2_data;
+    logic if_ex_alu_in1_pcor;
+    logic if_ex_alu_in2_roi;    // reconsider this, replace with branch taken condition later on
+    AluOp if_ex_alu_op;
+    logic if_ex_alu_bypass;
+    logic if_ex_mem_read;
+    logic if_ex_mem_write;
+    logic [2:0] if_ex_funct3;
+    logic if_ex_is_branch;
+    logic if_ex_reg_write;
+    logic if_ex_imm_to_reg;
+    logic if_ex_mem_to_reg;
+
     // alu
     AluOp alu_op;
     logic alu_in1_sel;
@@ -52,11 +75,26 @@ module rv32i_core (
     logic alu_zero;
     Word alu_out;
 
+    // EX/MEM
+    logic ex_mem_rs2_val;
+    RegAddr ex_mem_rd_addr;
+    Word ex_mem_result;
+    logic ex_mem_mem_read;
+    logic ex_mem_mem_write;
+    logic [2:0] ex_mem_funct3;
+    logic ex_mem_reg_write;
+    logic ex_mem_mem_to_reg;
+
     // lsu
     logic [2:0] funct3;
     logic mem_read;
     logic mem_write;
     Word reg_write_data;
+
+    // MEM/WB
+    RegAddr mem_wb_rd_addr;
+    Word mem_wb_rd_data;
+    logic mem_wb_reg_write;
 
     // integrated
     assign funct3 = instr[14:12];
@@ -102,6 +140,7 @@ module rv32i_core (
     );
 
     hazard_unit u_hazard_unit (
+        // input
         .if_id_opcode       (  ),
         .if_id_rs1          (  ),
         .if_id_rs2          (  ),
@@ -112,6 +151,7 @@ module rv32i_core (
         .ex_mem_rdst        (  ),
         .mem_wb_reg_write   (  ),
         .mem_wb_rdst        (  ),
+        // output
         .pc_enable          (  ),
         .if_id_enable       (  ),
         .if_id_clear        (  ),
@@ -130,12 +170,15 @@ module rv32i_core (
     );
 
     if_id u_if_id (
-        .clk      (  ),
-        .rst_n    (  ),
+        // clk and reset
+        .clk      (clk),
+        .rst_n    (rst_n),
         .stall    (  ),
         .clear    (  ),
+        // input
         .i_pc     (  ),
         .i_instr  (  ),
+        // output
         .o_pc     (  ),
         .o_instr  (  )
     );
@@ -165,10 +208,12 @@ module rv32i_core (
     );
 
     id_ex u_id_ex (
-        .clk              (  ),
-        .rst_n            (  ),
+        // clk and reset
+        .clk              (clk),
+        .rst_n            (rst_n),
         .stall            (  ),
         .clear            (  ),
+        // input
         .i_pc             (  ),
         .i_rs1_addr       (  ),
         .i_rs2_addr       (  ),
@@ -186,6 +231,7 @@ module rv32i_core (
         .i_reg_write      (  ),
         .i_imm_to_reg     (  ),
         .i_mem_to_reg     (  ),
+        // output
         .o_pc             (  ),
         .o_rs1_addr       (  ),
         .o_rs2_addr       (  ),
@@ -219,7 +265,7 @@ module rv32i_core (
         // from REG FILE
         .r_data1        (rs1_data),
         .r_data2        (rs2_data),
-        //  from PC & ID
+        // from PC & ID
         .pc             (pc),
         .use_pc         (alu_in1_sel),
         // from IMM & ID
@@ -239,10 +285,12 @@ module rv32i_core (
 
 
     ex_mem u_ex_mem (
-        .clk          (  ),
-        .rst_n        (  ),
+        // clk and reset
+        .clk          (clk),
+        .rst_n        (rst_n),
         .stall        (  ),
         .clear        (  ),
+        // input
         .i_rs2_val    (  ),
         .i_rd_addr    (  ),
         .i_result     (  ),
@@ -251,6 +299,7 @@ module rv32i_core (
         .i_funct3     (  ),
         .i_reg_write  (  ),
         .i_mem_to_reg (  ),
+        // output
         .o_rs2_val    (  ),
         .o_rd_addr    (  ),
         .o_result     (  ),
@@ -278,13 +327,16 @@ module rv32i_core (
     );
 
     mem_wb u_mem_wb (
-        .clk         (  ),
-        .rst_n       (  ),
+        // clk
+        .clk         (clk),
+        .rst_n       (rst_n),
         .stall       (  ),
         .clear       (  ),
+        // input
         .i_rd_addr   (  ),
         .i_rd_data   (  ),
         .i_reg_write (  ),
+        // output
         .o_rd_addr   (  ),
         .o_rd_data   (  ),
         .o_reg_write (  )
