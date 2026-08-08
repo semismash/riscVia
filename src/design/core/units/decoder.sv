@@ -23,6 +23,7 @@ module decoder #(
 
     // IMM GEN
     output ImmPackFmt imm_type, // output imm type for imm gen
+    output Word imm_val,            // immediate value as output
 
     // PC
     output logic pcinc_in1_pcor,    // PC inc input 1, default PC (0) or rs1 (1)
@@ -35,6 +36,7 @@ module decoder #(
     import rv32i::*;
 
     OpCode opcode;
+    ImmPackFmt imm_type;
 
     function automatic AluOp calc_alu_op(input logic is_r_type);
         logic [2:0] funct3;
@@ -156,6 +158,13 @@ module decoder #(
                 illegal_instr = 1'b1;
             end
         endcase
+
+        imm_gen u_imm_gen(
+            .instr          (instr),
+            .imm_type       (imm_type),
+            .imm_out        (imm_val)
+        );
+
     end
     
 endmodule
