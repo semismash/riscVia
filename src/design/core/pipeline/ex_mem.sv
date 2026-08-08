@@ -1,6 +1,6 @@
 import rv32i::*;
 
-module if_id #(
+module ex_mem #(
     parameter REG_WIDTH = 76    // 76 bits
 ) (
     input logic clk,
