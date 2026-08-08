@@ -232,23 +232,23 @@ module rv32i_core (
         .i_imm_to_reg     (  ),
         .i_mem_to_reg     (  ),
         // output
-        .o_pc             (  ),
-        .o_rs1_addr       (  ),
-        .o_rs2_addr       (  ),
-        .o_rd_addr        (  ),
-        .o_rs1_data       (  ),
-        .o_rs2_data       (  ),
-        .o_alu_in1_pcor   (  ),
-        .o_alu_in2_roi    (  ),
-        .o_alu_op         (  ),
-        .o_alu_bypass     (  ),
-        .o_mem_read       (  ),
-        .o_mem_write      (  ),
-        .o_funct3         (  ),
-        .o_is_branch      (  ),
-        .o_reg_write      (  ),
-        .o_imm_to_reg     (  ),
-        .o_mem_to_reg     (  )
+        .o_pc             (id_ex_pc),
+        .o_rs1_addr       (id_ex_rs1_addr),
+        .o_rs2_addr       (id_ex_rs2_addr),
+        .o_rd_addr        (id_ex_rd_addr),
+        .o_rs1_data       (id_ex_rs1_data),
+        .o_rs2_data       (id_ex_rs2_data),
+        .o_alu_in1_pcor   (id_ex_alu_in1_pcor),
+        .o_alu_in2_roi    (id_ex_alu_in2_roi),
+        .o_alu_op         (id_ex_alu_op),
+        .o_alu_bypass     (id_ex_alu_bypass),
+        .o_mem_read       (id_ex_mem_read),
+        .o_mem_write      (id_ex_mem_write),
+        .o_funct3         (id_ex_funct3),
+        .o_is_branch      (id_ex_is_branch),
+        .o_reg_write      (id_ex_reg_write),
+        .o_imm_to_reg     (id_ex_imm_to_reg),
+        .o_mem_to_reg     (id_ex_mem_to_reg)
     );
 
     alu u_alu(  // x
@@ -291,14 +291,14 @@ module rv32i_core (
         .i_reg_write  (  ),
         .i_mem_to_reg (  ),
         // output
-        .o_rs2_val    (  ),
-        .o_rd_addr    (  ),
-        .o_result     (  ),
-        .o_mem_read   (  ),
-        .o_mem_write  (  ),
-        .o_funct3     (  ),
-        .o_reg_write  (  ),
-        .o_mem_to_reg (  )
+        .o_rs2_val    (ex_mem_rs2_val),
+        .o_rd_addr    (ex_mem_rd_addr),
+        .o_result     (ex_mem_result),
+        .o_mem_read   (ex_mem_mem_read),
+        .o_mem_write  (ex_mem_mem_write),
+        .o_funct3     (ex_mem_funct3),
+        .o_reg_write  (ex_mem_reg_write),
+        .o_mem_to_reg (ex_mem_mem_to_reg)
     );
 
     lsu u_lsu(
@@ -328,9 +328,9 @@ module rv32i_core (
         .i_rd_data   (  ),
         .i_reg_write (  ),
         // output
-        .o_rd_addr   (  ),
-        .o_rd_data   (  ),
-        .o_reg_write (  )
+        .o_rd_addr   (mem_wb_rd_addr),
+        .o_rd_data   (mem_wb_rd_data),
+        .o_reg_write (mem_wb_reg_write)
     );
 
     assign halt = if_fault_out | data_fault | illegal_instr;
