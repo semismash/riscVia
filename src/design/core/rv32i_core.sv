@@ -176,16 +176,16 @@ module rv32i_core (
         .stall    (  ),
         .clear    (  ),
         // input
-        .i_pc     (  ),
-        .i_instr  (  ),
+        .i_pc     (pc),
+        .i_instr  (instr),
         // output
-        .o_pc     (  ),
-        .o_instr  (  )
+        .o_pc     (if_id_pc),
+        .o_instr  (if_id_instr)
     );
 
     decoder u_decoder(
         // IN
-        .instr          (instr),
+        .instr          (if_id_instr),
         .alu_zero       (alu_zero),
         // ALU
         .alu_op         (alu_op),
@@ -199,7 +199,7 @@ module rv32i_core (
         .mem_to_reg     (alu_or_mem_to_reg),
         .imm_to_reg     (imm_to_reg),
         // IMM GEN
-        .imm_type       (imm_type),
+        .imm_val        (imm_val),
         // PC
         .pcinc_in1_pcor (pc_in1_sel),
         .pcinc_in2_doi  (pc_in2_sel),
@@ -249,14 +249,6 @@ module rv32i_core (
         .o_reg_write      (  ),
         .o_imm_to_reg     (  ),
         .o_mem_to_reg     (  )
-    );
-
-    imm_gen u_imm_gen(  // x
-        // IN
-        .instr          (instr),
-        .imm_type       (imm_type),
-        // OUT
-        .imm_out        (imm_val)
     );
 
     alu u_alu(  // x
