@@ -101,6 +101,23 @@ module rv32i_core (
         .pc_out         (pc)
     );
 
+    hazard_unit u_hazard_unit (
+        .if_id_opcode       (  ),
+        .if_id_rs1          (  ),
+        .if_id_rs2          (  ),
+        .id_ex_mem_read     (  ),
+        .id_ex_rdst         (  ),
+        .branch_taken       (  ),
+        .ex_mem_reg_write   (  ),
+        .ex_mem_rdst        (  ),
+        .mem_wb_reg_write   (  ),
+        .mem_wb_rdst        (  ),
+        .pc_enable          (  ),
+        .if_id_enable       (  ),
+        .if_id_clear        (  ),
+        .id_ex_clear        (  )
+    );
+
     fetch u_fetch(  // x
         // IN
         .pc_in          (pc),
@@ -110,6 +127,17 @@ module rv32i_core (
         .mem_fetch_addr (if_addr),
         .instr_out      (instr),
         .mem_fault      (if_fault_out)
+    );
+
+    if_id u_if_id (
+        .clk      (  ),
+        .rst_n    (  ),
+        .stall    (  ),
+        .clear    (  ),
+        .i_pc     (  ),
+        .i_instr  (  ),
+        .o_pc     (  ),
+        .o_instr  (  )
     );
 
     decoder u_decoder(
@@ -134,6 +162,47 @@ module rv32i_core (
         .pcinc_in2_doi  (pc_in2_sel),
         // panic
         .illegal_instr  (illegal_instr)
+    );
+
+    id_ex u_id_ex (
+        .clk              (  ),
+        .rst_n            (  ),
+        .stall            (  ),
+        .clear            (  ),
+        .i_pc             (  ),
+        .i_rs1_addr       (  ),
+        .i_rs2_addr       (  ),
+        .i_rd_addr        (  ),
+        .i_rs1_data       (  ),
+        .i_rs2_data       (  ),
+        .i_alu_in1_pcor   (  ),
+        .i_alu_in2_roi    (  ),
+        .i_alu_op         (  ),
+        .i_alu_bypass     (  ),
+        .i_mem_read       (  ),
+        .i_mem_write      (  ),
+        .i_funct3         (  ),
+        .i_is_branch      (  ),
+        .i_reg_write      (  ),
+        .i_imm_to_reg     (  ),
+        .i_mem_to_reg     (  ),
+        .o_pc             (  ),
+        .o_rs1_addr       (  ),
+        .o_rs2_addr       (  ),
+        .o_rd_addr        (  ),
+        .o_rs1_data       (  ),
+        .o_rs2_data       (  ),
+        .o_alu_in1_pcor   (  ),
+        .o_alu_in2_roi    (  ),
+        .o_alu_op         (  ),
+        .o_alu_bypass     (  ),
+        .o_mem_read       (  ),
+        .o_mem_write      (  ),
+        .o_funct3         (  ),
+        .o_is_branch      (  ),
+        .o_reg_write      (  ),
+        .o_imm_to_reg     (  ),
+        .o_mem_to_reg     (  )
     );
 
     imm_gen u_imm_gen(  // x
@@ -161,6 +230,37 @@ module rv32i_core (
         .out_zero       (alu_zero)
     );
 
+    branch_unit u_branch_unit (
+        .is_branch    (  ),
+        .id_ex_funct3 (  ),
+        .alu_zero     (  ),
+        .branch_taken (  )
+    );
+
+
+    ex_mem u_ex_mem (
+        .clk          (  ),
+        .rst_n        (  ),
+        .stall        (  ),
+        .clear        (  ),
+        .i_rs2_val    (  ),
+        .i_rd_addr    (  ),
+        .i_result     (  ),
+        .i_mem_read   (  ),
+        .i_mem_write  (  ),
+        .i_funct3     (  ),
+        .i_reg_write  (  ),
+        .i_mem_to_reg (  ),
+        .o_rs2_val    (  ),
+        .o_rd_addr    (  ),
+        .o_result     (  ),
+        .o_mem_read   (  ),
+        .o_mem_write  (  ),
+        .o_funct3     (  ),
+        .o_reg_write  (  ),
+        .o_mem_to_reg (  )
+    );
+
     lsu u_lsu(
         // IN
         .funct3         (funct3),
@@ -175,6 +275,19 @@ module rv32i_core (
         .write_data     (data_out),
         .req_bytes      (req_bytes),
         .reg_data       (reg_write_data)
+    );
+
+    mem_wb u_mem_wb (
+        .clk         (  ),
+        .rst_n       (  ),
+        .stall       (  ),
+        .clear       (  ),
+        .i_rd_addr   (  ),
+        .i_rd_data   (  ),
+        .i_reg_write (  ),
+        .o_rd_addr   (  ),
+        .o_rd_data   (  ),
+        .o_reg_write (  )
     );
 
     assign halt = if_fault_out | data_fault | illegal_instr;
