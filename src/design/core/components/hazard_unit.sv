@@ -1,25 +1,25 @@
 import rv32i::*;
 
 module hazard_unit (    // currently, stalls for both control and data hazards
-    input logic [6:0] if_id_opcode,  // take instruction opcode to check inst type and prevent false stalls
+    input OpCode    if_id_opcode,  // take instruction opcode to check inst type and prevent false stalls
     // IF/ID
-    input RegAddr if_id_rs1,
-    input RegAddr if_id_rs2,
+    input RegAddr   if_id_rs1,
+    input RegAddr   if_id_rs2,
     // ID/EX
-    input logic id_ex_mem_read,
-    input RegAddr id_ex_rdst,
-    input logic branch_taken,
+    input logic     id_ex_mem_read,
+    input RegAddr   id_ex_rdst,
+    input logic     branch_taken,
     // EX/MEM
-    input logic       ex_mem_reg_write,
-    input RegAddr     ex_mem_rdst,
+    input logic     ex_mem_reg_write,
+    input RegAddr   ex_mem_rdst,
     // MEM/WB
-    input logic       mem_wb_reg_write,
-    input RegAddr     mem_wb_rdst,
+    input logic     mem_wb_reg_write,
+    input RegAddr   mem_wb_rdst,
 
-    output logic pc_enable,
-    output logic if_id_enable,
-    output logic if_id_clear,
-    output logic id_ex_clear
+    output logic    pc_enable,
+    output logic    if_id_enable,
+    output logic    if_id_clear,
+    output logic    id_ex_clear
 );
 
     // 1. Control Hazard - when branch detected in ID/EX - clear and stall IF/ID for one cycle

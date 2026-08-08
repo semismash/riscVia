@@ -1,7 +1,7 @@
 import rv32i::*;
 
 module id_ex #(
-    parameter REG_WIDTH = 158    // 158 bits
+    parameter REG_WIDTH = 159    // 159 bits
 ) (
     input logic clk,
     input logic rst_n,  // active low
@@ -20,6 +20,7 @@ module id_ex #(
     input logic mem_read,       // 1 bit
     input logic mem_write,      // 1 bit
     input logic [2:0] funct3,   // 3 bits
+    input logic is_branch,      // 1 bit
     input logic reg_write,      // 1 bit
     input logic imm_to_reg,     // 1 bit
     input logic mem_to_reg,     // 1 bit
@@ -37,6 +38,7 @@ module id_ex #(
     output logic mem_read,
     output logic mem_write,
     output logic [2:0] funct3,
+    output logic is_branch,
     output logic reg_write,
     output logic imm_to_reg,
     output logic mem_to_reg
