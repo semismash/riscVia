@@ -1,8 +1,6 @@
 import rv32i::*;
 
-module id_ex #(
-    parameter REG_WIDTH = 159    // 159 bits
-) (
+module id_ex (  // 161 bits
     input logic clk,
     input logic rst_n,  // asynchronous active low reset
     input logic stall,
@@ -22,6 +20,8 @@ module id_ex #(
     input logic i_mem_write,      // 1 bit
     input logic [2:0] i_funct3,   // 3 bits
     input logic i_is_branch,      // 1 bit
+    input logic i_is_jal,         // 1 bit
+    input logic i_is_jalr,        // 1 bit
     input logic i_reg_write,      // 1 bit
     input logic i_imm_to_reg,     // 1 bit
     input logic i_mem_to_reg,     // 1 bit

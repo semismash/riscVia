@@ -5,7 +5,7 @@ module decoder #(
     parameter ADDR_WIDTH = rv32i::ADDR_WIDTH
 ) (
     input Instruction instr,    // instruction
-    input logic alu_zero,       // feedback from ALU to resolve branch conditions
+    //input logic alu_zero,       // feedback from ALU to resolve branch conditions
 
     // ALU
     output AluOp alu_op,        // alu specific operation

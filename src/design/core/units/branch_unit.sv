@@ -2,6 +2,8 @@ import rv32i::*;
 
 module branch_unit (
     input logic is_branch,
+    input logic is_jal,
+    input logic is_jalr,
     input logic [2:0] id_ex_funct3,
     input logic alu_zero,
     
@@ -21,6 +23,6 @@ module branch_unit (
     end
 
     // do branch taken only if actually a branch instruction
-    assign branch_taken = is_branch && branch_passed;
+    assign branch_taken = is_jal || is_jalr || (is_branch && branch_passed);
 
 endmodule

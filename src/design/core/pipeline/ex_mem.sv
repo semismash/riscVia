@@ -1,8 +1,6 @@
 import rv32i::*;
 
-module ex_mem #(
-    parameter REG_WIDTH = 76    // 76 bits
-) (
+module ex_mem ( // 76 bits
     input logic clk,
     input logic rst_n,  // asynchronous active low reset
     input logic stall,
