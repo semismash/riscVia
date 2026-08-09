@@ -4,6 +4,7 @@ localparam INST_BYTE_SIZE = DATA_WIDTH >> 3;
 module pc(
     input logic clk,
     input logic rst_n,      // active low reset
+    input logic pc_enable,  // enable PC incrementation if enabled
     
     input logic pcinc_in1_pcor, // choose whether in1 of alu inc is pc or rs1
     input logic pcinc_in2_doi,  // choose whether in2 of alu inc is 4 (default) or imm
@@ -30,7 +31,7 @@ module pc(
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             pc <= '0;
-        end else begin
+        end else if (pc_enable) begin
             pc <= pc_next;
         end
     end
