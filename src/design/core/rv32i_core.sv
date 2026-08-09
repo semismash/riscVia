@@ -115,16 +115,6 @@ module rv32i_core (
     Word mem_wb_rd_data;
     logic mem_wb_reg_write;
 
-    // integrated (CHANGE ALL THIS TO ALSO INCLUDE FOR HAZARD UNIT, for example the first instr becomes if_id_instr)
-    // assign funct3 = instr[14:12];
-
-    // route reg data input write based on imm (LUI), alu output, or mem write output
-    always_comb begin
-        if (imm_to_reg == 1'b1) rdst_data = imm_val;          // lui now bypasses alu
-        else if (mem_to_reg == 1'b0) rdst_data = alu_out;
-        else rdst_data = reg_write_data;
-    end
-
     reg_file u_reg_file(
         // clk and reset
         .clk            (clk),
@@ -190,8 +180,8 @@ module rv32i_core (
         // clk and reset
         .clk            (clk),
         .rst_n          (rst_n),
-        .stall          (  ),
-        .clear          (  ),
+        .stall          (!hz_if_id_enable),
+        .clear          (hz_if_id_clear),
         // input
         .i_pc           (mem_fetch_addr),
         .i_instr        (instr),
@@ -243,8 +233,8 @@ module rv32i_core (
         // clk and reset
         .clk              (clk),
         .rst_n            (rst_n),
-        .stall            (  ),
-        .clear            (  ),
+        .stall            (1'b0),
+        .clear            (hz_id_ex_clear),
         // input
         .i_pc             (if_id_pc),
         .i_rs1_addr       (rs1_addr),
@@ -298,7 +288,7 @@ module rv32i_core (
         .r_data1        (id_ex_rs1_data),
         .r_data2        (id_ex_rs2_data),
         // from PC & ID
-        .pc             (id_ex_pcs),
+        .pc             (id_ex_pc),
         .use_pc         (id_ex_alu_in1_ropc),
         // from IMM & ID
         .imm            (id_ex_imm_val),
@@ -325,8 +315,8 @@ module rv32i_core (
         // clk and reset
         .clk            (clk),
         .rst_n          (rst_n),
-        .stall          (  ),
-        .clear          (  ),
+        .stall          (1'b0),
+        .clear          (1'b0),
         // input
         .i_rs2_val      (id_ex_rs2_data),
         .i_rd_addr      (id_ex_rd_addr),
@@ -368,8 +358,8 @@ module rv32i_core (
         // clk
         .clk            (clk),
         .rst_n          (rst_n),
-        .stall          (  ),
-        .clear          (  ),
+        .stall          (1'b0),
+        .clear          (1'b0),
         // input
         .i_rd_addr      (ex_mem_rd_addr),
         .i_rd_data      (reg_write_data),
