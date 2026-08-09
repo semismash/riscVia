@@ -75,6 +75,9 @@ module rv32i_core (
     logic alu_zero;
     Word alu_out;
 
+    // branch unit
+    logic branch_taken;
+
     // EX/MEM
     logic ex_mem_rs2_val;
     RegAddr ex_mem_rd_addr;
@@ -96,7 +99,7 @@ module rv32i_core (
     Word mem_wb_rd_data;
     logic mem_wb_reg_write;
 
-    // integrated
+    // integrated (CHANGE ALL THIS TO ALSO INCLUDE FOR HAZARD UNIT, for example the first instr becomes if_id_instr)
     assign funct3 = instr[14:12];
     assign rdst_addr = RegAddr'(instr[11:7]);
     assign rs1_addr = RegAddr'(instr[19:15]);
@@ -176,7 +179,7 @@ module rv32i_core (
         .stall    (  ),
         .clear    (  ),
         // input
-        .i_pc     (pc),
+        .i_pc     (mem_fetch_addr),
         .i_instr  (instr),
         // output
         .o_pc     (if_id_pc),
@@ -186,7 +189,7 @@ module rv32i_core (
     decoder u_decoder(
         // IN
         .instr          (if_id_instr),
-        .alu_zero       (alu_zero),
+        //.alu_zero       (alu_zero),
         // ALU
         .alu_op         (alu_op),
         .alu_in1_ropc   (alu_in1_sel),
@@ -269,10 +272,10 @@ module rv32i_core (
     );
 
     branch_unit u_branch_unit (
-        .is_branch    (  ),
-        .id_ex_funct3 (  ),
-        .alu_zero     (  ),
-        .branch_taken (  )
+        .is_branch    (id_ex_is_branch),
+        .id_ex_funct3 (id_ex_funct3),
+        .alu_zero     (alu_zero),
+        .branch_taken (branch_taken)
     );
 
     ex_mem u_ex_mem (

@@ -1,8 +1,6 @@
 import rv32i::*;
 
-module if_id #(
-    parameter REG_WIDTH = 64    // 64 bits = 32 (pc) + 32 (instr)
-) (
+module if_id (  // 64 bits
     input logic clk,
     input logic rst_n,  // asynchronous active low reset
     input logic stall,
