@@ -23,7 +23,7 @@ module rv32i_core (
     Instruction instr;
 
     // Reg File
-    logic   w_enable;
+    logic   reg_w_enable;
     RegAddr rdst_addr;
     Word    rdst_data;
     RegAddr rs1_addr;
@@ -39,11 +39,17 @@ module rv32i_core (
     // IF/ID
     Word if_id_pc;
     Instruction if_id_instr;
+    OpCode if_id_opcode;
+    RegAddr if_id_rs1_addr;
+    RegAddr if_id_rs2_addr;
 
     // decoder
-    logic alu_or_mem_to_reg;
+    logic mem_to_reg;
     logic imm_to_reg;        
     logic illegal_instr;
+    logic d_is_branch;
+    logic d_is_jal;
+    logic d_is_jalr;
 
     // imm
     Word imm_val;
@@ -56,7 +62,7 @@ module rv32i_core (
     RegAddr id_ex_rd_addr;
     Word id_ex_rs1_data;
     Word id_ex_rs2_data;
-    logic id_ex_alu_in1_pcor;
+    logic id_ex_alu_in1_ropc;
     logic id_ex_alu_in2_roi;    // reconsider this, replace with branch taken condition later on
     AluOp id_ex_alu_op;
     logic id_ex_alu_bypass;
@@ -74,6 +80,7 @@ module rv32i_core (
     AluOp alu_op;
     logic alu_in1_sel;
     logic alu_in2_sel;
+    logic alu_bypass;
     logic alu_zero;
     Word alu_out;
 
@@ -102,15 +109,12 @@ module rv32i_core (
     logic mem_wb_reg_write;
 
     // integrated (CHANGE ALL THIS TO ALSO INCLUDE FOR HAZARD UNIT, for example the first instr becomes if_id_instr)
-    assign funct3 = instr[14:12];
-    assign rdst_addr = RegAddr'(instr[11:7]);
-    assign rs1_addr = RegAddr'(instr[19:15]);
-    assign rs2_addr = RegAddr'(instr[24:20]);
+    // assign funct3 = instr[14:12];
 
     // route reg data input write based on imm (LUI), alu output, or mem write output
     always_comb begin
         if (imm_to_reg == 1'b1) rdst_data = imm_val;          // lui now bypasses alu
-        else if (alu_or_mem_to_reg == 1'b0) rdst_data = alu_out;
+        else if (mem_to_reg == 1'b0) rdst_data = alu_out;
         else rdst_data = reg_write_data;
     end
 
@@ -119,7 +123,7 @@ module rv32i_core (
         .clk            (clk),
         .rst_n          (rst_n), 
         // write
-        .w_enable       (w_enable),
+        .w_enable       (mem_wb_reg_write),
         .w_addr         (rdst_addr),
         .w_data         (rdst_data),
         // read address
@@ -135,7 +139,7 @@ module rv32i_core (
         .clk            (clk),
         .rst_n          (rst_n),
         // from decoder
-        .pcinc_in1_pcor (pc_in1_sel),
+        .pcinc_in1_ropc (pc_in1_sel),
         .pcinc_in2_doi  (pc_in2_sel),
         // from reg and imm gen, based on decoder signal
         .rs1_in         (rs1_data),
@@ -146,16 +150,16 @@ module rv32i_core (
 
     hazard_unit u_hazard_unit (
         // input
-        .if_id_opcode       (  ),
-        .if_id_rs1          (  ),
-        .if_id_rs2          (  ),
-        .id_ex_mem_read     (  ),
-        .id_ex_rdst         (  ),
-        .branch_taken       (  ),
-        .ex_mem_reg_write   (  ),
-        .ex_mem_rdst        (  ),
-        .mem_wb_reg_write   (  ),
-        .mem_wb_rdst        (  ),
+        .if_id_opcode       (if_id_opcode),
+        .if_id_rs1          (if_id_rs1_addr),
+        .if_id_rs2          (if_id_rs2_addr),
+        .id_ex_mem_read     (id_ex_mem_read),
+        .id_ex_rdst         (id_ex_rd_addr),
+        .branch_taken       (branch_taken),
+        .ex_mem_reg_write   (ex_mem_reg_write),
+        .ex_mem_rdst        (ex_mem_rd_addr),
+        .mem_wb_reg_write   (mem_wb_reg_write),
+        .mem_wb_rdst        (mem_wb_rd_addr),
         // output
         .pc_enable          (  ),
         .if_id_enable       (  ),
@@ -188,26 +192,41 @@ module rv32i_core (
         .o_instr  (if_id_instr)
     );
 
+    // direct primitive slice (does not require explicit decoding)
+    assign if_id_opcode = OpCode'(if_id_instr[6:0]);
+    assign if_id_rs1_addr = OpCode'(if_id_instr[19:15]);
+    assign if_id_rs2_addr = OpCode'(if_id_instr[24:20]);
+
     decoder u_decoder(
         // IN
         .instr          (if_id_instr),
         //.alu_zero       (alu_zero),
+        .rs1_addr       (rs1_addr),
+        .rs2_addr       (rs2_addr),
+        .rd_addr        (rdst_addr),
+        // branches
+        .is_branch      (d_is_branch),
+        .is_jal         (d_is_jal),
+        .is_jalr        (d_is_jalr),
         // ALU
         .alu_op         (alu_op),
         .alu_in1_ropc   (alu_in1_sel),
         .alu_in2_roi    (alu_in2_sel),
+        .alu_bypass     (alu_bypass),
         // REG FILE
-        .reg_write      (w_enable),
+        .reg_write      (reg_w_enable),
         // LSU
         .mem_read       (mem_read),
         .mem_write      (mem_write),
-        .mem_to_reg     (alu_or_mem_to_reg),
+        .mem_to_reg     (mem_to_reg),
         .imm_to_reg     (imm_to_reg),
         // IMM GEN
         .imm_val        (imm_val),
         // PC
-        .pcinc_in1_pcor (pc_in1_sel),
+        .pcinc_in1_ropc (pc_in1_sel),
         .pcinc_in2_doi  (pc_in2_sel),
+        // funct3
+        .funct3         (funct3),
         // panic
         .illegal_instr  (illegal_instr)
     );
@@ -220,24 +239,24 @@ module rv32i_core (
         .clear            (  ),
         // input
         .i_pc             (if_id_pc),
-        .i_rs1_addr       (  ),
-        .i_rs2_addr       (  ),
-        .i_rd_addr        (  ),
-        .i_rs1_data       (  ),
-        .i_rs2_data       (  ),
-        .i_alu_in1_pcor   (  ),
-        .i_alu_in2_roi    (  ),
-        .i_alu_op         (  ),
-        .i_alu_bypass     (  ),
-        .i_mem_read       (  ),
-        .i_mem_write      (  ),
-        .i_funct3         (  ),
-        .i_is_branch      (  ),
-        .i_is_jal         (  ),
-        .i_is_jalr        (  ),
-        .i_reg_write      (  ),
-        .i_imm_to_reg     (  ),
-        .i_mem_to_reg     (  ),
+        .i_rs1_addr       (rs1_addr),
+        .i_rs2_addr       (rs2_addr),
+        .i_rd_addr        (rdst_addr),
+        .i_rs1_data       (rs1_data),
+        .i_rs2_data       (rs2_data),
+        .i_alu_in1_ropc   (alu_in1_sel),
+        .i_alu_in2_roi    (alu_in2_sel),
+        .i_alu_op         (alu_op),
+        .i_alu_bypass     (alu_bypass),
+        .i_mem_read       (mem_read),
+        .i_mem_write      (mem_write),
+        .i_funct3         (funct3),
+        .i_is_branch      (d_is_branch),
+        .i_is_jal         (d_is_jal),
+        .i_is_jalr        (d_is_jalr),
+        .i_reg_write      (reg_w_enable),
+        .i_imm_to_reg     (imm_to_reg),
+        .i_mem_to_reg     (mem_to_reg),
         // output
         .o_pc             (id_ex_pc),
         .o_rs1_addr       (id_ex_rs1_addr),
@@ -245,7 +264,7 @@ module rv32i_core (
         .o_rd_addr        (id_ex_rd_addr),
         .o_rs1_data       (id_ex_rs1_data),
         .o_rs2_data       (id_ex_rs2_data),
-        .o_alu_in1_pcor   (id_ex_alu_in1_pcor),
+        .o_alu_in1_ropc   (id_ex_alu_in1_ropc),
         .o_alu_in2_roi    (id_ex_alu_in2_roi),
         .o_alu_op         (id_ex_alu_op),
         .o_alu_bypass     (id_ex_alu_bypass),
@@ -264,11 +283,11 @@ module rv32i_core (
         // from ID
         .alu_op         (alu_op),
         // from REG FILE
-        .r_data1        (rs1_data),
-        .r_data2        (rs2_data),
+        .r_data1        (id_ex_rs1_data),
+        .r_data2        (id_ex_rs2_data),
         // from PC & ID
-        .pc             (pc),
-        .use_pc         (alu_in1_sel),
+        .pc             (id_ex_pcs),
+        .use_pc         (id_ex_alu_in1_ropc),
         // from IMM & ID
         .imm            (imm_val),
         .use_imm        (alu_in2_sel),  
@@ -278,10 +297,12 @@ module rv32i_core (
     );
 
     branch_unit u_branch_unit (
-        .is_branch    (id_ex_is_branch),
-        .id_ex_funct3 (id_ex_funct3),
-        .alu_zero     (alu_zero),
-        .branch_taken (branch_taken)
+        .is_branch      (id_ex_is_branch),
+        .is_jal         (id_ex_is_jal),
+        .is_jalr        (id_ex_is_jalr),
+        .id_ex_funct3   (id_ex_funct3),
+        .alu_zero       (alu_zero),
+        .branch_taken   (branch_taken)
     );
 
     ex_mem u_ex_mem (
