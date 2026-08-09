@@ -95,7 +95,7 @@ module rv32i_core (
     logic branch_taken;
 
     // EX/MEM
-    logic ex_mem_rs2_val;
+    Word ex_mem_rs2_val;
     RegAddr ex_mem_rd_addr;
     Word ex_mem_result;
     logic ex_mem_mem_read;
@@ -121,8 +121,8 @@ module rv32i_core (
         .rst_n          (rst_n), 
         // write
         .w_enable       (mem_wb_reg_write),
-        .w_addr         (rdst_addr),
-        .w_data         (rdst_data),
+        .w_addr         (mem_wb_rd_addr),
+        .w_data         (mem_wb_rd_data),
         // read address
         .r_addr1        (rs1_addr),
         .r_addr2        (rs2_addr),
@@ -183,7 +183,7 @@ module rv32i_core (
         .stall          (!hz_if_id_enable),
         .clear          (hz_if_id_clear),
         // input
-        .i_pc           (mem_fetch_addr),
+        .i_pc           (if_addr),
         .i_instr        (instr),
         // output
         .o_pc           (if_id_pc),
@@ -192,8 +192,8 @@ module rv32i_core (
 
     // direct primitive slice (does not require explicit decoding)
     assign if_id_opcode     = OpCode'(if_id_instr[6:0]);
-    assign if_id_rs1_addr   = OpCode'(if_id_instr[19:15]);
-    assign if_id_rs2_addr   = OpCode'(if_id_instr[24:20]);
+    assign if_id_rs1_addr   = RegAddr'(if_id_instr[19:15]);
+    assign if_id_rs2_addr   = RegAddr'(if_id_instr[24:20]);
 
     decoder u_decoder(
         // IN
