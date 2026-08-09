@@ -18,6 +18,12 @@ module rv32i_core (
     output logic halt           // halt on panic
 );
 
+    // hazard unit
+    logic hz_pc_enable,
+    logic hz_if_id_enable,
+    logic hz_if_id_clear,
+    logic hz_id_ex_clear,
+
     // fetch
     logic if_fault_out;
     Instruction instr;
@@ -62,6 +68,7 @@ module rv32i_core (
     RegAddr id_ex_rd_addr;
     Word id_ex_rs1_data;
     Word id_ex_rs2_data;
+    Word id_ex_imm_val;
     logic id_ex_alu_in1_ropc;
     logic id_ex_alu_in2_roi;    // reconsider this, replace with branch taken condition later on
     AluOp id_ex_alu_op;
@@ -138,6 +145,7 @@ module rv32i_core (
         // clk and reset
         .clk            (clk),
         .rst_n          (rst_n),
+        .pc_enable      (hz_pc_enable),
         // from decoder
         .pcinc_in1_ropc (pc_in1_sel),
         .pcinc_in2_doi  (pc_in2_sel),
@@ -161,10 +169,10 @@ module rv32i_core (
         .mem_wb_reg_write   (mem_wb_reg_write),
         .mem_wb_rdst        (mem_wb_rd_addr),
         // output
-        .pc_enable          (  ),
-        .if_id_enable       (  ),
-        .if_id_clear        (  ),
-        .id_ex_clear        (  )
+        .pc_enable          (hz_pc_enable),
+        .if_id_enable       (hz_if_id_enable),
+        .if_id_clear        (hz_if_id_clear),
+        .id_ex_clear        (hz_id_ex_clear)
     );
 
     fetch u_fetch(  // x
@@ -180,22 +188,22 @@ module rv32i_core (
 
     if_id u_if_id (
         // clk and reset
-        .clk      (clk),
-        .rst_n    (rst_n),
-        .stall    (  ),
-        .clear    (  ),
+        .clk            (clk),
+        .rst_n          (rst_n),
+        .stall          (  ),
+        .clear          (  ),
         // input
-        .i_pc     (mem_fetch_addr),
-        .i_instr  (instr),
+        .i_pc           (mem_fetch_addr),
+        .i_instr        (instr),
         // output
-        .o_pc     (if_id_pc),
-        .o_instr  (if_id_instr)
+        .o_pc           (if_id_pc),
+        .o_instr        (if_id_instr)
     );
 
     // direct primitive slice (does not require explicit decoding)
-    assign if_id_opcode = OpCode'(if_id_instr[6:0]);
-    assign if_id_rs1_addr = OpCode'(if_id_instr[19:15]);
-    assign if_id_rs2_addr = OpCode'(if_id_instr[24:20]);
+    assign if_id_opcode     = OpCode'(if_id_instr[6:0]);
+    assign if_id_rs1_addr   = OpCode'(if_id_instr[19:15]);
+    assign if_id_rs2_addr   = OpCode'(if_id_instr[24:20]);
 
     decoder u_decoder(
         // IN
@@ -224,7 +232,7 @@ module rv32i_core (
         .imm_val        (imm_val),
         // PC
         .pcinc_in1_ropc (pc_in1_sel),
-        .pcinc_in2_doi  (pc_in2_sel),
+        //.pcinc_in2_doi  (pc_in2_sel), (CHECK AGAIN)
         // funct3
         .funct3         (funct3),
         // panic
@@ -244,6 +252,7 @@ module rv32i_core (
         .i_rd_addr        (rdst_addr),
         .i_rs1_data       (rs1_data),
         .i_rs2_data       (rs2_data),
+        .i_imm_val        (imm_val),
         .i_alu_in1_ropc   (alu_in1_sel),
         .i_alu_in2_roi    (alu_in2_sel),
         .i_alu_op         (alu_op),
@@ -264,6 +273,7 @@ module rv32i_core (
         .o_rd_addr        (id_ex_rd_addr),
         .o_rs1_data       (id_ex_rs1_data),
         .o_rs2_data       (id_ex_rs2_data),
+        .o_imm_val        (id_ex_imm_val),
         .o_alu_in1_ropc   (id_ex_alu_in1_ropc),
         .o_alu_in2_roi    (id_ex_alu_in2_roi),
         .o_alu_op         (id_ex_alu_op),
@@ -289,55 +299,60 @@ module rv32i_core (
         .pc             (id_ex_pcs),
         .use_pc         (id_ex_alu_in1_ropc),
         // from IMM & ID
-        .imm            (imm_val),
-        .use_imm        (alu_in2_sel),  
+        .imm            (id_ex_imm_val),
+        .use_imm        (id_ex_alu_in2_roi),  
         // OUT
         .alu_out        (alu_out),
         .out_zero       (alu_zero)
     );
 
     branch_unit u_branch_unit (
+        // input
         .is_branch      (id_ex_is_branch),
         .is_jal         (id_ex_is_jal),
         .is_jalr        (id_ex_is_jalr),
         .id_ex_funct3   (id_ex_funct3),
         .alu_zero       (alu_zero),
+        // output
         .branch_taken   (branch_taken)
     );
 
+    assign pc_in2_sel = branch_taken;
+
     ex_mem u_ex_mem (
         // clk and reset
-        .clk          (clk),
-        .rst_n        (rst_n),
-        .stall        (  ),
-        .clear        (  ),
+        .clk            (clk),
+        .rst_n          (rst_n),
+        .stall          (  ),
+        .clear          (  ),
         // input
-        .i_rs2_val    (  ),
-        .i_rd_addr    (  ),
-        .i_result     (  ),
-        .i_mem_read   (  ),
-        .i_mem_write  (  ),
-        .i_funct3     (  ),
-        .i_reg_write  (  ),
-        .i_mem_to_reg (  ),
+        .i_rs2_val      (id_ex_rs2_data),
+        .i_rd_addr      (id_ex_rd_addr),
+        .i_result       (alu_out),
+        .i_mem_read     (id_ex_mem_read),
+        .i_mem_write    (id_ex_mem_write),
+        .i_funct3       (id_ex_funct3),
+        .i_reg_write    (id_ex_reg_write),
+        .i_mem_to_reg   (id_ex_mem_to_reg),
         // output
-        .o_rs2_val    (ex_mem_rs2_val),
-        .o_rd_addr    (ex_mem_rd_addr),
-        .o_result     (ex_mem_result),
-        .o_mem_read   (ex_mem_mem_read),
-        .o_mem_write  (ex_mem_mem_write),
-        .o_funct3     (ex_mem_funct3),
-        .o_reg_write  (ex_mem_reg_write),
-        .o_mem_to_reg (ex_mem_mem_to_reg)
+        .o_rs2_val      (ex_mem_rs2_val),
+        .o_rd_addr      (ex_mem_rd_addr),
+        .o_result       (ex_mem_result),
+        .o_mem_read     (ex_mem_mem_read),
+        .o_mem_write    (ex_mem_mem_write),
+        .o_funct3       (ex_mem_funct3),
+        .o_reg_write    (ex_mem_reg_write),
+        .o_mem_to_reg   (ex_mem_mem_to_reg)
     );
 
     lsu u_lsu(
         // IN
-        .funct3         (funct3),
-        .alu_res        (alu_out),
-        .is_mem_read    (mem_read),
-        .is_mem_write   (mem_write),
-        .rs2_in         (rs2_data),
+        .funct3         (ex_mem_funct3),
+        .alu_res        (ex_mem_result),
+        .is_mem_read    (ex_mem_mem_read),
+        .is_mem_write   (ex_mem_mem_write),
+        .rs2_in         (ex_mem_rs2_val),
+        .mem_to_reg     (ex_mem_mem_to_reg),
         .data_in        (data_in),
         // OUT
         .mem_addr       (data_addr),
@@ -349,18 +364,18 @@ module rv32i_core (
 
     mem_wb u_mem_wb (
         // clk
-        .clk         (clk),
-        .rst_n       (rst_n),
-        .stall       (  ),
-        .clear       (  ),
+        .clk            (clk),
+        .rst_n          (rst_n),
+        .stall          (  ),
+        .clear          (  ),
         // input
-        .i_rd_addr   (  ),
-        .i_rd_data   (  ),
-        .i_reg_write (  ),
+        .i_rd_addr      (ex_mem_rd_addr),
+        .i_rd_data      (reg_write_data),
+        .i_reg_write    (ex_mem_reg_write),
         // output
-        .o_rd_addr   (mem_wb_rd_addr),
-        .o_rd_data   (mem_wb_rd_data),
-        .o_reg_write (mem_wb_reg_write)
+        .o_rd_addr      (mem_wb_rd_addr),
+        .o_rd_data      (mem_wb_rd_data),
+        .o_reg_write    (mem_wb_reg_write)
     );
 
     assign halt = if_fault_out | data_fault | illegal_instr;
