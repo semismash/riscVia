@@ -40,6 +40,8 @@ module id_ex (  // 161 bits
     output logic o_mem_write,
     output logic [2:0] o_funct3,
     output logic o_is_branch,
+    output logic o_is_jal,
+    output logic o_is_jalr,
     output logic o_reg_write,
     output logic o_imm_to_reg,
     output logic o_mem_to_reg

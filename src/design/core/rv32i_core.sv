@@ -64,6 +64,8 @@ module rv32i_core (
     logic id_ex_mem_write;
     logic [2:0] id_ex_funct3;
     logic id_ex_is_branch;
+    logic id_ex_is_jal;
+    logic id_ex_is_jalr;
     logic id_ex_reg_write;
     logic id_ex_imm_to_reg;
     logic id_ex_mem_to_reg;
@@ -217,7 +219,7 @@ module rv32i_core (
         .stall            (  ),
         .clear            (  ),
         // input
-        .i_pc             (  ),
+        .i_pc             (if_id_pc),
         .i_rs1_addr       (  ),
         .i_rs2_addr       (  ),
         .i_rd_addr        (  ),
@@ -231,6 +233,8 @@ module rv32i_core (
         .i_mem_write      (  ),
         .i_funct3         (  ),
         .i_is_branch      (  ),
+        .i_is_jal         (  ),
+        .i_is_jalr        (  ),
         .i_reg_write      (  ),
         .i_imm_to_reg     (  ),
         .i_mem_to_reg     (  ),
@@ -249,6 +253,8 @@ module rv32i_core (
         .o_mem_write      (id_ex_mem_write),
         .o_funct3         (id_ex_funct3),
         .o_is_branch      (id_ex_is_branch),
+        .o_is_jal         (id_ex_is_jal),
+        .o_is_jalr        (id_ex_is_jalr),
         .o_reg_write      (id_ex_reg_write),
         .o_imm_to_reg     (id_ex_imm_to_reg),
         .o_mem_to_reg     (id_ex_mem_to_reg)

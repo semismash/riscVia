@@ -7,10 +7,23 @@ module decoder #(
     input Instruction instr,    // instruction
     //input logic alu_zero,       // feedback from ALU to resolve branch conditions
 
+    // ID/EX
+    output RegAddr rs1_addr,
+    output RegAddr rs2_addr,
+    output RegAddr rd_addr,
+    output RegAddr rs1_addr,
+    output RegAddr rs2_addr,
+
+    // branches
+    output logic is_branch,
+    output logic is_jal,
+    output logic is_jalr,
+
     // ALU
     output AluOp alu_op,        // alu specific operation
     output logic alu_in1_ropc,  // picks between alu first input being reg(0) or pc(1)
     output logic alu_in2_roi,   // picks between alu second input being reg(0) or imm(1)
+    output logic alu_bypass,
 
     // REG FILE
     output logic reg_write,     // if it writes back to a register
@@ -22,7 +35,6 @@ module decoder #(
     output logic imm_to_reg,    // when high, write imm to reg directly, hence bypassing alu, used by lui
 
     // IMM GEN
-    output ImmPackFmt imm_type, // output imm type for imm gen
     output Word imm_val,            // immediate value as output
 
     // PC
@@ -63,12 +75,6 @@ module decoder #(
         return return_op;
     endfunction
 
-    function void alu_bypass(); // alu_bypass alu
-        alu_op = ADD;
-        alu_in1_ropc = 1'bX;  
-        alu_in2_roi = 1'bX;
-    endfunction
-
     always_comb begin
         
         logic [2:0] funct3;
@@ -77,6 +83,7 @@ module decoder #(
 
         alu_in1_ropc = 1'b0;    // by default, take alu 1 from register
         alu_in2_roi  = 1'b1;    // by default, take alu 2 from imm gen
+        alu_bypass   = 1'b0;
 
         reg_write    = 1'b0;    // by default, dont write back to reg file
         mem_write    = 1'b0;    // by default, don't write to mem
@@ -88,6 +95,10 @@ module decoder #(
 
         pcinc_in1_pcor   = 1'b0;    // by default, always increment pc instead of set
         pcinc_in2_doi    = 1'b0;    // by default, pc always incremented by 4
+
+        is_branch   = 1'b0;
+        is_jal      = 1'b0;
+        is_jalr     = 1'b0;
 
         imm_type = N;
         illegal_instr = 1'b0;
@@ -110,7 +121,7 @@ module decoder #(
                 imm_type = I;
             end
             OP_I_E: begin   
-                alu_bypass();  // don't write to reg, so garbage ALU inputs are harmless here
+                alu_bypass = 1'b1;  // don't write to reg, so garbage ALU inputs are harmless here
                 imm_type = I;
             end
             OP_S: begin 
@@ -130,12 +141,14 @@ module decoder #(
                     default: begin alu_op = ADD;  pcinc_in2_doi = 1'b0;      end
                 endcase
                 imm_type = B;
+                is_branch = 1'b1;
             end
             OP_J: begin
                 reg_write = 1'b1; 
                 alu_in1_ropc = 1'b1;    // input is PC instead
                 pcinc_in2_doi = 1'b1;
                 imm_type = J;
+                is_jal = 1'b1;
             end
             OP_I_J: begin
                 reg_write = 1'b1; 
@@ -143,6 +156,7 @@ module decoder #(
                 pcinc_in1_pcor = 1'b1;
                 pcinc_in2_doi  = 1'b1;  // PC = rs1 + imm
                 imm_type = I;
+                is_jalr = 1'b1;
             end
             OP_LUI: begin
                 reg_write = 1'b1; 
