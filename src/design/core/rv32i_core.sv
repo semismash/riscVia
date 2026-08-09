@@ -291,7 +291,9 @@ module rv32i_core (
 
     alu u_alu(  // x
         // from ID
-        .alu_op         (alu_op),
+        .alu_op         (id_ex_alu_op),
+        .alu_bypass     (id_ex_alu_bypass),
+        .imm_to_reg     (id_ex_imm_to_reg),
         // from REG FILE
         .r_data1        (id_ex_rs1_data),
         .r_data2        (id_ex_rs2_data),
