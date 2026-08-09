@@ -12,7 +12,8 @@ module id_ex (  // 161 bits
     input RegAddr i_rd_addr,      // 5 bits
     input Word i_rs1_data,        // 32 bits
     input Word i_rs2_data,        // 32 bits
-    input logic i_alu_in1_pcor,   // 1 bit
+    input Word i_imm_val,         // 32 bits
+    input logic i_alu_in1_ropc,   // 1 bit
     input logic i_alu_in2_roi,    // 1 bit
     input ALUOp i_alu_op,         // 4 bits
     input logic i_alu_bypass,     // 1 bit
@@ -32,7 +33,8 @@ module id_ex (  // 161 bits
     output RegAddr o_rd_addr,
     output Word o_rs1_data,
     output Word o_rs2_data,
-    output logic o_alu_in1_pcor,
+    output Word o_imm_val,
+    output logic o_alu_in1_ropc,
     output logic o_alu_in2_roi,
     output ALUOp o_alu_op,
     output logic o_alu_bypass,
@@ -55,7 +57,7 @@ module id_ex (  // 161 bits
             o_rd_addr      <= '0;
             o_rs1_data     <= '0;
             o_rs2_data     <= '0;
-            o_alu_in1_pcor <= '0;
+            o_alu_in1_ropc <= '0;
             o_alu_in2_roi  <= '0;
             o_alu_op       <= ADD;    // add by default
             o_alu_bypass   <= '0;
@@ -73,7 +75,7 @@ module id_ex (  // 161 bits
             o_rd_addr      <= i_rd_addr;
             o_rs1_data     <= i_rs1_data;
             o_rs2_data     <= i_rs2_data;
-            o_alu_in1_pcor <= i_alu_in1_pcor;
+            o_alu_in1_ropc <= i_alu_in1_ropc;
             o_alu_in2_roi  <= i_alu_in2_roi;
             o_alu_op       <= i_alu_op;
             o_alu_bypass   <= i_alu_bypass;
