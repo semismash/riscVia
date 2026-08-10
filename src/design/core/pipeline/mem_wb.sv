@@ -22,10 +22,12 @@ module mem_wb ( // 38 bits
             o_rd_addr   <= '0;
             o_rd_data   <= '0;
             o_reg_write <= '0;
+            o_is_stop   <= '0;
         end else if (!stall) begin  // do normal logic if NOT a stall
             o_rd_addr   <= i_rd_addr;
             o_rd_data   <= i_rd_data;
             o_reg_write <= i_reg_write;
+            o_is_stop   <= i_is_stop;
         end
     end
 

@@ -334,13 +334,9 @@ void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf) {
         vlSelfRef.top__DOT__u_cpu__DOT__mem_wb_rd_addr = 0U;
         vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_rd_addr = 0U;
     }
-    vlSelfRef.top__DOT__u_cpu__DOT__u_stop__DOT__stop_signal 
-        = ((IData)(vlSelfRef.rst_n) && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__mem_wb_stop));
     vlSelfRef.top__DOT__u_cpu__DOT__id_ex_pc_in1_sel 
         = ((1U & (~ ((~ (IData)(vlSelfRef.rst_n)) | (IData)(vlSelfRef.top__DOT__u_cpu__DOT__hz_id_ex_clear)))) 
            && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__pc_in1_sel));
-    vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_stop = ((IData)(vlSelfRef.rst_n) 
-                                                   && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_stop));
     if ((1U & ((~ (IData)(vlSelfRef.rst_n)) | (IData)(vlSelfRef.top__DOT__u_cpu__DOT__hz_id_ex_clear)))) {
         vlSelfRef.top__DOT__u_cpu__DOT__id_ex_imm_val = 0U;
         vlSelfRef.top__DOT__u_cpu__DOT__id_ex_rs1_data = 0U;
@@ -405,15 +401,11 @@ void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf) {
         = ((IData)(vlSelfRef.rst_n) && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_mem_write));
     vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_mem_read 
         = ((IData)(vlSelfRef.rst_n) && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_mem_read));
+    vlSelfRef.top__DOT__u_cpu__DOT__u_stop__DOT__stop_signal 
+        = ((IData)(vlSelfRef.rst_n) && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__mem_wb_stop));
     vlSelfRef.top__DOT__u_cpu__DOT__mem_wb_reg_write 
         = ((IData)(vlSelfRef.rst_n) && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_reg_write));
-    vlSelfRef.stop = vlSelfRef.top__DOT__u_cpu__DOT__u_stop__DOT__stop_signal;
     vlSelfRef.top__DOT__data_addr = vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_result;
-    vlSelfRef.top__DOT__u_cpu__DOT__id_ex_stop = ((1U 
-                                                   & (~ 
-                                                      ((~ (IData)(vlSelfRef.rst_n)) 
-                                                       | (IData)(vlSelfRef.top__DOT__u_cpu__DOT__hz_id_ex_clear)))) 
-                                                  && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__d_stop));
     vlSelfRef.top__DOT__u_cpu__DOT__id_ex_mem_to_reg 
         = ((1U & (~ ((~ (IData)(vlSelfRef.rst_n)) | (IData)(vlSelfRef.top__DOT__u_cpu__DOT__hz_id_ex_clear)))) 
            && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__mem_to_reg));
@@ -432,6 +424,9 @@ void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf) {
         vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr 
             = vlSelfRef.top__DOT__instr;
     }
+    vlSelfRef.stop = vlSelfRef.top__DOT__u_cpu__DOT__u_stop__DOT__stop_signal;
+    vlSelfRef.top__DOT__u_cpu__DOT__mem_wb_stop = ((IData)(vlSelfRef.rst_n) 
+                                                   && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_stop));
     vlSelfRef.top__DOT__req_bytes = 0U;
     vlSelfRef.top__DOT__write_data = 0U;
     if ((1U & (~ (IData)(vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_mem_read)))) {
@@ -547,6 +542,8 @@ void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf) {
     }
     vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_reg_write 
         = ((IData)(vlSelfRef.rst_n) && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_reg_write));
+    vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_stop = ((IData)(vlSelfRef.rst_n) 
+                                                   && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_stop));
     if (vlSelfRef.top__DOT__u_cpu__DOT__id_ex_alu_bypass) {
         vlSelfRef.top__DOT__u_cpu__DOT__alu_out = 0U;
     } else if (vlSelfRef.top__DOT__u_cpu__DOT__id_ex_imm_to_reg) {
@@ -649,6 +646,11 @@ void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf) {
     vlSelfRef.top__DOT__u_cpu__DOT__id_ex_reg_write 
         = ((1U & (~ ((~ (IData)(vlSelfRef.rst_n)) | (IData)(vlSelfRef.top__DOT__u_cpu__DOT__hz_id_ex_clear)))) 
            && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__reg_w_enable));
+    vlSelfRef.top__DOT__u_cpu__DOT__id_ex_stop = ((1U 
+                                                   & (~ 
+                                                      ((~ (IData)(vlSelfRef.rst_n)) 
+                                                       | (IData)(vlSelfRef.top__DOT__u_cpu__DOT__hz_id_ex_clear)))) 
+                                                  && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__d_stop));
     vlSelfRef.top__DOT__instr = 0U;
     if ((0x0000fffcU > vlSelfRef.top__DOT__if_addr)) {
         vlSelfRef.top__DOT__instr = (((((IData)(vlSelfRef.top__DOT__u_instr_mem__DOT__container
@@ -742,13 +744,16 @@ void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf) {
     vlSelfRef.top__DOT__u_cpu__DOT__d_is_jalr = 0U;
     vlSelfRef.top__DOT__u_cpu__DOT__u_decoder__DOT__imm_type = 5U;
     vlSelfRef.top__DOT__u_cpu__DOT__illegal_instr = 0U;
+    vlSelfRef.top__DOT__u_cpu__DOT__d_stop = 0U;
     if ((0x00000040U & (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_decoder__DOT__opcode))) {
         if ((0x00000020U & (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_decoder__DOT__opcode))) {
             if ((0x00000010U & (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_decoder__DOT__opcode))) {
                 if ((8U & (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_decoder__DOT__opcode))) {
                     if ((4U & (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_decoder__DOT__opcode))) {
                         if ((2U & (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_decoder__DOT__opcode))) {
-                            if ((1U & (~ (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_decoder__DOT__opcode)))) {
+                            if ((1U & (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_decoder__DOT__opcode))) {
+                                vlSelfRef.top__DOT__u_cpu__DOT__d_stop = 1U;
+                            } else {
                                 vlSelfRef.top__DOT__u_cpu__DOT__illegal_instr = 1U;
                             }
                         } else {
