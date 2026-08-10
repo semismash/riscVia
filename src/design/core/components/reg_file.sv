@@ -20,8 +20,10 @@ module reg_file
     Word registers [2**ADDR_WIDTH - 1:0];
 
     //hardwire zero register r0 to 0
-    assign r_data1 = (r_addr1 == {ADDR_WIDTH{1'b0}}) ? {DATA_WIDTH{1'b0}} : registers[r_addr1];
-    assign r_data2 = (r_addr2 == {ADDR_WIDTH{1'b0}}) ? {DATA_WIDTH{1'b0}} : registers[r_addr2];
+    //assign r_data1 = (r_addr1 == {ADDR_WIDTH{1'b0}}) ? {DATA_WIDTH{1'b0}} : registers[r_addr1];
+    //assign r_data2 = (r_addr2 == {ADDR_WIDTH{1'b0}}) ? {DATA_WIDTH{1'b0}} : registers[r_addr2];
+    assign r_data1 = (r_addr1 == {ADDR_WIDTH{1'b0}}) ? {DATA_WIDTH{1'b0}} : (w_enable && w_addr == r_addr1) ? w_data : registers[r_addr1];
+    assign r_data2 = (r_addr2 == {ADDR_WIDTH{1'b0}}) ? {DATA_WIDTH{1'b0}} : (w_enable && w_addr == r_addr2) ? w_data : registers[r_addr2];
 
     integer i;
     always_ff @(posedge clk or negedge rst_n) begin

@@ -91,6 +91,8 @@ add  x3, x2, x1    # x3 = 5
 nop
 RESULT: PASSED
 PRESULT: FAILED (slli instruction seems to have failed, ended with x1 = 1, x2 = 0, and x3 = 1)
+PRESULT2: FAILED
+PRESULT3: FAILED
 6)printf "\x93\x00\x40\x00\x63\x08\x00\x00\x93\x01\x10\x00\xff\xff\xff\xff" > program.bin
 addi x1, x0, 4     # x1 = 4
 beq  x0, x0, +16   # branch always taken, skip next instr
