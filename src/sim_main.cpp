@@ -8,7 +8,8 @@
 #include "Vtop.h"
 #include "Vtop___024root.h"
 
-constexpr size_t RAM_SIZE = 131072;
+constexpr size_t RAM_SIZE = 65536;
+constexpr size_t MAX_CYCLE_COUNT = 200; // maximum safe cycle count for CPU before automatically crashing
 
 double sc_time_stamp() {
     return 0;
@@ -60,7 +61,7 @@ int main(int argc, char** argv) {
     trace->open("waveform.vcd");
 
     if (file_size > RAM_SIZE) {
-        std::cerr << "[TB ERROR] Binary size exceeds 128KB limit!" << std::endl;
+        std::cerr << "[TB ERROR] Binary size exceeds 64KB limit!" << std::endl;
         return -1;
     }
     
@@ -112,7 +113,7 @@ int main(int argc, char** argv) {
         std::cout << " -> Data Memory Access:   [" << (mem_we ? "WRITE" : "READ") << "] "
                   << "Addr: 0x" << mem_data_addr << " | WData: 0x" << mem_wdata << std::endl;
 
-        if (cycles > 100) {
+        if (cycles > MAX_CYCLE_COUNT) {
             std::cout << "\n[TB WARNING] Safety simulation cutoff breached!" << std::endl;
             break;
         }

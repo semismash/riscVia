@@ -106,6 +106,7 @@ module decoder #(
 
         imm_type = N;
         illegal_instr = 1'b0;
+        stop = 1'b0;
 
         case (opcode)
             OP_R: begin
@@ -173,7 +174,7 @@ module decoder #(
             end
             OP_NOP: begin end // ignore if NOP, i.e. first 7 bits from LSB are 0
             OP_STOP: begin 
-
+                stop = 1'b1;
             end
             default: begin 
                 illegal_instr = 1'b1;
