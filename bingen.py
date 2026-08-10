@@ -20,8 +20,8 @@ def binary_to_printf(binary_lines):
         for byte in little_endian:
             output.append(f"\\x{byte:02x}")
 
-    # Append four 0x00 bytes
-    output.extend(["\\x00"] * 4)
+    # Append four 0xff bytes
+    output.extend(["\\xff"] * 4)
 
     return f'printf "{"".join(output)}" > program.bin'
 
