@@ -58,9 +58,7 @@ module decoder #(
     assign funct3 = instr[14:12];
 
     function automatic AluOp calc_alu_op(input logic is_r_type);
-        logic [2:0] funct3;
         AluOp return_op;
-        funct3 = instr[14:12];
         return_op = ADD;
         case (funct3)
             3'b000: begin
@@ -83,8 +81,6 @@ module decoder #(
     endfunction
 
     always_comb begin
-        
-        logic [2:0] funct3;
 
         opcode = OpCode'(instr[6:0]);
 

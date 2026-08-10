@@ -26,53 +26,49 @@ module lsu #(
         req_bytes = ZERO;
         write_enable = 1'b0;
         write_data = '0;
-        reg_data = '0;
-        if (mem_to_reg == 1'b1) begin
-            if (is_mem_read == 1'b1) begin  // load
-                case (funct3)
-                    3'b000: begin   // lb
-                        req_bytes = ONE;
-                        reg_data = {{(DATA_WIDTH - 8){data_in[7]}}, data_in[7:0]};
-                    end
-                    3'b001: begin   // lh
-                        req_bytes = TWO;
-                        reg_data = {{(DATA_WIDTH - 16){data_in[15]}}, data_in[15:0]};
-                    end
-                    3'b010: begin   // lw
-                        req_bytes = FOUR;
-                        reg_data = {{(DATA_WIDTH - 32){data_in[31]}}, data_in[31:0]};   // first concat not needed, but kept for extensibility
-                    end
-                    3'b100: begin   // lbu
-                        req_bytes = ONE;
-                        reg_data = {{(DATA_WIDTH - 8){1'b0}}, data_in[7:0]};
-                    end
-                    3'b101: begin   // lhu
-                        req_bytes = TWO;
-                        reg_data = {{(DATA_WIDTH - 16){1'b0}}, data_in[15:0]};
-                    end
-                    default: begin end
-                endcase
-            end else if (is_mem_write == 1'b1) begin   // store
-                write_enable = 1'b1;
-                case (funct3)
-                    3'b000: begin   // sb
-                        req_bytes = ONE;
-                        write_data = {{(DATA_WIDTH - 8){1'b0}}, rs2_in[7:0]};   // stores zero extend, anyways not considered by mem module based on req bytes
-                    end
-                    3'b001: begin   // sh
-                        req_bytes = TWO;
-                        write_data = {{(DATA_WIDTH - 16){1'b0}}, rs2_in[15:0]};
-                    end
-                    3'b010: begin   // sw
-                        req_bytes = FOUR;
-                        write_data = {{(DATA_WIDTH - 32){1'b0}}, rs2_in[31:0]};
-                    end
-                    default: begin end
-                endcase
-            end   // else: neither load nor store -> req_bytes stays ZERO, write_enable stays 0
-        end else begin
-            reg_data = alu_res;
-        end
+        reg_data = alu_res;
+        if (is_mem_read == 1'b1) begin  // load
+            case (funct3)
+                3'b000: begin   // lb
+                    req_bytes = ONE;
+                    reg_data = {{(DATA_WIDTH - 8){data_in[7]}}, data_in[7:0]};
+                end
+                3'b001: begin   // lh
+                    req_bytes = TWO;
+                    reg_data = {{(DATA_WIDTH - 16){data_in[15]}}, data_in[15:0]};
+                end
+                3'b010: begin   // lw
+                    req_bytes = FOUR;
+                    reg_data = {{(DATA_WIDTH - 32){data_in[31]}}, data_in[31:0]};   // first concat not needed, but kept for extensibility
+                end
+                3'b100: begin   // lbu
+                    req_bytes = ONE;
+                    reg_data = {{(DATA_WIDTH - 8){1'b0}}, data_in[7:0]};
+                end
+                3'b101: begin   // lhu
+                    req_bytes = TWO;
+                    reg_data = {{(DATA_WIDTH - 16){1'b0}}, data_in[15:0]};
+                end
+                default: begin end
+            endcase
+        end else if (is_mem_write == 1'b1) begin   // store
+            write_enable = 1'b1;
+            case (funct3)
+                3'b000: begin   // sb
+                    req_bytes = ONE;
+                    write_data = {{(DATA_WIDTH - 8){1'b0}}, rs2_in[7:0]};   // stores zero extend, anyways not considered by mem module based on req bytes
+                end
+                3'b001: begin   // sh
+                    req_bytes = TWO;
+                    write_data = {{(DATA_WIDTH - 16){1'b0}}, rs2_in[15:0]};
+                end
+                3'b010: begin   // sw
+                    req_bytes = FOUR;
+                    write_data = {{(DATA_WIDTH - 32){1'b0}}, rs2_in[31:0]};
+                end
+                default: begin end
+            endcase
+        end   // else: neither load nor store -> req_bytes stays ZERO, write_enable stays 0
     end
     
 endmodule
