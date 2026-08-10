@@ -4,18 +4,25 @@ SRC_DIR = src
 
 # design
 VERILOG_SRCS = \
-	$(SRC_DIR)/design/rv32i.sv \
-	$(SRC_DIR)/design/alu.sv \
-	$(SRC_DIR)/design/decoder.sv \
-	$(SRC_DIR)/design/fetch.sv \
-	$(SRC_DIR)/design/imm_gen.sv \
-	$(SRC_DIR)/design/lsu.sv \
-	$(SRC_DIR)/design/instr_mem.sv \
-	$(SRC_DIR)/design/data_mem.sv \
-	$(SRC_DIR)/design/pc.sv \
-	$(SRC_DIR)/design/reg_file.sv \
-	$(SRC_DIR)/design/rv32i_core.sv \
-	$(SRC_DIR)/design/top.sv
+    $(SRC_DIR)/design/core/components/hazard_unit.sv \
+    $(SRC_DIR)/design/core/components/pc.sv \
+    $(SRC_DIR)/design/core/components/reg_file.sv \
+    $(SRC_DIR)/design/core/pipeline/ex_mem.sv \
+    $(SRC_DIR)/design/core/pipeline/id_ex.sv \
+    $(SRC_DIR)/design/core/pipeline/if_id.sv \
+    $(SRC_DIR)/design/core/pipeline/mem_wb.sv \
+    $(SRC_DIR)/design/core/units/alu.sv \
+    $(SRC_DIR)/design/core/units/branch_unit.sv \
+    $(SRC_DIR)/design/core/units/decoder.sv \
+    $(SRC_DIR)/design/core/units/fetch.sv \
+    $(SRC_DIR)/design/core/units/imm_gen.sv \
+    $(SRC_DIR)/design/core/units/lsu.sv \
+    $(SRC_DIR)/design/core/rv32i_core.sv \
+    $(SRC_DIR)/design/mem/data_mem.sv \
+    $(SRC_DIR)/design/mem/instr_mem.sv \
+    $(SRC_DIR)/design/rv32i.sv \
+    $(SRC_DIR)/design/top.sv
+
 
 # VERILOG_SRCS = $(wildcard $(SRC_DIR)/*.sv)
 
