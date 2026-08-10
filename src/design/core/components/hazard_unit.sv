@@ -30,9 +30,9 @@ module hazard_unit (    // currently, stalls for both control and data hazards
     logic rs1_used;
     logic rs2_used;
     logic rs1_hazard_ex_mem;
-    logic rs1_hazard_mem_wb;
+    //logic rs1_hazard_mem_wb;
     logic rs2_hazard_ex_mem;
-    logic rs2_hazard_mem_wb;
+    //logic rs2_hazard_mem_wb;
 
     always_comb begin
         pc_enable = 1'b1;
@@ -56,9 +56,9 @@ module hazard_unit (    // currently, stalls for both control and data hazards
 
         // for condition 3 data hazards
         rs1_hazard_ex_mem = rs1_used && (if_id_rs1 != '0) && ex_mem_reg_write && (if_id_rs1 == ex_mem_rdst);
-        rs1_hazard_mem_wb = rs1_used && (if_id_rs1 != '0) && mem_wb_reg_write && (if_id_rs1 == mem_wb_rdst);
+        //rs1_hazard_mem_wb = rs1_used && (if_id_rs1 != '0) && mem_wb_reg_write && (if_id_rs1 == mem_wb_rdst);
         rs2_hazard_ex_mem = rs2_used && (if_id_rs2 != '0) && ex_mem_reg_write && (if_id_rs2 == ex_mem_rdst);
-        rs2_hazard_mem_wb = rs2_used && (if_id_rs2 != '0) && mem_wb_reg_write && (if_id_rs2 == mem_wb_rdst);
+        //rs2_hazard_mem_wb = rs2_used && (if_id_rs2 != '0) && mem_wb_reg_write && (if_id_rs2 == mem_wb_rdst);
 
         if (branch_taken) begin // Condition 1
             if_id_clear = 1'b1;
@@ -70,7 +70,7 @@ module hazard_unit (    // currently, stalls for both control and data hazards
             if_id_enable = 1'b0;
             id_ex_clear  = 1'b1;
         // Condition 3, create a bubble
-        end else if (rs1_hazard_ex_mem || rs1_hazard_mem_wb || rs2_hazard_ex_mem || rs2_hazard_mem_wb) begin
+        end else if (rs1_hazard_ex_mem || rs2_hazard_ex_mem) begin
             pc_enable    = 1'b0;
             if_id_enable = 1'b0;
             id_ex_clear  = 1'b1;
