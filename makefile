@@ -4,6 +4,7 @@ SRC_DIR = src
 
 # design
 VERILOG_SRCS = \
+	$(SRC_DIR)/design/rv32i.sv \
     $(SRC_DIR)/design/core/components/hazard_unit.sv \
     $(SRC_DIR)/design/core/components/pc.sv \
     $(SRC_DIR)/design/core/components/reg_file.sv \
@@ -20,7 +21,6 @@ VERILOG_SRCS = \
     $(SRC_DIR)/design/core/rv32i_core.sv \
     $(SRC_DIR)/design/mem/data_mem.sv \
     $(SRC_DIR)/design/mem/instr_mem.sv \
-    $(SRC_DIR)/design/rv32i.sv \
     $(SRC_DIR)/design/top.sv
 
 

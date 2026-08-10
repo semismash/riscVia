@@ -19,10 +19,10 @@ module rv32i_core (
 );
 
     // hazard unit
-    logic hz_pc_enable,
-    logic hz_if_id_enable,
-    logic hz_if_id_clear,
-    logic hz_id_ex_clear,
+    logic hz_pc_enable;
+    logic hz_if_id_enable;
+    logic hz_if_id_clear;
+    logic hz_id_ex_clear;
 
     // fetch
     logic if_fault_out;

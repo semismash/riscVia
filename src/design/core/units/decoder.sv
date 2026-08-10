@@ -36,7 +36,7 @@ module decoder #(
     output Word imm_val,            // immediate value as output
 
     // PC
-    output logic pcinc_in1_pcor,    // PC inc input 1, default PC (0) or rs1 (1)
+    output logic pcinc_in1_ropc,    // PC inc input 1, default PC (0) or rs1 (1)
     //output logic pcinc_in2_doi,     // PC inc input 2, default 4 (0) or IMM (1); PC = in1 + in2
 
     // funct3
@@ -96,7 +96,7 @@ module decoder #(
         mem_to_reg   = 1'b0;    // by default, always take from alu output to reg file
         imm_to_reg   = 1'b0;    // only set by lui
 
-        pcinc_in1_pcor   = 1'b0;    // by default, always increment pc instead of set
+        pcinc_in1_ropc   = 1'b0;    // by default, always increment pc instead of set
         //pcinc_in2_doi    = 1'b0;    // by default, pc always incremented by 4
 
         is_branch   = 1'b0;
@@ -156,7 +156,7 @@ module decoder #(
             OP_I_J: begin
                 reg_write = 1'b1; 
                 alu_in1_ropc = 1'b1;
-                pcinc_in1_pcor = 1'b1;
+                pcinc_in1_ropc = 1'b1;
                 //pcinc_in2_doi  = 1'b1;  // PC = rs1 + imm
                 imm_type = I;
                 is_jalr = 1'b1;
