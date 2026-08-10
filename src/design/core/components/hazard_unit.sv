@@ -27,6 +27,13 @@ module hazard_unit (    // currently, stalls for both control and data hazards
     /* 3. Data Hazard - non-load hazard or load hazard with instruction gap (scan ID/EX, EX/MEM and MEM/WB) 
         - stall till hazard resolved but replace with forwarding later*/
 
+    logic rs1_used;
+    logic rs2_used;
+    logic rs1_hazard_ex_mem;
+    logic rs1_hazard_mem_wb;
+    logic rs2_hazard_ex_mem;
+    logic rs2_hazard_mem_wb;
+
     always_comb begin
         pc_enable = 1'b1;
         if_id_enable = 1'b1;
@@ -34,7 +41,7 @@ module hazard_unit (    // currently, stalls for both control and data hazards
         id_ex_clear = 1'b0;
 
         // check if rs1 or rs2 are used by the instruction, performance guardrail to prevent unnecessary stalls
-        logic rs1_used = 
+        rs1_used = 
             (if_id_opcode == OP_R) ||
             (if_id_opcode == OP_I) ||
             (if_id_opcode == OP_I_L) ||
@@ -42,16 +49,16 @@ module hazard_unit (    // currently, stalls for both control and data hazards
             (if_id_opcode == OP_B) ||
             (if_id_opcode == OP_I_J) ||
             (if_id_opcode == OP_I_E);
-        logic rs2_used = 
+        rs2_used = 
             (if_id_opcode == OP_R) ||
             (if_id_opcode == OP_S) ||
             (if_id_opcode == OP_B);
 
         // for condition 3 data hazards
-        logic rs1_hazard_ex_mem = rs1_used && (if_id_rs1 != '0) && ex_mem_reg_write && (if_id_rs1 == ex_mem_rdst);
-        logic rs1_hazard_mem_wb = rs1_used && (if_id_rs1 != '0) && mem_wb_reg_write && (if_id_rs1 == mem_wb_rdst);
-        logic rs2_hazard_ex_mem = rs2_used && (if_id_rs2 != '0) && ex_mem_reg_write && (if_id_rs2 == ex_mem_rdst);
-        logic rs2_hazard_mem_wb = rs2_used && (if_id_rs2 != '0) && mem_wb_reg_write && (if_id_rs2 == mem_wb_rdst);
+        rs1_hazard_ex_mem = rs1_used && (if_id_rs1 != '0) && ex_mem_reg_write && (if_id_rs1 == ex_mem_rdst);
+        rs1_hazard_mem_wb = rs1_used && (if_id_rs1 != '0) && mem_wb_reg_write && (if_id_rs1 == mem_wb_rdst);
+        rs2_hazard_ex_mem = rs2_used && (if_id_rs2 != '0) && ex_mem_reg_write && (if_id_rs2 == ex_mem_rdst);
+        rs2_hazard_mem_wb = rs2_used && (if_id_rs2 != '0) && mem_wb_reg_write && (if_id_rs2 == mem_wb_rdst);
 
         if (branch_taken) begin // Condition 1
             if_id_clear = 1'b1;

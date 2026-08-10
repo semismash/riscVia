@@ -15,7 +15,7 @@ module id_ex (  // 161 bits
     input Word i_imm_val,         // 32 bits
     input logic i_alu_in1_ropc,   // 1 bit
     input logic i_alu_in2_roi,    // 1 bit
-    input ALUOp i_alu_op,         // 4 bits
+    input AluOp i_alu_op,         // 4 bits
     input logic i_alu_bypass,     // 1 bit
     input logic i_mem_read,       // 1 bit
     input logic i_mem_write,      // 1 bit
@@ -36,7 +36,7 @@ module id_ex (  // 161 bits
     output Word o_imm_val,
     output logic o_alu_in1_ropc,
     output logic o_alu_in2_roi,
-    output ALUOp o_alu_op,
+    output AluOp o_alu_op,
     output logic o_alu_bypass,
     output logic o_mem_read,
     output logic o_mem_write,

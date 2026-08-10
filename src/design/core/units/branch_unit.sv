@@ -10,14 +10,16 @@ module branch_unit (
     output logic branch_taken,
 );
 
+    logic branch_passed;
+
     always_comb begin
         case (id_ex_funct3)
-            3'b000:  branch_passed = alu_zero_out;   // BEQ
-            3'b001:  branch_passed = !alu_zero_out;  // BNE
-            3'b100:  branch_passed = !alu_zero_out;  // BLT
-            3'b101:  branch_passed = alu_zero_out;   // BGE
-            3'b110:  branch_passed = !alu_zero_out;  // BLTU
-            3'b111:  branch_passed = alu_zero_out;   // BGEU
+            3'b000:  branch_passed = alu_zero;   // BEQ
+            3'b001:  branch_passed = !alu_zero;  // BNE
+            3'b100:  branch_passed = !alu_zero;  // BLT
+            3'b101:  branch_passed = alu_zero;   // BGE
+            3'b110:  branch_passed = !alu_zero;  // BLTU
+            3'b111:  branch_passed = alu_zero;   // BGEU
             default: branch_passed = 1'b0;
         endcase
     end
