@@ -76,6 +76,7 @@ module rv32i_core (
     logic id_ex_mem_read;
     logic id_ex_mem_write;
     logic [2:0] id_ex_funct3;
+    logic id_ex_pc_in1_sel;
     logic id_ex_is_branch;
     logic id_ex_is_jal;
     logic id_ex_is_jalr;
@@ -137,7 +138,7 @@ module rv32i_core (
         .rst_n          (rst_n),
         .pc_enable      (hz_pc_enable),
         // from decoder
-        .pcinc_in1_ropc (pc_in1_sel),
+        .pcinc_in1_pcor (id_ex_pc_in1_sel),
         .pcinc_in2_doi  (pc_in2_sel),
         // from reg and imm gen, based on decoder signal
         .rs1_in         (rs1_data),
@@ -221,7 +222,7 @@ module rv32i_core (
         // IMM GEN
         .imm_val        (imm_val),
         // PC
-        .pcinc_in1_ropc (pc_in1_sel),
+        .pcinc_in1_pcor (pc_in1_sel),
         //.pcinc_in2_doi  (pc_in2_sel), (CHECK AGAIN)
         // funct3
         .funct3         (funct3),
@@ -250,6 +251,7 @@ module rv32i_core (
         .i_mem_read       (mem_read),
         .i_mem_write      (mem_write),
         .i_funct3         (funct3),
+        .i_pc_in1_sel     (pc_in1_sel),
         .i_is_branch      (d_is_branch),
         .i_is_jal         (d_is_jal),
         .i_is_jalr        (d_is_jalr),
@@ -271,6 +273,7 @@ module rv32i_core (
         .o_mem_read       (id_ex_mem_read),
         .o_mem_write      (id_ex_mem_write),
         .o_funct3         (id_ex_funct3),
+        .o_pc_in1_sel     (id_ex_pc_in1_sel),
         .o_is_branch      (id_ex_is_branch),
         .o_is_jal         (id_ex_is_jal),
         .o_is_jalr        (id_ex_is_jalr),

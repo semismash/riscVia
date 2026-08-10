@@ -20,6 +20,7 @@ module id_ex (  // 161 bits
     input logic i_mem_read,       // 1 bit
     input logic i_mem_write,      // 1 bit
     input logic [2:0] i_funct3,   // 3 bits
+    input logic i_pc_in1_sel,     // 1 bit
     input logic i_is_branch,      // 1 bit
     input logic i_is_jal,         // 1 bit
     input logic i_is_jalr,        // 1 bit
@@ -41,6 +42,7 @@ module id_ex (  // 161 bits
     output logic o_mem_read,
     output logic o_mem_write,
     output logic [2:0] o_funct3,
+    output logic o_pc_in1_sel,
     output logic o_is_branch,
     output logic o_is_jal,
     output logic o_is_jalr,
@@ -57,6 +59,7 @@ module id_ex (  // 161 bits
             o_rd_addr      <= '0;
             o_rs1_data     <= '0;
             o_rs2_data     <= '0;
+            o_imm_val      <= '0;
             o_alu_in1_ropc <= '0;
             o_alu_in2_roi  <= '0;
             o_alu_op       <= ADD;    // add by default
@@ -64,7 +67,10 @@ module id_ex (  // 161 bits
             o_mem_read     <= '0;
             o_mem_write    <= '0;
             o_funct3       <= '0;
+            o_pc_in1_sel   <= '0;
             o_is_branch    <= '0;
+            o_is_jal       <= '0;
+            o_is_jalr      <= '0;
             o_reg_write    <= '0;
             o_imm_to_reg   <= '0;
             o_mem_to_reg   <= '0;
@@ -75,6 +81,7 @@ module id_ex (  // 161 bits
             o_rd_addr      <= i_rd_addr;
             o_rs1_data     <= i_rs1_data;
             o_rs2_data     <= i_rs2_data;
+            o_imm_val      <= i_imm_val;
             o_alu_in1_ropc <= i_alu_in1_ropc;
             o_alu_in2_roi  <= i_alu_in2_roi;
             o_alu_op       <= i_alu_op;
@@ -82,7 +89,10 @@ module id_ex (  // 161 bits
             o_mem_read     <= i_mem_read;
             o_mem_write    <= i_mem_write;
             o_funct3       <= i_funct3;
+            o_pc_in1_sel   <= i_pc_in1_sel;
             o_is_branch    <= i_is_branch;
+            o_is_jal       <= i_is_jal;
+            o_is_jalr      <= i_is_jalr;
             o_reg_write    <= i_reg_write;
             o_imm_to_reg   <= i_imm_to_reg;
             o_mem_to_reg   <= i_mem_to_reg;

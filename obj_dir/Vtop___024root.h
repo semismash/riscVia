@@ -44,6 +44,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         CData/*0:0*/ top__DOT__u_cpu__DOT__id_ex_mem_read;
         CData/*0:0*/ top__DOT__u_cpu__DOT__id_ex_mem_write;
         CData/*2:0*/ top__DOT__u_cpu__DOT__id_ex_funct3;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__id_ex_pc_in1_sel;
         CData/*0:0*/ top__DOT__u_cpu__DOT__id_ex_is_branch;
         CData/*0:0*/ top__DOT__u_cpu__DOT__id_ex_is_jal;
         CData/*0:0*/ top__DOT__u_cpu__DOT__id_ex_is_jalr;
@@ -60,7 +61,6 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         CData/*2:0*/ top__DOT__u_cpu__DOT__ex_mem_funct3;
         CData/*0:0*/ top__DOT__u_cpu__DOT__ex_mem_reg_write;
         CData/*0:0*/ top__DOT__u_cpu__DOT__ex_mem_mem_to_reg;
-        CData/*2:0*/ top__DOT__u_cpu__DOT__funct3;
         CData/*0:0*/ top__DOT__u_cpu__DOT__mem_read;
         CData/*0:0*/ top__DOT__u_cpu__DOT__mem_write;
         CData/*4:0*/ top__DOT__u_cpu__DOT__mem_wb_rd_addr;
@@ -108,6 +108,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         IData/*31:0*/ top__DOT__u_cpu__DOT__mem_wb_rd_data;
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_reg_file__DOT__i;
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_pc__DOT__rs1_in;
+        IData/*31:0*/ top__DOT__u_cpu__DOT__u_pc__DOT__imm_in;
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_pc__DOT__pc;
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_pc__DOT__pc_next;
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_pc__DOT__unnamedblk1__DOT__in1;
