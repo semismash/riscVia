@@ -3,7 +3,8 @@ import rv32i::*;
 module top(
     input logic clk,    // clock
     input logic rst_n,  // active low reset
-    output logic halt   // halt detect
+    output logic halt,  // halt detect
+    output logic stop   // safe stop 
 );
 
     // from CPU
@@ -35,7 +36,8 @@ module top(
         .write_en   (write_enable),
         .req_bytes  (req_bytes),
         // HALT
-        .halt       (halt)
+        .halt       (halt),
+        .stop       (stop)
     );
 
     instr_mem u_instr_mem(

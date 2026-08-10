@@ -15,7 +15,8 @@ module rv32i_core (
     output logic write_en,      // write enable (LSU)
     output ReqBytes req_bytes,  // requested bytes amount (LSU)
 
-    output logic halt           // halt on panic
+    output logic halt,          // halt on panic
+    output logic stop           // safe halt
 );
 
     // hazard unit
@@ -56,6 +57,7 @@ module rv32i_core (
     logic d_is_branch;
     logic d_is_jal;
     logic d_is_jalr;
+    logic d_stop;
 
     // imm
     Word imm_val;
@@ -83,6 +85,7 @@ module rv32i_core (
     logic id_ex_reg_write;
     logic id_ex_imm_to_reg;
     logic id_ex_mem_to_reg;
+    logic id_ex_stop;
 
     // alu
     AluOp alu_op;
@@ -104,6 +107,7 @@ module rv32i_core (
     logic [2:0] ex_mem_funct3;
     logic ex_mem_reg_write;
     logic ex_mem_mem_to_reg;
+    logic ex_mem_stop;
 
     // lsu
     logic [2:0] funct3;
@@ -115,6 +119,7 @@ module rv32i_core (
     RegAddr mem_wb_rd_addr;
     Word mem_wb_rd_data;
     logic mem_wb_reg_write;
+    logic mem_wb_stop;
 
     reg_file u_reg_file(
         // clk and reset
@@ -227,7 +232,8 @@ module rv32i_core (
         // funct3
         .funct3         (funct3),
         // panic
-        .illegal_instr  (illegal_instr)
+        .illegal_instr  (illegal_instr),
+        .stop           (d_stop)
     );
 
     id_ex u_id_ex (
@@ -258,6 +264,7 @@ module rv32i_core (
         .i_reg_write      (reg_w_enable),
         .i_imm_to_reg     (imm_to_reg),
         .i_mem_to_reg     (mem_to_reg),
+        .i_is_stop        (d_stop),
         // output
         .o_pc             (id_ex_pc),
         .o_rs1_addr       (id_ex_rs1_addr),
@@ -279,7 +286,8 @@ module rv32i_core (
         .o_is_jalr        (id_ex_is_jalr),
         .o_reg_write      (id_ex_reg_write),
         .o_imm_to_reg     (id_ex_imm_to_reg),
-        .o_mem_to_reg     (id_ex_mem_to_reg)
+        .o_mem_to_reg     (id_ex_mem_to_reg),
+        .o_is_stop        (id_ex_stop)
     );
 
     alu u_alu(  // x
@@ -329,6 +337,7 @@ module rv32i_core (
         .i_funct3       (id_ex_funct3),
         .i_reg_write    (id_ex_reg_write),
         .i_mem_to_reg   (id_ex_mem_to_reg),
+        .i_is_stop      (id_ex_stop),
         // output
         .o_rs2_val      (ex_mem_rs2_val),
         .o_rd_addr      (ex_mem_rd_addr),
@@ -337,7 +346,8 @@ module rv32i_core (
         .o_mem_write    (ex_mem_mem_write),
         .o_funct3       (ex_mem_funct3),
         .o_reg_write    (ex_mem_reg_write),
-        .o_mem_to_reg   (ex_mem_mem_to_reg)
+        .o_mem_to_reg   (ex_mem_mem_to_reg),
+        .o_is_stop      (ex_mem_stop)
     );
 
     lsu u_lsu(
@@ -367,10 +377,19 @@ module rv32i_core (
         .i_rd_addr      (ex_mem_rd_addr),
         .i_rd_data      (reg_write_data),
         .i_reg_write    (ex_mem_reg_write),
+        .i_is_stop      (ex_mem_stop),
         // output
         .o_rd_addr      (mem_wb_rd_addr),
         .o_rd_data      (mem_wb_rd_data),
-        .o_reg_write    (mem_wb_reg_write)
+        .o_reg_write    (mem_wb_reg_write),
+        .o_is_stop      (mem_wb_stop)
+    );
+
+    stop u_stop (
+        .clk        (clk),
+        .rst_n      (rst_n),
+        .stop_in    (mem_wb_stop),
+        .stop_out   (stop)
     );
 
     assign halt = if_fault_out | data_fault | illegal_instr;

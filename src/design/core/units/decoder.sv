@@ -43,7 +43,8 @@ module decoder #(
     output logic [2:0] funct3,
 
     // panic
-    output logic illegal_instr      // detects illegal instr, panics respectively
+    output logic illegal_instr,     // detects illegal instr, panics respectively
+    output logic stop               // stop, but propagates through pipeline without emergency halt
 );
 
     import rv32i::*;
@@ -171,6 +172,9 @@ module decoder #(
                 imm_type = U;
             end
             OP_NOP: begin end // ignore if NOP, i.e. first 7 bits from LSB are 0
+            OP_STOP: begin 
+
+            end
             default: begin 
                 illegal_instr = 1'b1;
             end
