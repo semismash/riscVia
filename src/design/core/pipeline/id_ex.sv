@@ -27,6 +27,7 @@ module id_ex (  // 161 bits
     input logic i_reg_write,      // 1 bit
     input logic i_imm_to_reg,     // 1 bit
     input logic i_mem_to_reg,     // 1 bit
+    input logic i_is_stop,        // meta bit for debugging to stop CPU at a certain stage of pipelined
 
     output Word o_pc,
     output RegAddr o_rs1_addr,
@@ -48,7 +49,8 @@ module id_ex (  // 161 bits
     output logic o_is_jalr,
     output logic o_reg_write,
     output logic o_imm_to_reg,
-    output logic o_mem_to_reg
+    output logic o_mem_to_reg,
+    output logic o_is_stop,
 );
 
     always_ff @(posedge clk or negedge rst_n) begin
@@ -74,6 +76,7 @@ module id_ex (  // 161 bits
             o_reg_write    <= '0;
             o_imm_to_reg   <= '0;
             o_mem_to_reg   <= '0;
+            o_is_stop      <= '0;
         end else if (!stall) begin  // do normal logic if NOT a stall
             o_pc           <= i_pc;
             o_rs1_addr     <= i_rs1_addr;
@@ -96,6 +99,7 @@ module id_ex (  // 161 bits
             o_reg_write    <= i_reg_write;
             o_imm_to_reg   <= i_imm_to_reg;
             o_mem_to_reg   <= i_mem_to_reg;
+            o_is_stop      <= i_is_stop;
         end
     end
 

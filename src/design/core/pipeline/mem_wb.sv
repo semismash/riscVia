@@ -9,10 +9,12 @@ module mem_wb ( // 38 bits
     input RegAddr i_rd_addr,      // 5 bits
     input Word i_rd_data,         // 32 bits
     input logic i_reg_write,      // 1 bit
+    input logic i_is_stop,        // 1 bit
 
     output RegAddr o_rd_addr,
     output Word o_rd_data,
-    output logic o_reg_write
+    output logic o_reg_write,
+    output logic o_is_stop
 );
 
     always_ff @(posedge clk or negedge rst_n) begin

@@ -18,6 +18,7 @@ VERILOG_SRCS = \
     $(SRC_DIR)/design/core/units/fetch.sv \
     $(SRC_DIR)/design/core/units/imm_gen.sv \
     $(SRC_DIR)/design/core/units/lsu.sv \
+    $(SRC_DIR)/design/core/stop.sv \
     $(SRC_DIR)/design/core/rv32i_core.sv \
     $(SRC_DIR)/design/mem/data_mem.sv \
     $(SRC_DIR)/design/mem/instr_mem.sv \

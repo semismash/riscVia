@@ -80,7 +80,7 @@ int main(int argc, char** argv) {
 
     uint64_t cycles = 0;
     uint64_t sim_time = 1;
-    while (!Verilated::gotFinish() && !DUT->halt) {
+    while (!Verilated::gotFinish() && !DUT->halt && !DUT->stop) {
         DUT->clk = 0;
         DUT->eval();
         trace->dump(sim_time++);
@@ -120,7 +120,12 @@ int main(int argc, char** argv) {
 
     std::cout << "\n========================================================" << std::endl;
     if (DUT->halt) {
-        std::cout << "[TB INFO] Core reached a global safe HALT signal." << std::endl;
+        std::cout << "[TB INFO] CPU core crashed safely and generated a HALT signal." << std::endl;
+        std::cout << "[FINAL STATUS]" << std::endl;
+        std::cout << " -> Final Data Address: 0x" << std::hex << DUT->rootp->top__DOT__data_addr << std::endl;
+        std::cout << " -> Final Data Out:     0x" << std::hex << DUT->rootp->top__DOT__write_data << std::endl;
+    } else if (DUT->stop) {
+        std::cout << "[TB INFO] CPU core stopped safety and reached a safe STOP signal." << std::endl;
         std::cout << "[FINAL STATUS]" << std::endl;
         std::cout << " -> Final Data Address: 0x" << std::hex << DUT->rootp->top__DOT__data_addr << std::endl;
         std::cout << " -> Final Data Out:     0x" << std::hex << DUT->rootp->top__DOT__write_data << std::endl;
