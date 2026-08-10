@@ -58,6 +58,7 @@ module top(
         .write_enable       (write_enable),
         .data_in            (write_data),
 
+        .data_out           (read_data),
         .data_not_found     (data_fault)
     );
 

@@ -121,6 +121,13 @@ module rv32i_core (
     logic mem_wb_reg_write;
     logic mem_wb_stop;
 
+    // temp fix
+    Word ex_result;
+    Word pc_plus4;
+
+    assign pc_plus4  = id_ex_pc + 32'd4;
+    assign ex_result = (id_ex_is_jal || id_ex_is_jalr) ? pc_plus4 : alu_out;
+
     reg_file u_reg_file(
         // clk and reset
         .clk            (clk),
@@ -146,8 +153,9 @@ module rv32i_core (
         .pcinc_in1_pcor (id_ex_pc_in1_sel),
         .pcinc_in2_doi  (pc_in2_sel),
         // from reg and imm gen, based on decoder signal
-        .rs1_in         (rs1_data),
-        .imm_in         (imm_val),
+        .rs1_in         (id_ex_rs1_data),
+        .pc_in          (id_ex_pc),
+        .imm_in         (id_ex_imm_val),
         // out
         .pc_out         (pc)
     );
@@ -331,7 +339,7 @@ module rv32i_core (
         // input
         .i_rs2_val      (id_ex_rs2_data),
         .i_rd_addr      (id_ex_rd_addr),
-        .i_result       (alu_out),
+        .i_result       (ex_result),
         .i_mem_read     (id_ex_mem_read),
         .i_mem_write    (id_ex_mem_write),
         .i_funct3       (id_ex_funct3),
