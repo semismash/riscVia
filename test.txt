@@ -93,6 +93,7 @@ RESULT: PASSED
 PRESULT: FAILED (slli instruction seems to have failed, ended with x1 = 1, x2 = 0, and x3 = 1)
 PRESULT2: FAILED
 PRESULT3: FAILED
+PRESULT4: PASSED
 6)printf "\x93\x00\x40\x00\x63\x08\x00\x00\x93\x01\x10\x00\xff\xff\xff\xff" > program.bin
 addi x1, x0, 4     # x1 = 4
 beq  x0, x0, +16   # branch always taken, skip next instr
@@ -123,6 +124,8 @@ nop
 RESULT: PASSED
 PRESULT: FAILED (either load or store failed)
 PRESULT2: FAILED (again, same issue)
+PRESULT3: FAILED
+PRESULT4: PASSED
 10)printf "\x93\x00\xa0\x00\x13\x01\xf0\xff\xb3\x01\x11\x00\xff\xff\xff\xff" > program.bin
 addi x1, x0, 10    # x1 = 10
 addi x2, x0, -1    # x2 = -1
@@ -140,16 +143,18 @@ lb   x3, 0(x1)          # x3 = 0xFFFFFFFB (sign extended)
 lbu  x4, 0(x1)          # x4 = 251 (0xFB)
 RESULT: FAILED (FAILS IN FIRST CYCLE AFTER LOADING EMPTY VALUE) (NOTE: REPLACING -5 WITH 5 OR A POSITIVE IMMEDIATE CAUSES THE TEST TO PASS)
 RESULT2: PASSED
+PRESULT: PASSED
 
-12)printf "\x93\x00\x00\x00\x37\x81\x00\x00\x23\x90\x20\x00\x83\x91\x00\x00\x03\xd2\x00\x00\xff\xff\xff\xff" > program.bin
+12)printf "\x93\x00\x00\x11\x37\x81\x00\x00\x23\x90\x20\x00\x83\x91\x00\x00\x03\xd2\x00\x00\xff\xff\xff\xff" > program.bin
 addi x1, x0, 272        # x1 = 0x110
 lui  x2, 0x8            # x2 = 0x00008000
 sh   x2, 0(x1)          # mem[0x110]=00 mem[0x111]=80
 lh   x3, 0(x1)          # x3 = 0xFFFF8000
 lhu  x4, 0(x1)          # x4 = 0x00008000
 RESULT: PASSED
+PRESULT: PASSED
 
-13)printf "\x93\x00\x00\x00\x13\x01\x00\x00\x23\x80\x20\x00\x13\x01\x00\x00\xa3\x80\x20\x00\x83\x91\x00\x00\xff\xff\xff\xff" > program.bin
+13)printf "\x93\x00\x00\x12\x13\x01\x20\x01\x23\x80\x20\x00\x13\x01\x40\x03\xa3\x80\x20\x00\x83\x91\x00\x00\xff\xff\xff\xff" > program.bin
 addi x1, x0, 288        # address = 0x120
 addi x2, x0, 18         # x2 = 18
 sb   x2, 0(x1)          # mem[0x120]=0x12
@@ -157,6 +162,7 @@ addi x2, x0, 52         # x2 = 52
 sb   x2, 1(x1)          # mem[0x121]=0x34
 lh   x3, 0(x1)          # x3 = 0x3412
 RESULT: PASSED
+PRESULT: THINK IT PASSED? NEED TO RE-VERIFY
 
 14)printf "\x93\x00\x00\x13\x13\x01\xf0\xff\x23\x80\x20\x00\x83\x81\x00\x00\x13\xa2\x01\x00\xff\xff\xff\xff" > program.bin
 addi x1, x0, 304        # address = 0x130
@@ -165,6 +171,7 @@ sb   x2, 0(x1)          # mem[0x130]=0xFF
 lb   x3, 0(x1)          # x3 = -1
 slti x4, x3, 0          # x4 = 1
 RESULT: PASSED
+PRESULT: PASSED
 
 15)printf "\x97\x00\x00\x00\x13\x81\x80\x00\x97\x11\x00\x00\x33\x82\x11\x40\xff\xff\xff\xff" > program.bin
 auipc x1, 0             # x1 = address of this instruction
@@ -172,6 +179,8 @@ addi  x2, x1, 8         # x2 = x1 + 8
 auipc x3, 1             # x3 = PC + 4096
 sub   x4, x3, x1        # x4 = 4096 + instruction spacing
 RESULT: PASSED (NOTE: DURING THE SIMULATION, AUIPC TAKES THE VALUE OF PC AS DISPLAYED IN THE PREVIOUS CYCLE, ASSUMED TO BE INTENTIONAL BEHAVIOUR)
+PRESULT: UNCLEAR, LOOKS LIKE IT FAILED (First three instructions executed correctly, but SUB didn't seem to load the value into x4 correctly as it remained 0 by the end of the simulation)
+PRESULT2: PASSED
 
 16)printf "\x93\x00\x10\x00\x6f\x01\x80\x00\x93\x80\x40\x06\x93\x80\x20\x00\xff\xff\xff\xff" > program.bin
 addi x1, x0, 1          # x1 = 1
@@ -180,6 +189,8 @@ addi x1, x1, 100        # skipped
 target:
 addi x1, x1, 2          # x1 = 3
 RESULT: PASSED
+PRESULT: I'm so confused, cuz the 3rd instruction did get skipped successfully and the registers had the correct value written to them, but for some random ass reason, x2 became 8???
+PRESULT2: PASSED (above behaviour was working as intended)
 
 17)printf "\x17\x02\x00\x00\x13\x02\x02\x01\xe7\x00\x02\x00\x13\x01\x30\x06\x93\x01\xa0\x02\xff\xff\xff\xff" > program.bin
 auipc x4, 0             # x4 = current PC
@@ -197,6 +208,8 @@ addi  x4, x4, 13        # intentionally odd
 jalr  x1, 0(x4)         # jump to (x4+0)&~1
 addi  x2, x0, 55        # skipped
 RESULT: PASSED
+PRESULT: PARTIAL SUCCESS (INSTRUCTION GOT SKIPPED BUT THE CPU CRASHED VIA HALT RATHER THAN A NORMAL STOP)
+PRESULT2: PASSED
 
 19)printf "\x93\x00\xa0\x00\x13\x01\xc0\x00\xb3\xc1\x20\x00\x33\xe2\x20\x00\xb3\xf1\x20\x00\xff\xff\xff\xff" > program.bin
 addi x1, x0, 10         # 1010
@@ -205,6 +218,7 @@ xor  x3, x1, x2         # 0110 = 6
 or   x4, x1, x2         # 1110 = 14
 and  x3, x1, x2         # x3 overwritten with 1000 = 8
 RESULT: PASSED
+PRESULT: PASSED
 
 20)printf "\x93\x00\xa0\x00\x13\xc1\xf0\x00\x93\xe1\x10\x00\x13\xf2\x60\x00\xff\xff\xff\xff" > program.bin
 addi x1, x0, 10         # 1010
@@ -212,6 +226,8 @@ xori x2, x1, 15         # 0101 = 5
 ori  x3, x1, 1          # 1011 = 11
 andi x4, x1, 6          # 0010 = 2
 RESULT: PASSED
+PRESULT: FAILED (all instructions passed except x2 whose final value was 15 instead of 5 as expected)
+PRESULT: PASSED
 
 21)printf "\x93\x00\xf0\xff\x13\x01\x10\x00\xb3\xa1\x20\x00\x33\xb2\x20\x00\xff\xff\xff\xff" > program.bin
 addi x1, x0, -1         # 0xFFFFFFFF
@@ -219,14 +235,17 @@ addi x2, x0, 1          # 1
 slt  x3, x1, x2         # 1
 sltu x4, x1, x2         # 0
 RESULT: PASSED
+PRESULT: PASSED
 
 22)printf "\x93\x00\xd0\xff\x13\xa1\xe0\xff\x93\xa1\xc0\xff\x13\xb2\x50\x00\xff\xff\xff\xff" > program.bin
-addi x1, x0, -3         # -3 <-- STOPPED BEFORE THIS EVEN EXECUTED
+addi x1, x0, -3         # -3
 slti  x2, x1, -2        # 1
 slti  x3, x1, -4        # 0
 sltiu x4, x1, 5         # 0
 RESULT: FAILED (DIDN'T EVEN EXECUTE ONE INSTRUCTION)
 RESULT2: PASSED
+PRESULT: FAILED (DIDN'T EXECUTE 2nd INSTRUCTION CORRECTLY, AS x2 DIDN'T CHANGE TO 1, ALTHOUGH 1st INSTRUCTION AND I THINK INSTRUCTIONS 3 AND 4 WERE EXECUTED CORRECTLY)
+PRESULT: PASSED
 
 23)printf "\x93\x00\xf0\xff\x13\x01\x10\x00\x63\xe4\x20\x00\x93\x01\x50\x00\xff\xff\xff\xff" > program.bin
 addi x1, x0, -1         # 0xFFFFFFFF
@@ -235,15 +254,17 @@ bltu x1, x2, fail       # not taken
 addi x3, x0, 5          # x3 = 5
 fail:
 RESULT: PASSED
+PRESULT: PASSED
 
 24)printf "\x93\x00\xb0\xff\x13\x01\x30\x00\x63\xd4\x20\x00\x93\x01\x90\x00\xff\xff\xff\xff" > program.bin
-addi x1, x0, -5         # -5 <-- STOPPED BEFORE THIS EVEN EXECTED
+addi x1, x0, -5         # -5
 addi x2, x0, 3          # 3
 bge  x1, x2, skip       # not taken
 addi x3, x0, 9          # x3 = 9
 skip:
 RESULT: FAILED (DIDN'T EVEN EXECUTE ONE INSTRUCTION)
 RESULT2: PASSED
+PRESULT: PASSED
 
 25)printf "\x93\x00\x70\x00\x73\x00\x00\x00\x93\x80\x10\x00\x73\x00\x10\x00\x13\x81\x20\x00\xff\xff\xff\xff" > program.bin
 addi   x1, x0, 7        # x1 = 7
@@ -252,5 +273,4 @@ addi   x1, x1, 1        # x1 = 8
 ebreak                  # no effect
 addi   x2, x1, 2        # x2 = 10
 RESULT: PASSED
-
-SUSPECTED ISSUE: Negative immediates causing errors (except if its -1 for some reason)
+PRESULT: PASSED

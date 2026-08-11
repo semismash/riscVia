@@ -32,7 +32,7 @@ module pc(
             in1 = pc_in;
             in2 = imm_in;
         end
-        pc_next = in1 + in2;
+        pc_next = (in1 + in2) & ~Word'(32'b1);
     end
 
     always_ff @(posedge clk or negedge rst_n) begin

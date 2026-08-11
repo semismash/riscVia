@@ -26,6 +26,8 @@ module alu #(
     Word data2;
 
     always_comb begin
+        data1 = '0;
+        data2 = '0;
         if (alu_bypass) begin
             alu_out = '0;
         end else if (imm_to_reg) begin
