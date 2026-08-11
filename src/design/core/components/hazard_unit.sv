@@ -7,6 +7,7 @@ module hazard_unit (    // currently, stalls for both control and data hazards
     input RegAddr   if_id_rs2,
     // ID/EX
     input logic     id_ex_mem_read,
+    input logic     id_ex_reg_write,
     input RegAddr   id_ex_rdst,
     input logic     branch_taken,
     // EX/MEM
@@ -64,8 +65,7 @@ module hazard_unit (    // currently, stalls for both control and data hazards
             if_id_clear = 1'b1;
             id_ex_clear = 1'b1;
         // Condition 2, create bubble by freezing
-        end else if (id_ex_mem_read && (id_ex_rdst != '0) && 
-                ((rs1_used && (id_ex_rdst == if_id_rs1)) || (rs2_used && (id_ex_rdst == if_id_rs2)))) begin
+        end else if (id_ex_reg_write && (id_ex_rdst != '0) && ((rs1_used && (id_ex_rdst == if_id_rs1)) || (rs2_used && (id_ex_rdst == if_id_rs2)))) begin
             pc_enable    = 1'b0;
             if_id_enable = 1'b0;
             id_ex_clear  = 1'b1;

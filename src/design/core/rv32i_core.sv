@@ -166,6 +166,7 @@ module rv32i_core (
         .if_id_rs1          (if_id_rs1_addr),
         .if_id_rs2          (if_id_rs2_addr),
         .id_ex_mem_read     (id_ex_mem_read),
+        .id_ex_reg_write    (id_ex_reg_write),
         .id_ex_rdst         (id_ex_rd_addr),
         .branch_taken       (branch_taken),
         .ex_mem_reg_write   (ex_mem_reg_write),
