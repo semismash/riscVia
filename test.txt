@@ -358,7 +358,7 @@ lb   x3, 0(x1)          # x3 = sign-extended byte loaded from memory
 lbu  x4, 0(x1)          # x4 = zero-extended byte loaded from memory
 PRESULT: PASSED
 
-36) printf "\x93\x00\x00\x30\x37\x21\x01\x00\x13\x01\x01\x00\x23\x90\x20\x00\x83\x91\x00\x00\x03\xd2\x00\x00\xff\xff\xff\xff" > program.bin
+36) printf "\x93\x00\x00\x30\x37\x21\x01\x00\x13\x01\x41\x23\x23\x90\x20\x00\x83\x91\x00\x00\x03\xd2\x00\x00\xff\xff\xff\xff" > program.bin
 addi x1, x0, 768        # x1 = memory address (0x300)
 lui  x2, 0x00012        # x2 = 0x00012000; loads upper 20 bits
 addi x2, x2, 0x234      # x2 = 0x00012234; completes constant
