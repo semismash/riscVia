@@ -134,6 +134,29 @@ int main(int argc, char** argv) {
         std::cout << "[TB INFO] Simulation finished processing." << std::endl;
     }
 
+    uint64_t total_instr = file_size / 4;
+    uint64_t active_instr = (total_instr > 0) ? (total_instr - 1) : 0;
+
+    std::cout << "\n------------------- PERFORMANCE METRICS -------------------" << std::endl;
+    std::cout << "Total Clock Cycles:   " << std::dec << cycles << std::endl;
+    std::cout << "Total Instructions:   " << total_instr << std::endl;
+    std::cout << "Active Instructions:  " << active_instr << " (Excludes STOP)" << std::endl;
+    
+    if (total_instr > 0) {
+        double cpi_raw = static_cast<double>(cycles) / total_instr;
+        std::cout << "CPI (Raw File Size):  " << std::fixed << std::setprecision(2) << cpi_raw << std::endl;
+    } else {
+        std::cout << "CPI (Raw File Size):  N/A" << std::endl;
+    }
+
+    if (active_instr > 0) {
+        double cpi_clean = static_cast<double>(cycles) / active_instr;
+        std::cout << "CPI (Without STOP):   " << std::fixed << std::setprecision(2) << cpi_clean << std::endl;
+    } else {
+        std::cout << "CPI (Without STOP):   N/A" << std::endl;
+    }
+    std::cout << "========================================================\n" << std::endl;
+
     trace->close();
     DUT->final();
     return 0;

@@ -1,6 +1,6 @@
 import rv32i::*;
 
-module mem_wb ( // 38 bits
+module mem_wb ( // 39 bits
     input logic clk,
     input logic rst_n,  // asynchronous active low reset
     input logic stall,
