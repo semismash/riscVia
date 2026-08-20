@@ -4,7 +4,8 @@ module top(
     input logic clk,    // clock
     input logic rst_n,  // active low reset
     output logic halt,  // halt detect
-    output logic stop   // safe stop 
+    output logic stop,  // safe stop
+    output logic [31:0] instr_count
 );
 
     // from CPU
@@ -37,7 +38,8 @@ module top(
         .req_bytes  (req_bytes),
         // HALT
         .halt       (halt),
-        .stop       (stop)
+        .stop       (stop),
+        .instr_count(instr_count)
     );
 
     instr_mem u_instr_mem(

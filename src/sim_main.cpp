@@ -14,7 +14,7 @@ constexpr bool AUTO_STOP = true; // automatically injects an 0xFFFFFFFF word in 
 
 // --- GPR TRACKING CONFIGURATION (Compile-Time Validated) ---
 constexpr int MIN_GPR = 1; // inclusive
-constexpr int MAX_GPR = 8; // inclsuive
+constexpr int MAX_GPR = 31; // inclusive
 
 static_assert(MIN_GPR >= 1 && MIN_GPR <= 31, "[COMPILE ERROR] MIN_GPR must be between 1 and 31!");
 static_assert(MAX_GPR >= 1 && MAX_GPR <= 31, "[COMPILE ERROR] MAX_GPR must be between 1 and 31!");
@@ -78,12 +78,10 @@ int main(int argc, char** argv) {
         DUT->rootp->top__DOT__u_instr_mem__DOT__container[i] = ram_buffer[i];
     }
 
-    bool stop_injected = false;
     if (AUTO_STOP && (ram_buffer.size() + 4 <= RAM_SIZE)) {
         for (size_t b = 0; b < 4; ++b) {
             DUT->rootp->top__DOT__u_instr_mem__DOT__container[ram_buffer.size() + b] = (char)0xFF;
         }
-        stop_injected = true;
     }
 
     // reset in the beginning to initialize, and set clk to 0
@@ -125,7 +123,7 @@ int main(int argc, char** argv) {
         for (int r = MIN_GPR; r <= MAX_GPR; ++r) {
             uint32_t reg_val = DUT->rootp->top__DOT__u_cpu__DOT__u_reg_file__DOT__registers[r];
             
-            // Format register number to always use 2 digits with zero-padding (e.g., x01, x12)
+            // format register number to always use 2 digits with zero-padding (e.g., x01, x12)
             std::cout << "x" << std::dec << std::setw(2) << std::setfill('0') << r << ": 0x" 
                       << std::hex << std::setw(8) << std::right << std::setfill('0') << reg_val;
             
@@ -164,23 +162,18 @@ int main(int argc, char** argv) {
         std::cout << "[TB INFO] Simulation finished processing." << std::endl;
     }
 
-    uint64_t total_instr = file_size / 4;
-    if (stop_injected) {
-        total_instr += 1;
-    }
-    uint64_t active_instr = (total_instr > 0) ? (total_instr - 1) : 0;
+    // capture number of retired instructions from top module directly
+    uint32_t live_retired_instr = DUT->instr_count;
 
     std::cout << "\n------------------- PERFORMANCE METRICS -------------------" << std::endl;
     std::cout << "Total Clock Cycles:   " << std::dec << cycles << std::endl;
-    std::cout << "Total Instructions:   " << total_instr << std::endl;
-    std::cout << "Active Instructions:  " << active_instr << " (Excludes STOP)" << std::endl;
+    std::cout << "Instructions Retired: " << live_retired_instr << std::endl;
     
-    if (active_instr > 0) {
-        // Strip away the 4-cycle startup latency required to fill a 5-stage pipeline
+    if (live_retired_instr > 0) {
         uint64_t steady_state_cycles = (cycles > 4) ? (cycles - 4) : 0;
         
-        double cpi_clean = static_cast<double>(cycles) / active_instr;
-        double cpi_steady = static_cast<double>(steady_state_cycles) / active_instr;
+        double cpi_clean = static_cast<double>(cycles) / live_retired_instr;
+        double cpi_steady = static_cast<double>(steady_state_cycles) / live_retired_instr;
         
         std::cout << "Measured CPI (w/ Overhead): " << std::fixed << std::setprecision(2) << cpi_clean << std::endl;
         std::cout << "Steady-State CPI (True):    " << std::fixed << std::setprecision(2) << cpi_steady << std::endl;

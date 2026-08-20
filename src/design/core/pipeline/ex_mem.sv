@@ -1,6 +1,6 @@
 import rv32i::*;
 
-module ex_mem ( // 76 bits
+module ex_mem ( // 77 bits
     input logic clk,
     input logic rst_n,  // asynchronous active low reset
     input logic stall,
@@ -15,6 +15,7 @@ module ex_mem ( // 76 bits
     input logic i_reg_write,      // 1 bit
     input logic i_mem_to_reg,     // 1 bit
     input logic i_is_stop,        // 1 bit
+    input logic i_valid_instr,    // 1 bit
 
     output Word o_rs2_val,
     output RegAddr o_rd_addr,
@@ -25,29 +26,32 @@ module ex_mem ( // 76 bits
     output logic o_reg_write,
     output logic o_mem_to_reg,
     output logic o_is_stop,
+    output logic o_valid_instr
 );
 
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n || clear) begin
-            o_rs2_val    <= '0;
-            o_rd_addr    <= '0;
-            o_result     <= '0;
-            o_mem_read   <= '0;
-            o_mem_write  <= '0;
-            o_funct3     <= '0;
-            o_reg_write  <= '0;
-            o_mem_to_reg <= '0;
-            o_is_stop    <= '0;
+            o_rs2_val       <= '0;
+            o_rd_addr       <= '0;
+            o_result        <= '0;
+            o_mem_read      <= '0;
+            o_mem_write     <= '0;
+            o_funct3        <= '0;
+            o_reg_write     <= '0;
+            o_mem_to_reg    <= '0;
+            o_is_stop       <= '0;
+            o_valid_instr   <= '0;
         end else if (!stall) begin  // do normal logic if NOT a stall
-            o_rs2_val    <= i_rs2_val;
-            o_rd_addr    <= i_rd_addr;
-            o_result     <= i_result;
-            o_mem_read   <= i_mem_read;
-            o_mem_write  <= i_mem_write;
-            o_funct3     <= i_funct3;
-            o_reg_write  <= i_reg_write;
-            o_mem_to_reg <= i_mem_to_reg;
-            o_is_stop    <= i_is_stop;
+            o_rs2_val       <= i_rs2_val;
+            o_rd_addr       <= i_rd_addr;
+            o_result        <= i_result;
+            o_mem_read      <= i_mem_read;
+            o_mem_write     <= i_mem_write;
+            o_funct3        <= i_funct3;
+            o_reg_write     <= i_reg_write;
+            o_mem_to_reg    <= i_mem_to_reg;
+            o_is_stop       <= i_is_stop;
+            o_valid_instr   <= i_valid_instr;
         end
     end
 
