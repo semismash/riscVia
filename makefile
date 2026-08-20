@@ -3,9 +3,10 @@ SIM_EXE   = ./obj_dir/Vtop.exe
 SRC_DIR = src
 
 # RISC-V Toolchain Configurations
-AS      = riscv-none-elf-as
-LD      = riscv-none-elf-ld
-OBJCOPY = riscv-none-elf-objcopy
+AS      = riscv64-unknown-elf-as
+LD      = riscv64-unknown-elf-ld
+OBJCOPY = riscv64-unknown-elf-objcopy
+
 
 # design
 VERILOG_SRCS = \
@@ -46,11 +47,9 @@ asm:
 	@echo "[MAKE] Assembling program.s..."
 	$(AS) -march=rv32i -mabi=ilp32 -o program.o program.s
 	@echo "[MAKE] Linking ELF image at base address 0x0..."
-	$(LD) -Ttext 0x0 -o program.elf program.o
+	$(LD) -m elf32lriscv -Ttext 0x0 -o program.elf program.o
 	@echo "[MAKE] Extracting raw machine bytes to program.bin..."
 	$(OBJCOPY) -O binary program.elf program.bin
-	@echo "[MAKE] Appending 0xFFFFFFFF terminal STOP token..."
-	@printf "\xff\xff\xff\xff" >> program.bin
 	@rm -f program.o program.elf
 	@echo "[MAKE] Assembly compilation complete!"
 
