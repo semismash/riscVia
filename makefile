@@ -2,6 +2,11 @@ VERILATOR = verilator
 SIM_EXE   = ./obj_dir/Vtop.exe
 SRC_DIR = src
 
+# RISC-V Toolchain Configurations
+AS      = riscv-none-elf-as
+LD      = riscv-none-elf-ld
+OBJCOPY = riscv-none-elf-objcopy
+
 # design
 VERILOG_SRCS = \
 	$(SRC_DIR)/design/rv32i.sv \
@@ -24,16 +29,30 @@ VERILOG_SRCS = \
     $(SRC_DIR)/design/mem/instr_mem.sv \
     $(SRC_DIR)/design/top.sv
 
-
-# VERILOG_SRCS = $(wildcard $(SRC_DIR)/*.sv)
-
 # testbench
 CPP_SRCS = $(SRC_DIR)/sim_main.cpp
 
 # --- Build Rules ---
-.PHONY: all compile run clean
+.PHONY: all compile run clean asm
 
 all: compile
+
+# Target to compile your assembly source file into the expected program.bin
+asm:
+	@if [ ! -f program.s ]; then \
+		echo "[MAKE ERROR] program.s not found in root directory!"; \
+		exit 1; \
+	fi
+	@echo "[MAKE] Assembling program.s..."
+	$(AS) -march=rv32i -mabi=ilp32 -o program.o program.s
+	@echo "[MAKE] Linking ELF image at base address 0x0..."
+	$(LD) -Ttext 0x0 -o program.elf program.o
+	@echo "[MAKE] Extracting raw machine bytes to program.bin..."
+	$(OBJCOPY) -O binary program.elf program.bin
+	@echo "[MAKE] Appending 0xFFFFFFFF terminal STOP token..."
+	@printf "\xff\xff\xff\xff" >> program.bin
+	@rm -f program.o program.elf
+	@echo "[MAKE] Assembly compilation complete!"
 
 compile: $(VERILOG_SRCS) $(CPP_SRCS)
 	@echo "[MAKE] Compiling SystemVerilog core and C++ testbench..."
@@ -42,15 +61,11 @@ compile: $(VERILOG_SRCS) $(CPP_SRCS)
 		-LDFLAGS "-O2" \
 		$(VERILOG_SRCS) $(CPP_SRCS) --top-module top
 
-run: compile
-	@if [ -f program.bin ]; then \
-		echo "[MAKE] Executing simulation wrapper..."; \
-		$(SIM_EXE); \
-	else \
-		echo "[MAKE ERROR] program.bin not found! Please create it before running."; \
-		exit 1; \
-	fi
+# Updated run rule: Automatically rebuilds program.bin if program.s changes
+run: asm compile
+	@echo "[MAKE] Executing simulation wrapper..."
+	$(SIM_EXE)
 
 clean:
 	@echo "[MAKE] Sweeping away generated simulation files..."
-	rm -rf obj_dir program.bin
+	rm -rf obj_dir program.bin program.o program.elf
