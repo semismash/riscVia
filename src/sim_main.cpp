@@ -9,7 +9,8 @@
 #include "Vtop___024root.h"
 
 constexpr size_t RAM_SIZE = 65536;
-constexpr size_t MAX_CYCLE_COUNT = 200; // maximum safe cycle count for CPU before automatically crashing
+constexpr size_t MAX_CYCLE_COUNT = 10000; // maximum safe cycle count for CPU before automatically crashing
+constexpr bool AUTO_STOP = true; // automatically injects an 0xFFFFFFFF word in the end of the program to signal the CPU simulation to stop at the end
 
 double sc_time_stamp() {
     return 0;
@@ -67,6 +68,14 @@ int main(int argc, char** argv) {
     
     for (size_t i = 0; i < ram_buffer.size(); ++i) {
         DUT->rootp->top__DOT__u_instr_mem__DOT__container[i] = ram_buffer[i];
+    }
+
+    bool stop_injected = false;
+    if (AUTO_STOP && (ram_buffer.size() + 4 <= RAM_SIZE)) {
+        for (size_t b = 0; b < 4; ++b) {
+            DUT->rootp->top__DOT__u_instr_mem__DOT__container[ram_buffer.size() + b] = (char)0xFF;
+        }
+        stop_injected = true;
     }
 
     // reset in the beginning to initialize, and set clk to 0
@@ -135,6 +144,9 @@ int main(int argc, char** argv) {
     }
 
     uint64_t total_instr = file_size / 4;
+    if (stop_injected) {
+        total_instr += 1;
+    }
     uint64_t active_instr = (total_instr > 0) ? (total_instr - 1) : 0;
 
     std::cout << "\n------------------- PERFORMANCE METRICS -------------------" << std::endl;
