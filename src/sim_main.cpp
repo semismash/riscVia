@@ -12,6 +12,14 @@ constexpr size_t RAM_SIZE = 65536;
 constexpr size_t MAX_CYCLE_COUNT = 10000; // maximum safe cycle count for CPU before automatically crashing
 constexpr bool AUTO_STOP = true; // automatically injects an 0xFFFFFFFF word in the end of the program to signal the CPU simulation to stop at the end
 
+// --- GPR TRACKING CONFIGURATION (Compile-Time Validated) ---
+constexpr int MIN_GPR = 1; // inclusive
+constexpr int MAX_GPR = 8; // inclsuive
+
+static_assert(MIN_GPR >= 1 && MIN_GPR <= 31, "[COMPILE ERROR] MIN_GPR must be between 1 and 31!");
+static_assert(MAX_GPR >= 1 && MAX_GPR <= 31, "[COMPILE ERROR] MAX_GPR must be between 1 and 31!");
+static_assert(MIN_GPR <= MAX_GPR, "[COMPILE ERROR] MIN_GPR cannot be greater than MAX_GPR!");
+
 double sc_time_stamp() {
     return 0;
 }
@@ -106,18 +114,31 @@ int main(int argc, char** argv) {
         uint32_t mem_wdata     = DUT->rootp->top__DOT__write_data;
         bool     mem_we        = DUT->rootp->top__DOT__write_enable;
 
-        uint32_t r1 = DUT->rootp->top__DOT__u_cpu__DOT__u_reg_file__DOT__registers[1];
-        uint32_t r2 = DUT->rootp->top__DOT__u_cpu__DOT__u_reg_file__DOT__registers[2];
-        uint32_t r3 = DUT->rootp->top__DOT__u_cpu__DOT__u_reg_file__DOT__registers[3];
-        uint32_t r4 = DUT->rootp->top__DOT__u_cpu__DOT__u_reg_file__DOT__registers[4];
-
         std::cout << "\n========================================================" << std::endl;
         std::cout << "[CYCLE " << std::dec << cycles << "]  Executing at PC: 0x" 
                   << std::hex << std::setw(8) << std::setfill('0') << current_pc << std::endl;
         std::cout << " -> Raw Instruction Hex:  0x" << std::setw(8) << instruction << std::endl;
         std::cout << " -------------------- REGISTER FILE --------------------" << std::endl;
-        std::cout << " -> x1: 0x" << std::setw(8) << r1 << " | x2: 0x" << std::setw(8) << r2 << std::endl;
-        std::cout << " -> x3: 0x" << std::setw(8) << r3 << " | x4: 0x" << std::setw(8) << r4 << std::endl;
+        
+        int printed_in_row = 0;
+        std::cout << " -> ";
+        for (int r = MIN_GPR; r <= MAX_GPR; ++r) {
+            uint32_t reg_val = DUT->rootp->top__DOT__u_cpu__DOT__u_reg_file__DOT__registers[r];
+            
+            // Format register number to always use 2 digits with zero-padding (e.g., x01, x12)
+            std::cout << "x" << std::dec << std::setw(2) << std::setfill('0') << r << ": 0x" 
+                      << std::hex << std::setw(8) << std::right << std::setfill('0') << reg_val;
+            
+            printed_in_row++;
+            if (printed_in_row == 4 && r != MAX_GPR) {
+                std::cout << "\n -> ";
+                printed_in_row = 0;
+            } else if (r != MAX_GPR) {
+                std::cout << " | ";
+            }
+        }
+        std::cout << std::endl;
+
         std::cout << " ----------------------- CONTROLS ----------------------" << std::endl;
         std::cout << " -> Data Memory Access:   [" << (mem_we ? "WRITE" : "READ") << "] "
                   << "Addr: 0x" << mem_data_addr << " | WData: 0x" << mem_wdata << std::endl;
@@ -154,18 +175,18 @@ int main(int argc, char** argv) {
     std::cout << "Total Instructions:   " << total_instr << std::endl;
     std::cout << "Active Instructions:  " << active_instr << " (Excludes STOP)" << std::endl;
     
-    if (total_instr > 0) {
-        double cpi_raw = static_cast<double>(cycles) / total_instr;
-        std::cout << "CPI (Raw File Size):  " << std::fixed << std::setprecision(2) << cpi_raw << std::endl;
-    } else {
-        std::cout << "CPI (Raw File Size):  N/A" << std::endl;
-    }
-
     if (active_instr > 0) {
+        // Strip away the 4-cycle startup latency required to fill a 5-stage pipeline
+        uint64_t steady_state_cycles = (cycles > 4) ? (cycles - 4) : 0;
+        
         double cpi_clean = static_cast<double>(cycles) / active_instr;
-        std::cout << "CPI (Without STOP):   " << std::fixed << std::setprecision(2) << cpi_clean << std::endl;
+        double cpi_steady = static_cast<double>(steady_state_cycles) / active_instr;
+        
+        std::cout << "Measured CPI (w/ Overhead): " << std::fixed << std::setprecision(2) << cpi_clean << std::endl;
+        std::cout << "Steady-State CPI (True):    " << std::fixed << std::setprecision(2) << cpi_steady << std::endl;
     } else {
-        std::cout << "CPI (Without STOP):   N/A" << std::endl;
+        std::cout << "Measured CPI (w/ Overhead): N/A" << std::endl;
+        std::cout << "Steady-State CPI (True):    N/A" << std::endl;
     }
     std::cout << "========================================================\n" << std::endl;
 
