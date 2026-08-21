@@ -14,7 +14,10 @@ Vtop::Vtop(VerilatedContext* _vcontextp__, const char* _vcname__)
     , rst_n{vlSymsp->TOP.rst_n}
     , halt{vlSymsp->TOP.halt}
     , stop{vlSymsp->TOP.stop}
-    , instr_count{vlSymsp->TOP.instr_count}
+    , meta_instr_count{vlSymsp->TOP.meta_instr_count}
+    , meta_stall_count{vlSymsp->TOP.meta_stall_count}
+    , meta_l_use_count{vlSymsp->TOP.meta_l_use_count}
+    , meta_br_flush_count{vlSymsp->TOP.meta_br_flush_count}
     , rootp{&(vlSymsp->TOP)}
 {
     // Register model with the context
@@ -140,6 +143,6 @@ VL_ATTR_COLD void Vtop::traceBaseModel(VerilatedTraceBaseC* tfp, int levels, int
             " use --trace-fst with VerilatedFst object, and --trace-vcd with VerilatedVcd object");
     }
     stfp->spTrace()->addModel(this);
-    stfp->spTrace()->addInitCb(&trace_init, &(vlSymsp->TOP), name(), false, 143);
+    stfp->spTrace()->addInitCb(&trace_init, &(vlSymsp->TOP), name(), false, 151);
     Vtop___024root__trace_register(&(vlSymsp->TOP), stfp->spTrace());
 }

@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include <iomanip>
+#include <chrono>
 #include <verilated.h>
 #include <verilated_vcd_c.h>
 #include "Vtop.h"
@@ -97,6 +98,10 @@ int main(int argc, char** argv) {
 
     uint64_t cycles = 0;
     uint64_t sim_time = 1;
+
+    // Start benchmark clocking session right before loop initialization
+    auto start_wall_time = std::chrono::high_resolution_clock::now();
+
     while (!Verilated::gotFinish() && !DUT->halt && !DUT->stop) {
         DUT->clk = 0;
         DUT->eval();
@@ -148,6 +153,10 @@ int main(int argc, char** argv) {
         }
     }
 
+    // Stop wall-clock timing right as simulation drops out
+    auto end_wall_time = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end_wall_time - start_wall_time;
+
     std::cout << "\n========================================================" << std::endl;
     if (DUT->halt) {
         std::cout << "[TB INFO] CPU core crashed safely and generated a HALT signal." << std::endl;
@@ -163,24 +172,56 @@ int main(int argc, char** argv) {
         std::cout << "[TB INFO] Simulation finished processing." << std::endl;
     }
 
-    // capture number of retired instructions from top module directly
-    uint32_t live_retired_instr = DUT->instr_count;
+    // Capture telemetry signals directly from the new hardware output ports
+    uint32_t total_retired_instr = DUT->meta_instr_count;
+    uint32_t total_stalls        = DUT->meta_stall_count;
+    uint32_t load_use_stalls     = DUT->meta_l_use_count;
+    uint32_t branch_flushes      = DUT->meta_br_flush_count;
 
     std::cout << "\n------------------- PERFORMANCE METRICS -------------------" << std::endl;
-    std::cout << "Total Clock Cycles:   " << std::dec << cycles << std::endl;
-    std::cout << "Instructions Retired: " << live_retired_instr << std::endl;
+    std::cout << "Total Clock Cycles:       " << std::dec << cycles << std::endl;
+    std::cout << "Instructions Retired:     " << total_retired_instr << std::endl;
     
-    if (live_retired_instr > 0) {
-        uint64_t steady_state_cycles = (cycles > PIPELINE_STAGES) ? (cycles - PIPELINE_STAGES) : 0;
+    if (total_retired_instr > 0) {
+        uint64_t steady_state_cycles = (cycles > (PIPELINE_STAGES - 1)) ? (cycles - (PIPELINE_STAGES - 1)) : 0;
         
-        double cpi_clean = static_cast<double>(cycles) / live_retired_instr;
-        double cpi_steady = static_cast<double>(steady_state_cycles) / live_retired_instr;
+        double cpi_clean = static_cast<double>(cycles) / total_retired_instr;
+        double cpi_steady = static_cast<double>(steady_state_cycles) / total_retired_instr;
         
         std::cout << "Measured CPI (w/ Overhead): " << std::fixed << std::setprecision(2) << cpi_clean << std::endl;
         std::cout << "Steady-State CPI (True):    " << std::fixed << std::setprecision(2) << cpi_steady << std::endl;
     } else {
         std::cout << "Measured CPI (w/ Overhead): N/A" << std::endl;
         std::cout << "Steady-State CPI (True):    N/A" << std::endl;
+    }
+
+    std::cout << " ------------------ MICROARCHITECTURAL STATS --------------" << std::endl;
+    std::cout << "Total Stall Cycles:       " << std::dec << total_stalls;
+    if (cycles > 0) {
+        double stall_ratio = (static_cast<double>(total_stalls) / cycles) * 100.0;
+        std::cout << " (" << std::fixed << std::setprecision(1) << stall_ratio << "% of cycles)" << std::endl;
+    } else {
+        std::cout << " (0.0%)" << std::endl;
+    }
+
+    std::cout << " -> Load-Use Stalls:      " << load_use_stalls << std::endl;
+    std::cout << " -> Structural/ALU Stalls:" << (total_stalls - load_use_stalls) << std::endl;
+    std::cout << "Total Branch Flush Cycles:" << branch_flushes << std::endl;
+
+    std::cout << " ------------------- SIMULATION SPEED ---------------------" << std::endl;
+    std::cout << "Elapsed Compute Time:     " << std::fixed << std::setprecision(6) << elapsed_seconds.count() << " seconds" << std::endl;
+    
+    if (elapsed_seconds.count() > 0.0) {
+        double sim_hz = static_cast<double>(cycles) / elapsed_seconds.count();
+        if (sim_hz >= 1000000.0) {
+            std::cout << "Simulation Frequency:     " << std::fixed << std::setprecision(2) << (sim_hz / 1000000.0) << " MHz" << std::endl;
+        } else if (sim_hz >= 1000.0) {
+            std::cout << "Simulation Frequency:     " << std::fixed << std::setprecision(2) << (sim_hz / 1000.0) << " kHz" << std::endl;
+        } else {
+            std::cout << "Simulation Frequency:     " << std::fixed << std::setprecision(2) << sim_hz << " Hz" << std::endl;
+        }
+    } else {
+        std::cout << "Simulation Frequency:     N/A" << std::endl;
     }
     std::cout << "========================================================\n" << std::endl;
 
