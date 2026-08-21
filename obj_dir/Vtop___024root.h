@@ -26,6 +26,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         CData/*0:0*/ top__DOT__u_cpu__DOT__hz_pc_enable;
         CData/*0:0*/ top__DOT__u_cpu__DOT__hz_if_id_enable;
         CData/*0:0*/ top__DOT__u_cpu__DOT__hz_id_ex_clear;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__hz_meta_is_stall;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__hz_meta_is_l_use;
         CData/*0:0*/ top__DOT__u_cpu__DOT__reg_w_enable;
         CData/*0:0*/ top__DOT__u_cpu__DOT__pc_in1_sel;
         CData/*0:0*/ top__DOT__u_cpu__DOT__mem_to_reg;
@@ -78,10 +80,13 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs1_used;
         CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs2_used;
         CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs1_hazard_ex_mem;
-        CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs2_hazard_ex_mem;
-        CData/*6:0*/ top__DOT__u_cpu__DOT__u_decoder__DOT__opcode;
     };
     struct {
+        CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs2_hazard_ex_mem;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__raw_hazard_id_ex;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__condition_2a;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__condition_2b;
+        CData/*6:0*/ top__DOT__u_cpu__DOT__u_decoder__DOT__opcode;
         CData/*2:0*/ top__DOT__u_cpu__DOT__u_decoder__DOT__imm_type;
         CData/*0:0*/ top__DOT__u_cpu__DOT__u_branch_unit__DOT__branch_passed;
         CData/*0:0*/ top__DOT__u_cpu__DOT__u_meta__DOT__stop_signal;
@@ -98,7 +103,10 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         CData/*0:0*/ __Vtrigprevexpr___TOP__rst_n__0;
         CData/*0:0*/ __VactPhaseResult;
         CData/*0:0*/ __VnbaPhaseResult;
-        VL_OUT(instr_count,31,0);
+        VL_OUT(meta_instr_count,31,0);
+        VL_OUT(meta_stall_count,31,0);
+        VL_OUT(meta_l_use_count,31,0);
+        VL_OUT(meta_br_flush_count,31,0);
         IData/*31:0*/ top__DOT__if_addr;
         IData/*31:0*/ top__DOT__data_addr;
         IData/*31:0*/ top__DOT__write_data;
@@ -124,6 +132,9 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_alu__DOT__data1;
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_alu__DOT__data2;
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_meta__DOT__instr_count;
+        IData/*31:0*/ top__DOT__u_cpu__DOT__u_meta__DOT__stall_count;
+        IData/*31:0*/ top__DOT__u_cpu__DOT__u_meta__DOT__l_use_count;
+        IData/*31:0*/ top__DOT__u_cpu__DOT__u_meta__DOT__br_flush_count;
         IData/*31:0*/ top__DOT__u_instr_mem__DOT__addr_reg;
         IData/*31:0*/ __VactIterCount;
         VlUnpacked<IData/*31:0*/, 32> top__DOT__u_cpu__DOT__u_reg_file__DOT__registers;

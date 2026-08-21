@@ -30,6 +30,9 @@ module rv32i_core (
     logic hz_if_id_enable;
     logic hz_if_id_clear;
     logic hz_id_ex_clear;
+    logic hz_meta_is_stall;
+    logic hz_meta_is_l_use;
+    logic hz_meta_branch_flush;
 
     // fetch
     logic if_fault_out;
@@ -187,7 +190,11 @@ module rv32i_core (
         .pc_enable          (hz_pc_enable),
         .if_id_enable       (hz_if_id_enable),
         .if_id_clear        (hz_if_id_clear),
-        .id_ex_clear        (hz_id_ex_clear)
+        .id_ex_clear        (hz_id_ex_clear),
+        // metadata
+        .meta_is_stall      (hz_meta_is_stall),
+        .meta_is_l_use      (hz_meta_is_l_use),
+        .meta_branch_flush  (hz_meta_branch_flush)
     );
 
     fetch u_fetch(  // x
@@ -416,6 +423,9 @@ module rv32i_core (
         .rst_n                  (rst_n),
         .stop_in                (mem_wb_stop),
         .valid_instr            (mem_wb_valid_instr),
+        .is_stall               (hz_meta_is_stall),
+        .is_l_use               (hz_meta_is_l_use),
+        .is_br_flush            (hz_meta_branch_flush),
         .stop_out               (stop),
         .meta_instr_count       (meta_instr_count),
         .meta_stall_count       (meta_stall_count),

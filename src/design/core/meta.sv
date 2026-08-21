@@ -29,16 +29,22 @@ module meta (
         if (!rst_n) begin
             stop_signal <= 1'b0;
             instr_count <= '0;
+            stall_count <= '0;
+            l_use_count <= '0;
+            br_flush_count <= '0;
         end else begin
             stop_signal <= stop_in;
             if (valid_instr)    instr_count <= instr_count + 1'b1;
             if (is_stall)       stall_count <= stall_count + 1'b1;
             if (is_l_use)       l_use_count <= l_use_count + 1'b1;
-            if (is_br_flush)    br_flush_count <= br_flush_count + 1'b1;
+            if (is_br_flush)    br_flush_count <= br_flush_count + 2'd2;    // add 2 cycles here since flushes void 2 cycles worth of instructions
         end
     end
 
     assign stop_out = stop_signal;
-    assign instr_count_out = instr_count;
+    assign meta_instr_count = instr_count;
+    assign meta_stall_count = stall_count;
+    assign meta_l_use_count = l_use_count;
+    assign meta_br_flush_count = br_flush_count;
 
 endmodule
