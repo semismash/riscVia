@@ -25,8 +25,8 @@ void Vtop___024root__trace_chg_0_sub_0(Vtop___024root* vlSelf, VerilatedVcd::Buf
     // Body
     uint32_t* const oldp VL_ATTR_UNUSED = bufp->oldp(vlSymsp->__Vm_baseCode + 0);
     if (VL_UNLIKELY((vlSelfRef.__Vm_traceActivity[1U]))) {
-        bufp->chgBit(oldp+0,(vlSelfRef.top__DOT__u_cpu__DOT__u_stop__DOT__stop_signal));
-        bufp->chgIData(oldp+1,(vlSelfRef.top__DOT__u_cpu__DOT__u_stop__DOT__instr_count),32);
+        bufp->chgBit(oldp+0,(vlSelfRef.top__DOT__u_cpu__DOT__u_meta__DOT__stop_signal));
+        bufp->chgIData(oldp+1,(vlSelfRef.top__DOT__u_cpu__DOT__u_meta__DOT__instr_count),32);
         bufp->chgBit(oldp+2,(vlSelfRef.top__DOT__u_cpu__DOT__hz_pc_enable));
         bufp->chgBit(oldp+3,(vlSelfRef.top__DOT__u_cpu__DOT__hz_if_id_enable));
         bufp->chgBit(oldp+4,(vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__branch_taken));

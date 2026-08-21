@@ -8,6 +8,8 @@ package rv32i;
     typedef logic [7:0] Byte;
     typedef logic [ADDR_WIDTH-1:0] RegAddr;
 
+    typedef logic [31:0] MetaCount;
+
     localparam BITS_FIT = $clog2(DATA_WIDTH>>3) + 1;    // 3
     typedef enum logic [BITS_FIT - 1:0] {  // to be shared between LSU and mem module
         ZERO = 'd0,

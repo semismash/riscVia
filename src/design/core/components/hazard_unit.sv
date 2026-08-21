@@ -16,11 +16,15 @@ module hazard_unit (    // currently, stalls for both control and data hazards
     // MEM/WB
     input logic     mem_wb_reg_write,
     input RegAddr   mem_wb_rdst,
-
+    // outputs
     output logic    pc_enable,
     output logic    if_id_enable,
     output logic    if_id_clear,
-    output logic    id_ex_clear
+    output logic    id_ex_clear,
+    // metadata
+    output logic    meta_is_stall,
+    output logic    meta_is_l_use,
+    output logic    meta_branch_flush
 );
 
     // 1. Control Hazard - when branch detected in ID/EX - clear and stall IF/ID for one cycle
@@ -40,6 +44,10 @@ module hazard_unit (    // currently, stalls for both control and data hazards
         if_id_enable = 1'b1;
         if_id_clear = 1'b0;
         id_ex_clear = 1'b0;
+
+        meta_is_stall = 1'b0;
+        meta_is_l_use = 1'b0;
+        meta_branch_flush = 1'b0;
 
         // check if rs1 or rs2 are used by the instruction, performance guardrail to prevent unnecessary stalls
         rs1_used = 
@@ -64,16 +72,20 @@ module hazard_unit (    // currently, stalls for both control and data hazards
         if (branch_taken) begin // Condition 1
             if_id_clear = 1'b1;
             id_ex_clear = 1'b1;
+            meta_branch_flush = 1'b1;
         // Condition 2, create bubble by freezing
         end else if (id_ex_reg_write && (id_ex_rdst != '0) && ((rs1_used && (id_ex_rdst == if_id_rs1)) || (rs2_used && (id_ex_rdst == if_id_rs2)))) begin
-            pc_enable    = 1'b0;
-            if_id_enable = 1'b0;
-            id_ex_clear  = 1'b1;
+            pc_enable     = 1'b0;
+            if_id_enable  = 1'b0;
+            id_ex_clear   = 1'b1;
+            meta_is_stall = 1'b1;
+            meta_is_l_use = 1'b1;
         // Condition 3, create a bubble
         end else if (rs1_hazard_ex_mem || rs2_hazard_ex_mem) begin
-            pc_enable    = 1'b0;
-            if_id_enable = 1'b0;
-            id_ex_clear  = 1'b1;
+            pc_enable     = 1'b0;
+            if_id_enable  = 1'b0;
+            id_ex_clear   = 1'b1;
+            meta_is_stall = 1'b1;
         end
     end
 
