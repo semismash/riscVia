@@ -84,7 +84,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
     struct {
         CData/*2:0*/ top__DOT__u_cpu__DOT__u_decoder__DOT__imm_type;
         CData/*0:0*/ top__DOT__u_cpu__DOT__u_branch_unit__DOT__branch_passed;
-        CData/*0:0*/ top__DOT__u_cpu__DOT__u_stop__DOT__stop_signal;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__u_meta__DOT__stop_signal;
         CData/*3:0*/ __Vfunc_top__DOT__u_cpu__DOT__u_decoder__DOT__calc_alu_op__0__Vfuncout;
         CData/*3:0*/ __Vfunc_top__DOT__u_cpu__DOT__u_decoder__DOT__calc_alu_op__0__return_op;
         CData/*3:0*/ __Vfunc_top__DOT__u_cpu__DOT__u_decoder__DOT__calc_alu_op__1__Vfuncout;
@@ -123,7 +123,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_pc__DOT__unnamedblk1__DOT__in2;
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_alu__DOT__data1;
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_alu__DOT__data2;
-        IData/*31:0*/ top__DOT__u_cpu__DOT__u_stop__DOT__instr_count;
+        IData/*31:0*/ top__DOT__u_cpu__DOT__u_meta__DOT__instr_count;
         IData/*31:0*/ top__DOT__u_instr_mem__DOT__addr_reg;
         IData/*31:0*/ __VactIterCount;
         VlUnpacked<IData/*31:0*/, 32> top__DOT__u_cpu__DOT__u_reg_file__DOT__registers;

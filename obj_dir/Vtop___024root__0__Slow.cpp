@@ -117,8 +117,8 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
     CData/*3:0*/ __Vtableidx1;
     __Vtableidx1 = 0;
     // Body
-    vlSelfRef.stop = vlSelfRef.top__DOT__u_cpu__DOT__u_stop__DOT__stop_signal;
-    vlSelfRef.instr_count = vlSelfRef.top__DOT__u_cpu__DOT__u_stop__DOT__instr_count;
+    vlSelfRef.stop = vlSelfRef.top__DOT__u_cpu__DOT__u_meta__DOT__stop_signal;
+    vlSelfRef.instr_count = vlSelfRef.top__DOT__u_cpu__DOT__u_meta__DOT__instr_count;
     vlSelfRef.top__DOT__write_enable = 0U;
     vlSelfRef.top__DOT__write_data = 0U;
     if ((1U & (~ (IData)(vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_mem_read)))) {
@@ -847,8 +847,8 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->top__DOT__u_cpu__DOT__u_alu__DOT__data1 = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 14033296306717898790ull);
     vlSelf->top__DOT__u_cpu__DOT__u_alu__DOT__data2 = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12677144840115112110ull);
     vlSelf->top__DOT__u_cpu__DOT__u_branch_unit__DOT__branch_passed = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5030301645421667381ull);
-    vlSelf->top__DOT__u_cpu__DOT__u_stop__DOT__stop_signal = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15469077429217011766ull);
-    vlSelf->top__DOT__u_cpu__DOT__u_stop__DOT__instr_count = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 2871191373399451771ull);
+    vlSelf->top__DOT__u_cpu__DOT__u_meta__DOT__stop_signal = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12421637888803468164ull);
+    vlSelf->top__DOT__u_cpu__DOT__u_meta__DOT__instr_count = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 15613914127732262431ull);
     for (int __Vi0 = 0; __Vi0 < 65536; ++__Vi0) {
         vlSelf->top__DOT__u_instr_mem__DOT__container[__Vi0] = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 17838547526792547713ull);
     }

@@ -17,7 +17,12 @@ module rv32i_core (
 
     output logic halt,          // halt on panic
     output logic stop,          // safe halt
-    output logic [31:0] instr_count
+
+    // telemetry
+    output MetaCount meta_instr_count,
+    output MetaCount meta_stall_count,
+    output MetaCount meta_l_use_count,
+    output MetaCount meta_br_flush_count,
 );
 
     // hazard unit
@@ -406,13 +411,16 @@ module rv32i_core (
         .o_valid_instr  (mem_wb_valid_instr)
     );
 
-    stop u_stop (
-        .clk                (clk),
-        .rst_n              (rst_n),
-        .stop_in            (mem_wb_stop),
-        .valid_instr        (mem_wb_valid_instr),
-        .stop_out           (stop),
-        .instr_count_out    (instr_count)
+    meta u_meta (
+        .clk                    (clk),
+        .rst_n                  (rst_n),
+        .stop_in                (mem_wb_stop),
+        .valid_instr            (mem_wb_valid_instr),
+        .stop_out               (stop),
+        .meta_instr_count       (meta_instr_count),
+        .meta_stall_count       (meta_stall_count),
+        .meta_l_use_count       (meta_l_use_count),
+        .meta_br_flush_count    (meta_br_flush_count)
     );
 
     assign halt = if_fault_out | data_fault | illegal_instr;

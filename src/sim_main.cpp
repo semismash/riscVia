@@ -11,6 +11,7 @@
 constexpr size_t RAM_SIZE = 65536;
 constexpr size_t MAX_CYCLE_COUNT = 10000; // maximum safe cycle count for CPU before automatically crashing
 constexpr bool AUTO_STOP = true; // automatically injects an 0xFFFFFFFF word in the end of the program to signal the CPU simulation to stop at the end
+constexpr size_t PIPELINE_STAGES = 5;
 
 // --- GPR TRACKING CONFIGURATION (Compile-Time Validated) ---
 constexpr int MIN_GPR = 1; // inclusive
@@ -170,7 +171,7 @@ int main(int argc, char** argv) {
     std::cout << "Instructions Retired: " << live_retired_instr << std::endl;
     
     if (live_retired_instr > 0) {
-        uint64_t steady_state_cycles = (cycles > 4) ? (cycles - 4) : 0;
+        uint64_t steady_state_cycles = (cycles > PIPELINE_STAGES) ? (cycles - PIPELINE_STAGES) : 0;
         
         double cpi_clean = static_cast<double>(cycles) / live_retired_instr;
         double cpi_steady = static_cast<double>(steady_state_cycles) / live_retired_instr;

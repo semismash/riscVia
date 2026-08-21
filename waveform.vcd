@@ -334,6 +334,16 @@ $timescale 1ps $end
      $var wire 1 i o_is_stop $end
      $var wire 1 j o_valid_instr $end
     $upscope $end
+    $scope module u_meta $end
+     $var wire 1 =! clk $end
+     $var wire 1 >! rst_n $end
+     $var wire 1 i stop_in $end
+     $var wire 1 j valid_instr $end
+     $var wire 1 " stop_out $end
+     $var wire 32 # instr_count_out [31:0] $end
+     $var wire 1 " stop_signal $end
+     $var wire 32 # instr_count [31:0] $end
+    $upscope $end
     $scope module u_pc $end
      $var wire 1 =! clk $end
      $var wire 1 >! rst_n $end
@@ -396,16 +406,6 @@ $timescale 1ps $end
      $var wire 32 :! registers[1] [31:0] $end
      $var wire 32 ;! registers[0] [31:0] $end
      $var wire 32 <! i [31:0] $end
-    $upscope $end
-    $scope module u_stop $end
-     $var wire 1 =! clk $end
-     $var wire 1 >! rst_n $end
-     $var wire 1 i stop_in $end
-     $var wire 1 j valid_instr $end
-     $var wire 1 " stop_out $end
-     $var wire 32 # instr_count_out [31:0] $end
-     $var wire 1 " stop_signal $end
-     $var wire 32 # instr_count [31:0] $end
     $upscope $end
    $upscope $end
    $scope module u_data_mem $end

@@ -5,7 +5,11 @@ module top(
     input logic rst_n,  // active low reset
     output logic halt,  // halt detect
     output logic stop,  // safe stop
-    output logic [31:0] instr_count
+    // telemetry data
+    output MetaCount meta_instr_count,
+    output MetaCount meta_stall_count,
+    output MetaCount meta_l_use_count,
+    output MetaCount meta_br_flush_count,
 );
 
     // from CPU
@@ -23,23 +27,27 @@ module top(
 
     rv32i_core u_cpu(
         //clk and reset
-        .clk        (clk),
-        .rst_n      (rst_n),
+        .clk            (clk),
+        .rst_n          (rst_n),
         // IN
-        .instr_in   (instr),
-        .data_in    (read_data),
-        .if_fault   (if_fault),
-        .data_fault (data_fault),
+        .instr_in       (instr),
+        .data_in        (read_data),
+        .if_fault       (if_fault),
+        .data_fault     (data_fault),
         // OUT
-        .if_addr    (if_addr),
-        .data_addr  (data_addr),
-        .data_out   (write_data), 
-        .write_en   (write_enable),
-        .req_bytes  (req_bytes),
+        .if_addr        (if_addr),
+        .data_addr      (data_addr),
+        .data_out       (write_data), 
+        .write_en       (write_enable),
+        .req_bytes      (req_bytes),
         // HALT
-        .halt       (halt),
-        .stop       (stop),
-        .instr_count(instr_count)
+        .halt           (halt),
+        .stop           (stop),
+        // TELEMETRY
+        .meta_instr_count       (meta_instr_count),
+        .meta_stall_count       (meta_stall_count),
+        .meta_l_use_count       (meta_l_use_count),
+        .meta_br_flush_count    (meta_br_flush_count),
     );
 
     instr_mem u_instr_mem(

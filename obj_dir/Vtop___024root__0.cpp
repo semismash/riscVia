@@ -247,8 +247,8 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
            && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__alu_bypass));
     if (vlSelfRef.rst_n) {
         if (vlSelfRef.top__DOT__u_cpu__DOT__mem_wb_valid_instr) {
-            vlSelfRef.top__DOT__u_cpu__DOT__u_stop__DOT__instr_count 
-                = ((IData)(1U) + vlSelfRef.top__DOT__u_cpu__DOT__u_stop__DOT__instr_count);
+            vlSelfRef.top__DOT__u_cpu__DOT__u_meta__DOT__instr_count 
+                = ((IData)(1U) + vlSelfRef.top__DOT__u_cpu__DOT__u_meta__DOT__instr_count);
         }
         if (((IData)(vlSelfRef.top__DOT__u_cpu__DOT__mem_wb_reg_write) 
              & (0U != (IData)(vlSelfRef.top__DOT__u_cpu__DOT__mem_wb_rd_addr)))) {
@@ -271,7 +271,7 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
         vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_rs2_val 
             = vlSelfRef.top__DOT__u_cpu__DOT__id_ex_rs2_data;
     } else {
-        vlSelfRef.top__DOT__u_cpu__DOT__u_stop__DOT__instr_count = 0U;
+        vlSelfRef.top__DOT__u_cpu__DOT__u_meta__DOT__instr_count = 0U;
         __VdlySet__top__DOT__u_cpu__DOT__u_reg_file__DOT__registers__v1 = 1U;
         vlSelfRef.top__DOT__u_cpu__DOT__u_pc__DOT__pc = 0U;
         vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_result = 0U;
@@ -395,9 +395,9 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
         = ((IData)(vlSelfRef.rst_n) && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_mem_write));
     vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_mem_read 
         = ((IData)(vlSelfRef.rst_n) && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_mem_read));
-    vlSelfRef.top__DOT__u_cpu__DOT__u_stop__DOT__stop_signal 
+    vlSelfRef.top__DOT__u_cpu__DOT__u_meta__DOT__stop_signal 
         = ((IData)(vlSelfRef.rst_n) && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__mem_wb_stop));
-    vlSelfRef.instr_count = vlSelfRef.top__DOT__u_cpu__DOT__u_stop__DOT__instr_count;
+    vlSelfRef.instr_count = vlSelfRef.top__DOT__u_cpu__DOT__u_meta__DOT__instr_count;
     vlSelfRef.top__DOT__u_cpu__DOT__mem_wb_valid_instr 
         = ((IData)(vlSelfRef.rst_n) && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_valid_instr));
     vlSelfRef.__VdfgRegularize_h6e95ff9d_0_0 = ((IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_is_jal) 
@@ -411,7 +411,7 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
     vlSelfRef.top__DOT__u_cpu__DOT__id_ex_mem_read 
         = ((1U & (~ ((~ (IData)(vlSelfRef.rst_n)) | (IData)(vlSelfRef.top__DOT__u_cpu__DOT__hz_id_ex_clear)))) 
            && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__mem_read));
-    vlSelfRef.stop = vlSelfRef.top__DOT__u_cpu__DOT__u_stop__DOT__stop_signal;
+    vlSelfRef.stop = vlSelfRef.top__DOT__u_cpu__DOT__u_meta__DOT__stop_signal;
     vlSelfRef.top__DOT__u_cpu__DOT__mem_wb_stop = ((IData)(vlSelfRef.rst_n) 
                                                    && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_stop));
     if (__VdlySet__top__DOT__u_cpu__DOT__u_reg_file__DOT__registers__v0) {
