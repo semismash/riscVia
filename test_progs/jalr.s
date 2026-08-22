@@ -1,5 +1,5 @@
 #
-# TEST CODE FOR LW
+# TEST CODE FOR JALR
 #
         # -----------------------------------------
         # Program section (known as text)
@@ -15,28 +15,35 @@ _start: .global _start
 # Label for entry point of test code
 main:
         ### TEST CODE STARTS HERE ###
-        # load word with zero imm
-        lla  x1, data            # set x1 to data
-        addi x1,x1, 8           # set x1 to data + 8
-        lw  x2, 0(x1)           # load word from address data to x2, x2=0x11335577
         
-        # load word with positive imm
-        lw x3, 8(x1)           # load word from address 0x1010 to x3, x3=0xABCDEF19
+        # jump register
+        nop                     # no operation
+        nop                     # no operation
+        lla     x1, jump1       # load address of jump1 to x1, x1=jump1
+        jalr    x2, 0(x1)       # jump to address stored in x1 (jump1) then store next PC to x2 , x2=x2_val
+        x2_val:
+        j       fail1           # jump to fail
+        nop                     # no operation
+        nop                     # no operation
         
-        # load halfword with negative imm
-        lw x4, -8(x1)           # load word from address 0x1000 to x4, x4=0x12345678
+        jump1: 
+        nop                     # no operation
+        nop                     # no operation
+        jalr    x3, 24(x1)     # jump to address stored in x1 plus 24 then store next PC to x3, x3=x3_val
+        x3_val:
+        jal     fail2           # jump to fail
+        nop                     # no operation
+        nop                     # no operation
         
-        #self-check
-        li x5, 0x11335577       # set x5 to 0x11335577 (expected value for x2)
-        beqz x5, fail0          # make sure x5 has value
-        li x6, 0xABCDEF19       # set x6 to 0xABCDEF19 (0xFFFFABCD) (expected value for x3)
-        beqz x6, fail0          # make sure x6 has value
-        li x7, 0x12345678       # set x7 to 0x12345678 (expected value for x4)
-        beqz x7, fail0          # make sure x7 has value
-        bne x2, x5, fail1       #
-        bne x3, x6, fail2       # branch to fail if not equal to expected value
-        bne x4, x7, fail3       #
-        
+        jump2:
+        lla     x4, x2_val      # load address of x2_val to x4(expected value for x2)
+        beqz    x4, fail0       # make sure x4 has value
+        lla     x5, x3_val      # load address of x3_val to x5(expected value for x3)
+        beqz    x5, fail0       # make sure x5 has value
+        bne     x2, x4, fail3   # 
+        bne     x3, x5, fail4   # branch to fail if not equal to expected value
+         
+         
         ###    END OF TEST CODE   ###
 
         # Exit test using RISC-V International's riscv-tests pass/fail criteria
@@ -49,6 +56,7 @@ main:
         li      a0, 1           # fail code
         li      a7, 93          # reached end of code
         ebreak
+        
         
         fail1:
         li      a0, 2           # fail code
@@ -65,16 +73,18 @@ main:
         li      a7, 93          # reached end of code
         ebreak
         
- 
+        fail4:
+        li      a0, 8           # fail code
+        li      a7, 93          # reached end of code
+        ebreak
+        
+
         # -----------------------------------------
         # Data section. Note starts at 0x1000, as 
         # set by DATAADDR variable in rv_asm.bat.
         # -----------------------------------------
         .data
- data: 
+
         # Data section
-        .word 0x12345678    
-        .word 0             
-        .word 0x11335577    
-        .word 0             
-        .word 0xABCDEF19    
+data:
+        

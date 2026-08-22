@@ -77,7 +77,8 @@ int main(int argc, char** argv) {
     }
     
     for (size_t i = 0; i < ram_buffer.size(); ++i) {
-        DUT->rootp->top__DOT__u_instr_mem__DOT__container[i] = ram_buffer[i];
+        DUT->rootp->top__DOT__u_instr_mem__DOT__container[i] = ram_buffer[i]; // initialize program into instruction memory
+        DUT->rootp->top__DOT__u_data_mem__DOT__container[i] = ram_buffer[i];  // if any data intiialization left via .word directives
     }
 
     if (AUTO_STOP && (ram_buffer.size() + 4 <= RAM_SIZE)) {

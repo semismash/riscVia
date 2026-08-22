@@ -1,5 +1,5 @@
 #
-# TEST CODE FOR LW
+# TEST CODE FOR LB
 #
         # -----------------------------------------
         # Program section (known as text)
@@ -15,23 +15,23 @@ _start: .global _start
 # Label for entry point of test code
 main:
         ### TEST CODE STARTS HERE ###
-        # load word with zero imm
+        # load byte with zero imm
         lla  x1, data            # set x1 to data
         addi x1,x1, 8           # set x1 to data + 8
-        lw  x2, 0(x1)           # load word from address data to x2, x2=0x11335577
+        lb  x2, 0(x1)           # load byte from address data + 8 to x2, x2=0x00000077
         
-        # load word with positive imm
-        lw x3, 8(x1)           # load word from address 0x1010 to x3, x3=0xABCDEF19
+        # load byte with positive imm
+        lb x3, 11(x1)           # load byte from address to x3, x3=0xFFFFFFAB
         
-        # load halfword with negative imm
-        lw x4, -8(x1)           # load word from address 0x1000 to x4, x4=0x12345678
+        # load byte with negative imm
+        lb x4, -6(x1)           # load byte from address 0x1002 to x4, x4=0x00000034
         
         #self-check
-        li x5, 0x11335577       # set x5 to 0x11335577 (expected value for x2)
-        beqz x5, fail0          # make sure x5 has value
-        li x6, 0xABCDEF19       # set x6 to 0xABCDEF19 (0xFFFFABCD) (expected value for x3)
-        beqz x6, fail0          # make sure x6 has value
-        li x7, 0x12345678       # set x7 to 0x12345678 (expected value for x4)
+        li x5, 0x077            # set x5 to 0x77 (expected value for x2)
+        beqz x5, fail0          # make sure has x5 has value
+        li x6, -85              # set x6 to -85 (0xFFFFFFAB) (expected value for x3)
+        beqz x6, fail0          # make sure has x6 has value
+        li x7, 0x034            # set x7 to 0x034 (expected value for x4)
         beqz x7, fail0          # make sure x7 has value
         bne x2, x5, fail1       #
         bne x3, x6, fail2       # branch to fail if not equal to expected value
@@ -73,8 +73,8 @@ main:
         .data
  data: 
         # Data section
-        .word 0x12345678    
-        .word 0             
-        .word 0x11335577    
-        .word 0             
-        .word 0xABCDEF19    
+        .word 0x12345678    #1000
+        .word 0             #1004
+        .word 0x11335577    #1008
+        .word 0             #100C
+        .word 0xABCDEF19    #1010

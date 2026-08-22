@@ -1,5 +1,5 @@
 #
-# TEST CODE FOR LW
+# TEST CODE FOR SB
 #
         # -----------------------------------------
         # Program section (known as text)
@@ -15,28 +15,33 @@ _start: .global _start
 # Label for entry point of test code
 main:
         ### TEST CODE STARTS HERE ###
-        # load word with zero imm
-        lla  x1, data            # set x1 to data
-        addi x1,x1, 8           # set x1 to data + 8
-        lw  x2, 0(x1)           # load word from address data to x2, x2=0x11335577
         
-        # load word with positive imm
-        lw x3, 8(x1)           # load word from address 0x1010 to x3, x3=0xABCDEF19
+        # store byte with zero immediate
+        li      x1, 0x12345678  # set x1 to 0x12345678 
+        li      x2, 0x1008      # set x2 to 0x1008
+        sb      x1, 0(x2)       # store byte from x1 (0x12345678) to 0x1008, mem_byte(0x1008)=0x78 
         
-        # load halfword with negative imm
-        lw x4, -8(x1)           # load word from address 0x1000 to x4, x4=0x12345678
+        # store byte with positive immediate
+        li      x3, 0xAABBCCDD  # set x3 to 0xAABBCCDD
+        sb      x3, 1(x2)       # store byte from x3 (0xAABBCCDD) to 0x1009, mem_byte(0x1009)=0xDD
         
-        #self-check
-        li x5, 0x11335577       # set x5 to 0x11335577 (expected value for x2)
-        beqz x5, fail0          # make sure x5 has value
-        li x6, 0xABCDEF19       # set x6 to 0xABCDEF19 (0xFFFFABCD) (expected value for x3)
-        beqz x6, fail0          # make sure x6 has value
-        li x7, 0x12345678       # set x7 to 0x12345678 (expected value for x4)
-        beqz x7, fail0          # make sure x7 has value
-        bne x2, x5, fail1       #
-        bne x3, x6, fail2       # branch to fail if not equal to expected value
-        bne x4, x7, fail3       #
+        #store byte with negative immediate
+        sb      x3, -4(x2)      # store byte from x3(0xAABBCCDD) to 0x1004, mem_byte(0x1004)=0xDD
+         
+        # self-check 
+        li      x4, 0x78        # set x4 to 0x78 (expected value for mem_byte(0x1008)
+        beqz    x4, fail0       # make sure x4 has value
+        li      x5, 0xDD        # set x5 to 0xDD (expected value for mem_byte(0x1009) and mem_byte(0x1004) )
+        beqz    x5, fail0       # make sure x5 has value
+        lbu     x6, 0(x2)       # load byte from address 0x1008 to x6 (0x78)
+        lbu     x7, 1(x2)       # load byte from address 0x1009 to x7 (0xDD)
+        lbu     x8, -4(x2)      # load byte from address 0x1004 to x8 (0xDD)
+        bne     x6, x4, fail1   #
+        bne     x7, x5, fail2   # branch to fail if not equal to expected value
+        bne     x8, x5, fail3   #
         
+
+         
         ###    END OF TEST CODE   ###
 
         # Exit test using RISC-V International's riscv-tests pass/fail criteria
@@ -64,17 +69,13 @@ main:
         li      a0, 6           # fail code
         li      a7, 93          # reached end of code
         ebreak
-        
- 
+
         # -----------------------------------------
         # Data section. Note starts at 0x1000, as 
         # set by DATAADDR variable in rv_asm.bat.
         # -----------------------------------------
         .data
- data: 
+
         # Data section
-        .word 0x12345678    
-        .word 0             
-        .word 0x11335577    
-        .word 0             
-        .word 0xABCDEF19    
+data:
+        
