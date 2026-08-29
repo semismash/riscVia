@@ -21,6 +21,9 @@ module hazard_unit (    // currently, stalls for both control and data hazards
     output logic    if_id_enable,
     output logic    if_id_clear,
     output logic    id_ex_clear,
+    // forwarding
+    output logic    cond_l_use_1gp, // condition load-use 1 instruction gap (forwarding unit)
+    output logic    cond_raw_other, // condition for other RAW hazard (forwarding unit)
     // metadata
     output logic    meta_is_stall,
     output logic    meta_is_l_use,
@@ -28,9 +31,9 @@ module hazard_unit (    // currently, stalls for both control and data hazards
 );
 
     // 1. Control Hazard - when branch detected in ID/EX - clear and stall IF/ID for one cycle
-    // 2. Data Hazard - load hazard with no gap b/w use inst (scan IF/ID and ID/EX) - stall till hazard resolved
-    /* 3. Data Hazard - non-load hazard or load hazard with instruction gap (scan ID/EX, EX/MEM and MEM/WB) 
-        - stall till hazard resolved but replace with forwarding later*/
+    /* 2. Data Hazard - load-use hazard with (a) 0 instruction gap or (b) 1 instruction gap use inst (scan IF/ID and ID/EX) - 
+        stall till hazard resolved */
+    // 3. Data Hazard - non-load hazard (scan ID/EX, EX/MEM and MEM/WB) - stall till hazard resolved but replace with forwarding later
 
     logic rs1_used;
     logic rs2_used;
@@ -105,4 +108,4 @@ module hazard_unit (    // currently, stalls for both control and data hazards
         end
     end
 
-endmodule
+endmodule/
