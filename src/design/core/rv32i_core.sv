@@ -133,6 +133,12 @@ module rv32i_core (
     logic mem_wb_reg_write;
     logic mem_wb_stop;
     logic mem_wb_valid_instr;
+
+    // forwarding unit
+    logic fwd_alu_in1_ex_mem;
+    logic fwd_alu_in2_mem_wb;
+    logic fwd_alu_in1_ex_mem;
+    logic fwd_alu_in2_mem_wb;
     
     // temp fix
     Word ex_result;
@@ -173,29 +179,67 @@ module rv32i_core (
         .pc_out         (pc)
     );
 
+    // hazard_unit u_hazard_unit (
+    //     // input
+    //     .if_id_opcode       (if_id_opcode),
+    //     .if_id_rs1          (if_id_rs1_addr),
+    //     .if_id_rs2          (if_id_rs2_addr),
+    //     .id_ex_mem_read     (id_ex_mem_read),
+    //     .id_ex_reg_write    (id_ex_reg_write),
+    //     .id_ex_rdst         (id_ex_rd_addr),
+    //     .branch_taken       (branch_taken),
+    //     .ex_mem_reg_write   (ex_mem_reg_write),
+    //     .ex_mem_rdst        (ex_mem_rd_addr),
+    //     .mem_wb_reg_write   (mem_wb_reg_write),
+    //     .mem_wb_rdst        (mem_wb_rd_addr),
+    //     // output
+    //     .pc_enable          (hz_pc_enable),
+    //     .if_id_enable       (hz_if_id_enable),
+    //     .if_id_clear        (hz_if_id_clear),
+    //     .id_ex_clear        (hz_id_ex_clear),
+    //     // metadata
+    //     .meta_is_stall      (hz_meta_is_stall),
+    //     .meta_is_l_use      (hz_meta_is_l_use),
+    //     .meta_branch_flush  (hz_meta_branch_flush)
+    // );
+
     hazard_unit u_hazard_unit (
-        // input
-        .if_id_opcode       (if_id_opcode),
-        .if_id_rs1          (if_id_rs1_addr),
-        .if_id_rs2          (if_id_rs2_addr),
-        .id_ex_mem_read     (id_ex_mem_read),
-        .id_ex_reg_write    (id_ex_reg_write),
-        .id_ex_rdst         (id_ex_rd_addr),
-        .branch_taken       (branch_taken),
-        .ex_mem_reg_write   (ex_mem_reg_write),
-        .ex_mem_rdst        (ex_mem_rd_addr),
-        .mem_wb_reg_write   (mem_wb_reg_write),
-        .mem_wb_rdst        (mem_wb_rd_addr),
-        // output
-        .pc_enable          (hz_pc_enable),
-        .if_id_enable       (hz_if_id_enable),
-        .if_id_clear        (hz_if_id_clear),
-        .id_ex_clear        (hz_id_ex_clear),
-        // metadata
-        .meta_is_stall      (hz_meta_is_stall),
-        .meta_is_l_use      (hz_meta_is_l_use),
-        .meta_branch_flush  (hz_meta_branch_flush)
-    );
+    // IF/ID (incl. OpCode bits)
+    .if_id_opcode          (if_id_opcode),
+    .id_ex_opcode          (id_ex_opcode),
+    .if_id_rs1             (if_id_rs1_addr),
+    .if_id_rs2             (if_id_rs2_addr),
+    // ID/EX
+    .id_ex_rs1             (id_ex_rs1_addr),
+    .id_ex_rs2             (id_ex_rs2_addr),
+    .id_ex_rd              (id_ex_rd_addr),
+    // EX/MEM
+    .ex_mem_rd             (ex_mem_rd_addr),
+    // MEM/WB
+    .mem_wb_rd             (mem_wb_rd_addr),
+    // TO STALL UNIT DIRECTLY
+    .id_ex_mem_read        (id_ex_mem_read),    // if load (X)
+    .id_ex_reg_write       (id_ex_reg_write),   // if reg write (X)
+    .branch_taken          (branch_taken),      // check if a branch was taken, to stall control hazards for now (X)
+    // TO FORWARDING UNIT DIRECTLY
+    .ex_mem_reg_write      (ex_mem_reg_write),
+    .mem_wb_reg_write      (mem_wb_reg_write),
+    // OUTPUTS
+    // STALLING
+    .pc_enable             (hz_pc_enable),
+    .if_id_enable          (hz_if_id_enable),
+    .if_id_clear           (hz_if_id_clear),
+    .id_ex_clear           (hz_id_ex_clear),
+    // FORWARDING
+    .fwd_alu_in1_ex_mem    (fwd_alu_in1_ex_mem),    // forward to alu in 1 from src res in ex mem (X)
+    .fwd_alu_in2_ex_mem    (fwd_alu_in2_ex_mem),    // forward to alu in 2 from src res in ex mem (X)
+    .fwd_alu_in1_mem_wb    (fwd_alu_in1_mem_wb),    // forward to alu in 1 from src res in ex mem (X)
+    .fwd_alu_in2_mem_wb    (fwd_alu_in2_mem_wb),    // forward to alu in 2 from src res in ex mem (X)
+    // METADATA
+    .meta_branch_flush     (meta_branch_flush),
+    .meta_is_stall         (meta_is_stall),
+    .meta_is_l_use         (meta_is_l_use)
+);
 
     fetch u_fetch(  // x
         // IN
@@ -321,21 +365,29 @@ module rv32i_core (
 
     alu u_alu(  // x
         // from ID
-        .alu_op         (id_ex_alu_op),
-        .alu_bypass     (id_ex_alu_bypass),
-        .imm_to_reg     (id_ex_imm_to_reg),
+        .alu_op             (id_ex_alu_op),
+        .alu_bypass         (id_ex_alu_bypass),
+        .imm_to_reg         (id_ex_imm_to_reg),
         // from REG FILE
-        .r_data1        (id_ex_rs1_data),
-        .r_data2        (id_ex_rs2_data),
+        .r_data1            (id_ex_rs1_data),
+        .r_data2            (id_ex_rs2_data),
         // from PC & ID
-        .pc             (id_ex_pc),
-        .use_pc         (id_ex_alu_in1_ropc),
+        .pc                 (id_ex_pc),
+        .use_pc             (id_ex_alu_in1_ropc),
         // from IMM & ID
-        .imm            (id_ex_imm_val),
-        .use_imm        (id_ex_alu_in2_roi),  
+        .imm                (id_ex_imm_val),
+        .use_imm            (id_ex_alu_in2_roi),  
+        // for forwarding
+        .fwd_alu_in1_ex_mem (fwd_alu_in1_ex_mem),
+        .fwd_alu_in2_ex_mem (fwd_alu_in2_ex_mem),
+        .fwd_alu_in1_mem_wb (fwd_alu_in1_mem_wb),
+        .fwd_alu_in2_mem_wb (fwd_alu_in2_mem_wb),
+        // forwarded data
+        .ex_mem_rd_data     (ex_mem_rd_data),
+        .mem_wb_rd_data     (mem_wb_rd_data),
         // OUT
-        .alu_out        (alu_out),
-        .out_zero       (alu_zero)
+        .alu_out            (alu_out),
+        .out_zero           (alu_zero)
     );
 
     branch_unit u_branch_unit (

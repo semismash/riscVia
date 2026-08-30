@@ -11,13 +11,16 @@ OBJCOPY = riscv64-unknown-elf-objcopy
 # design
 VERILOG_SRCS = \
 	$(SRC_DIR)/design/rv32i.sv \
-    $(SRC_DIR)/design/core/components/hazard_unit.sv \
     $(SRC_DIR)/design/core/components/pc.sv \
     $(SRC_DIR)/design/core/components/reg_file.sv \
     $(SRC_DIR)/design/core/pipeline/ex_mem.sv \
     $(SRC_DIR)/design/core/pipeline/id_ex.sv \
     $(SRC_DIR)/design/core/pipeline/if_id.sv \
     $(SRC_DIR)/design/core/pipeline/mem_wb.sv \
+	$(SRC_DIR)/design/core/hazard_unit/hazard_unit.sv \
+	$(SRC_DIR)/design/core/hazard_unit/dep_analyzer.sv \
+	$(SRC_DIR)/design/core/hazard_unit/stall_unit.sv \
+	$(SRC_DIR)/design/core/hazard_unit/fwd_unit.sv \
     $(SRC_DIR)/design/core/units/alu.sv \
     $(SRC_DIR)/design/core/units/branch_unit.sv \
     $(SRC_DIR)/design/core/units/decoder.sv \
