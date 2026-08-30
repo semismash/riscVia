@@ -31,6 +31,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         CData/*0:0*/ top__DOT__u_cpu__DOT__hz_meta_branch_flush;
         CData/*0:0*/ top__DOT__u_cpu__DOT__reg_w_enable;
         CData/*0:0*/ top__DOT__u_cpu__DOT__pc_in1_sel;
+        CData/*6:0*/ top__DOT__u_cpu__DOT__id_ex_opcode;
         CData/*0:0*/ top__DOT__u_cpu__DOT__mem_to_reg;
         CData/*0:0*/ top__DOT__u_cpu__DOT__imm_to_reg;
         CData/*0:0*/ top__DOT__u_cpu__DOT__illegal_instr;
@@ -77,14 +78,13 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         CData/*0:0*/ top__DOT__u_cpu__DOT__mem_wb_reg_write;
         CData/*0:0*/ top__DOT__u_cpu__DOT__mem_wb_stop;
         CData/*0:0*/ top__DOT__u_cpu__DOT__mem_wb_valid_instr;
-        CData/*0:0*/ top__DOT__u_cpu__DOT__id_ex_opcode;
         CData/*0:0*/ top__DOT__u_cpu__DOT__meta_is_stall;
         CData/*0:0*/ top__DOT__u_cpu__DOT__meta_is_l_use;
     };
     struct {
-        CData/*0:0*/ top__DOT__u_cpu__DOT__ex_mem_rd_data;
         CData/*0:0*/ top__DOT__u_cpu__DOT__u_pc__DOT__pcinc_in2_doi;
         CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__if_id_rs2_valid;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__id_ex_rs2_valid;
         CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__u_stall_unit__DOT__is_l_use_no_gap;
         CData/*6:0*/ top__DOT__u_cpu__DOT__u_decoder__DOT__opcode;
         CData/*2:0*/ top__DOT__u_cpu__DOT__u_decoder__DOT__imm_type;
@@ -95,6 +95,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         CData/*3:0*/ __Vfunc_top__DOT__u_cpu__DOT__u_decoder__DOT__calc_alu_op__1__Vfuncout;
         CData/*3:0*/ __Vfunc_top__DOT__u_cpu__DOT__u_decoder__DOT__calc_alu_op__1__return_op;
         CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_0;
+        CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_1;
+        CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_2;
         CData/*0:0*/ __VstlFirstIteration;
         CData/*0:0*/ __VstlPhaseResult;
         CData/*0:0*/ __VicoFirstIteration;
@@ -144,6 +146,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         VlUnpacked<QData/*63:0*/, 1> __VicoTriggered;
         VlUnpacked<QData/*63:0*/, 1> __VactTriggered;
         VlUnpacked<QData/*63:0*/, 1> __VnbaTriggered;
+    };
+    struct {
         VlUnpacked<CData/*0:0*/, 2> __Vm_traceActivity;
     };
 

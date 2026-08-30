@@ -42,17 +42,16 @@ module alu #(
         end else if (imm_to_reg) begin
             alu_out = imm;
         end else begin
-            if (fwd_alu_in1_ex_mem || fwd_alu_in2_ex_mem || fwd_alu_in1_mem_wb || fwd_alu_in2_mem_wb) begin
-                if (fwd_alu_in1_ex_mem) data1 = ex_mem_rd_data;         // prioritize data from EX/MEM register over MEM/WB
-                else if (fwd_alu_in1_mem_wb) data2 = mem_wb_rd_data;
-                if (fwd_alu_in2_ex_mem) data1 = ex_mem_rd_data;         // can be forwarded into in2 simultaneously along with in1
-                else if (fwd_alu_in2_mem_wb) data2 = mem_wb_rd_data;
-            end else begin
-                if (use_pc == 1'b0) data1 = r_data1;
-                else data1 = pc;
-                if (use_imm == 1'b0) data2 = r_data2;
-                else data2 = imm;
-            end
+            // forward takes priority over normal source, independent of data2
+            if (fwd_alu_in1_ex_mem) data1 = ex_mem_rd_data;        // prioritize EX/MEM over MEM/WB
+            else if (fwd_alu_in1_mem_wb) data1 = mem_wb_rd_data;
+            else if (use_pc == 1'b0) data1 = r_data1;
+            else data1 = pc;
+            // forward takes priority over normal source, independent of data1
+            if (fwd_alu_in2_ex_mem) data2 = ex_mem_rd_data;        // prioritize EX/MEM over MEM/WB
+            else if (fwd_alu_in2_mem_wb) data2 = mem_wb_rd_data;
+            else if (use_imm == 1'b0) data2 = r_data2;
+            else data2 = imm;
             case (alu_op)
                 ADD: alu_out = data1 + data2;
                 SUB: alu_out = data1 - data2;

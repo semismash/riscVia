@@ -56,6 +56,7 @@ module rv32i_core (
     Word if_id_pc;
     Instruction if_id_instr;
     OpCode if_id_opcode;
+    OpCode id_ex_opcode;
     RegAddr if_id_rs1_addr;
     RegAddr if_id_rs2_addr;
 
@@ -314,6 +315,7 @@ module rv32i_core (
         .stall            (1'b0),
         .clear            (hz_id_ex_clear),
         // input
+        .i_opcode         (if_id_opcode),
         .i_pc             (if_id_pc),
         .i_rs1_addr       (rs1_addr),
         .i_rs2_addr       (rs2_addr),
@@ -338,6 +340,7 @@ module rv32i_core (
         .i_is_stop        (d_stop),
         .i_valid_instr    (d_valid_instr),
         // output
+        .o_opcode         (id_ex_opcode),
         .o_pc             (id_ex_pc),
         .o_rs1_addr       (id_ex_rs1_addr),
         .o_rs2_addr       (id_ex_rs2_addr),
@@ -383,7 +386,7 @@ module rv32i_core (
         .fwd_alu_in1_mem_wb (fwd_alu_in1_mem_wb),
         .fwd_alu_in2_mem_wb (fwd_alu_in2_mem_wb),
         // forwarded data
-        .ex_mem_rd_data     (ex_mem_rd_data),
+        .ex_mem_rd_data     (ex_mem_result),
         .mem_wb_rd_data     (mem_wb_rd_data),
         // OUT
         .alu_out            (alu_out),

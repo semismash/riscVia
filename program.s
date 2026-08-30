@@ -1,5 +1,5 @@
 #
-# TEST CODE FOR ADD
+# TEST CODE FOR BLT
 #
         # -----------------------------------------
         # Program section (known as text)
@@ -16,32 +16,24 @@ _start: .global _start
 main:
         ### TEST CODE STARTS HERE ###
         
-        # 100 + 150 = 250 (positive answer)
-        li      x1, 100         # set x1 to 100 (0x00000064)
-        li      x2, 150         # set x2 to 150 (0x00000096)
-        add     x3, x1, x2      # add x1(100) to x2(150), x3=250 (0x000000FA) 
+        # compare positive numbers
+        li      x1, 50          # set x1 to 50 (0x00000032)
+        li      x2, 100         # set x2 to 100 (0x00000064)
         
-        # -150 + 100 = -50 (negative answer)
-        li      x4, -150        # set x4 to -150 (FFFFFF6A)
-        add     x5, x4, x1      # add x4(-150) to x1(100), x5=-50 (0xFFFFFFCE)
+        beq     x1, x0, fail0   # make sure x1 has value 
+        blt     x1, x2, branch1 # if x1 < x2, branch to branch1
+        j       fail1           # jump to fail
         
-        # -150 + 150 = 0 (zero answer)
-        add     x6, x4, x2      # add x4(-150) to x2(150), x6=0 (0x00000000)
+        branch1: 
+        blt     x2, x1, fail1   # if x2 < x1, branch to fail
         
-        # store result to x0
-        add     x0, x1, x2      # x0 must be hardcoded to 0
+        # compare signed numbers
+        li      x3, -50         # set x3 to -50 (0xFFFFFFCE)
+        blt     x1, x3, fail2   # if x3 < x1, branch to fail
+
+        # compare equal numbers
+        blt     x3, x3, fail3
         
-        # self-check  
-        li      x7, 250         # set x7 to 250 (expected value for x3)
-        beqz    x7, fail0       # make sure x7 has value
-        li      x8, -50         # set x8 to -50 (expected value for x5)
-        beqz    x8, fail0       # make sure x8 has value
-        bne     x7, x3, fail1   #
-        bne     x8, x5, fail2   #branch to fail if not equal to expected value
-        bne     x0, x6, fail3   #
-        bnez    x0, fail4       #
-         
-         
         ###    END OF TEST CODE   ###
 
         # Exit test using RISC-V International's riscv-tests pass/fail criteria
@@ -69,11 +61,7 @@ main:
         li      a0, 6           # fail code
         li      a7, 93          # reached end of code
         ebreak
-        
-        fail4:
-        li      a0, 8           # fail code
-        li      a7, 93          # reached end of code
-        ebreak
+
 
         # -----------------------------------------
         # Data section. Note starts at 0x1000, as 
