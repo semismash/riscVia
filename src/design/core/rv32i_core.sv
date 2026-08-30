@@ -136,8 +136,8 @@ module rv32i_core (
 
     // forwarding unit
     logic fwd_alu_in1_ex_mem;
-    logic fwd_alu_in2_mem_wb;
-    logic fwd_alu_in1_ex_mem;
+    logic fwd_alu_in1_mem_wb;
+    logic fwd_alu_in2_ex_mem;
     logic fwd_alu_in2_mem_wb;
     
     // temp fix

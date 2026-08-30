@@ -8,7 +8,7 @@ module fwd_unit (
     input logic dep_ex_mem_rd_id_ex_rs2,
     // MEM/WB
     input logic dep_mem_wb_rd_id_ex_rs1,
-    input logic dep_mem_wb_rd_id_ex_rs1,
+    input logic dep_mem_wb_rd_id_ex_rs2,
     // non-zero bits to prevent accidental stalls if using locked zero register
     input logic id_ex_rs1_not_x0,
     input logic id_ex_rs2_not_x0,
