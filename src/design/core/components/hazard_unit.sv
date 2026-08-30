@@ -1,111 +1,145 @@
-import rv32i::*;
-
-module hazard_unit (    // currently, stalls for both control and data hazards
-    input OpCode    if_id_opcode,  // take instruction opcode to check inst type and prevent false stalls
-    // IF/ID
-    input RegAddr   if_id_rs1,
-    input RegAddr   if_id_rs2,
+module hazard_unit (
+    // IF/ID (incl. OpCode bits)
+    input OpCode if_id_opcode,  // x
+    input OpCode id_ex_opcode,  // x
+    input RegAddr if_id_rs1,    // x
+    input RegAddr if_id_rs2,    // x
     // ID/EX
-    input logic     id_ex_mem_read,
-    input logic     id_ex_reg_write,
-    input RegAddr   id_ex_rdst,
-    input logic     branch_taken,
+    input RegAddr id_ex_rs1,    // x
+    input RegAddr id_ex_rs2,    // x
+    input RegAddr id_ex_rd,     // x
     // EX/MEM
-    input logic     ex_mem_reg_write,
-    input RegAddr   ex_mem_rdst,
+    input RegAddr ex_mem_rd,    // x
     // MEM/WB
-    input logic     mem_wb_reg_write,
-    input RegAddr   mem_wb_rdst,
-    // outputs
-    output logic    pc_enable,
-    output logic    if_id_enable,
-    output logic    if_id_clear,
-    output logic    id_ex_clear,
-    // forwarding
-    output logic    cond_l_use_1gp, // condition load-use 1 instruction gap (forwarding unit)
-    output logic    cond_raw_other, // condition for other RAW hazard (forwarding unit)
-    // metadata
-    output logic    meta_is_stall,
-    output logic    meta_is_l_use,
-    output logic    meta_branch_flush
+    input RegAddr mem_wb_rd,    // x
+    // TO STALL UNIT DIRECTLY
+    input logic id_ex_mem_read,     // if load (X)
+    input logic id_ex_reg_write,    // if reg write (X)
+    input logic branch_taken,       // check if a branch was taken, to stall control hazards for now (X)
+    // TO FORWARDING UNIT DIRECTLY
+    input logic ex_mem_reg_write,   // x
+    input logic mem_wb_reg_write,   // x
+    // OUTPUTS
+    // STALLING
+    output logic pc_enable,     // x
+    output logic if_id_enable,  // x
+    output logic if_id_clear,   // x
+    output logic id_ex_clear,   // x
+    // FORWARDING
+    output logic fwd_alu_in1_ex_mem, // forward to alu in 1 from src res in ex mem (X)
+    output logic fwd_alu_in2_ex_mem, // forward to alu in 2 from src res in ex mem (X)
+    output logic fwd_alu_in1_mem_wb, // forward to alu in 1 from src res in ex mem (X)
+    output logic fwd_alu_in2_mem_wb, // forward to alu in 2 from src res in ex mem (X)
+    // METADATA
+    output logic meta_branch_flush, // x
+    output logic meta_is_stall,     // x
+    output logic meta_is_l_use      // x
 );
 
-    // 1. Control Hazard - when branch detected in ID/EX - clear and stall IF/ID for one cycle
-    /* 2. Data Hazard - load-use hazard with (a) 0 instruction gap or (b) 1 instruction gap use inst (scan IF/ID and ID/EX) - 
-        stall till hazard resolved */
-    // 3. Data Hazard - non-load hazard (scan ID/EX, EX/MEM and MEM/WB) - stall till hazard resolved but replace with forwarding later
+    // connecting ports between dep analyzer and fwd unit/stall unit
+    logic dep_id_ex_rd_if_id_rs1;
+    logic dep_id_ex_rd_if_id_rs2;
+    logic dep_ex_mem_rd_id_ex_rs1;
+    logic dep_ex_mem_rd_id_ex_rs2;
+    logic dep_mem_wb_rd_id_ex_rs1;
+    logic dep_mem_wb_rd_id_ex_rs2;
 
-    logic rs1_used;
-    logic rs2_used;
-    logic rs1_hazard_ex_mem;
-    //logic rs1_hazard_mem_wb;
-    logic rs2_hazard_ex_mem;
-    //logic rs2_hazard_mem_wb;
-    logic raw_hazard_id_ex;   // true whenever id_ex's rdst matches what if_id needs (load or non-load)
-    logic condition_2a;       // load-use subset of raw_hazard_id_ex
-    logic condition_2b;       // non-load subset of raw_hazard_id_ex
+    logic id_ex_rs1_not_x0;
+    logic id_ex_rs2_not_x0;
+    logic id_ex_rd_not_x0;
 
-    always_comb begin
-        pc_enable = 1'b1;
-        if_id_enable = 1'b1;
-        if_id_clear = 1'b0;
-        id_ex_clear = 1'b0;
+    logic if_id_rs1_valid;
+    logic if_id_rs2_valid;
+    logic id_ex_rs1_valid;
+    logic id_ex_rs2_valid;
 
-        meta_is_stall = 1'b0;
-        meta_is_l_use = 1'b0;
-        meta_branch_flush = 1'b0;
+    dep_analyzer u_dep_analyzer (
+        // dependency analyzer
+        // IF/ID (incl. OpCode bits)
+        .if_id_opcode               (if_id_opcode),     // x
+        .id_ex_opcode               (id_ex_opcode),     // x
+        .if_id_rs1                  (if_id_rs1),        // x
+        .if_id_rs2                  (if_id_rs2),        // x
+        // ID/EX
+        .id_ex_rs1                  (id_ex_rs1),        // x
+        .id_ex_rs2                  (id_ex_rs2),        // x
+        .id_ex_rd                   (id_ex_rd),  
+        // EX/MEM
+        .ex_mem_rd                  (ex_mem_rd),        // x
+        // MEM/WB
+        .mem_wb_rd                  (mem_wb_rd),        // x
+        // outputs (naming scheme = dep_source_dest)
+        // ID/EX
+        .dep_id_ex_rd_if_id_rs1     (dep_id_ex_rd_if_id_rs1),   // x
+        .dep_id_ex_rd_if_id_rs2     (dep_id_ex_rd_if_id_rs2),   // x
+        // EX/MEM
+        .dep_ex_mem_rd_id_ex_rs1    (dep_ex_mem_rd_id_ex_rs1),  // x
+        .dep_ex_mem_rd_id_ex_rs2    (dep_ex_mem_rd_id_ex_rs2),  // x
+        // MEM/WB
+        .dep_mem_wb_rd_id_ex_rs1    (dep_mem_wb_rd_id_ex_rs1),  // x
+        .dep_mem_wb_rd_id_ex_rs1    (dep_mem_wb_rd_id_ex_rs1),  // x
+        // extra bits to check if its not zero regiter
+        .id_ex_rs1_not_x0           (id_ex_rs1_not_x0), // x
+        .id_ex_rs2_not_x0           (id_ex_rs2_not_x0), // x
+        .id_ex_rd_not_x0            (id_ex_rd_not_x0),  // x
+        // check if rs1 or rs2 usage is even valid
+        // for stall unit (lcad use with no gap)
+        .if_id_rs1_valid            (if_id_rs1_valid),  // x
+        .if_id_rs2_valid            (if_id_rs2_valid),  // x
+        // for forwardable hazards
+        .id_ex_rs1_valid            (id_ex_rs1_valid),  // x
+        .id_ex_rs2_valid            (id_ex_rs2_valid)   // x
+    );
 
-        // check if rs1 or rs2 are used by the instruction, performance guardrail to prevent unnecessary stalls
-        rs1_used = 
-            (if_id_opcode == OP_R) ||
-            (if_id_opcode == OP_I) ||
-            (if_id_opcode == OP_I_L) ||
-            (if_id_opcode == OP_S) ||
-            (if_id_opcode == OP_B) ||
-            (if_id_opcode == OP_I_J) ||
-            (if_id_opcode == OP_I_E);
-        rs2_used = 
-            (if_id_opcode == OP_R) ||
-            (if_id_opcode == OP_S) ||
-            (if_id_opcode == OP_B);
+    stall_unit u_stall_unit (
+        // ID/EX - IF/ID dependencies
+        .dep_id_ex_rd_if_id_rs1    (dep_id_ex_rd_if_id_rs1),    // x
+        .dep_id_ex_rd_if_id_rs2    (dep_id_ex_rd_if_id_rs2),    // x
+        // non-zero bits to prevent accidental stalls if using locked zero register
+        .id_ex_rd_not_x0           (id_ex_rd_not_x0),           // x
+        // classification bits to check read and write to stall accordingly
+        .id_ex_mem_read            (id_ex_mem_read), // if load (load-use)                                              // x
+        .id_ex_reg_write           (id_ex_reg_write), // if writing to reg (mostly to disqualify non-load instructions) // x
+        .branch_taken              (branch_taken), // check if a branch was taken, to stall control hazards for now     // x
+        // if read registers are even valid to begin with
+        .if_id_rs1_valid           (if_id_rs1_valid),
+        .if_id_rs2_valid           (if_id_rs2_valid),
+        // OUTPUTS
+        .pc_enable                 (pc_enable),     // x
+        .if_id_enable              (if_id_enable),  // x
+        .if_id_clear               (if_id_clear),   // x
+        .id_ex_clear               (id_ex_clear),   // x
+        // METADATA
+        .meta_branch_flush         (meta_branch_flush), // x
+        .meta_is_stall             (meta_is_stall),     // x
+        .meta_is_l_use             (meta_is_l_use)      // x
+    );
 
-        // for condition 3 data hazards
-        rs1_hazard_ex_mem = rs1_used && (if_id_rs1 != '0) && ex_mem_reg_write && (if_id_rs1 == ex_mem_rdst);
-        //rs1_hazard_mem_wb = rs1_used && (if_id_rs1 != '0) && mem_wb_reg_write && (if_id_rs1 == mem_wb_rdst);
-        rs2_hazard_ex_mem = rs2_used && (if_id_rs2 != '0) && ex_mem_reg_write && (if_id_rs2 == ex_mem_rdst);
-        //rs2_hazard_mem_wb = rs2_used && (if_id_rs2 != '0) && mem_wb_reg_write && (if_id_rs2 == mem_wb_rdst);
+    fwd_unit u_fwd_unit (
+        // Dependencies
+        // ID/EX
+        .dep_id_ex_rd_if_id_rs1     (dep_id_ex_rd_if_id_rs1),   // x
+        .dep_id_ex_rd_if_id_rs2     (dep_id_ex_rd_if_id_rs2),   // x
+        // EX/MEM
+        .dep_ex_mem_rd_id_ex_rs1    (dep_ex_mem_rd_id_ex_rs1),  // x
+        .dep_ex_mem_rd_id_ex_rs2    (dep_ex_mem_rd_id_ex_rs2),  // x
+        // MEM/WB
+        .dep_mem_wb_rd_id_ex_rs1    (dep_mem_wb_rd_id_ex_rs1),  // x
+        .dep_mem_wb_rd_id_ex_rs1    (dep_mem_wb_rd_id_ex_rs1),  // x
+        // non-zero bits to prevent accidental stalls if using locked zero register
+        .id_ex_rs1_not_x0           (id_ex_rs1_not_x0),     // x
+        .id_ex_rs2_not_x0           (id_ex_rs2_not_x0),     // x
+        // if read registers are even valid to begin with
+        .id_ex_rs1_valid            (id_ex_rs1_valid),      // x
+        .id_ex_rs2_valid            (id_ex_rs2_valid),      // x
+        // write signal from registers
+        .ex_mem_reg_write           (ex_mem_reg_write),     // x
+        .mem_wb_reg_write           (mem_wb_reg_write),     // x
+        // OUTPUT
+        .fwd_alu_in1_ex_mem         (fwd_alu_in1_ex_mem), // forward to alu in 1 from src res in ex mem (X)
+        .fwd_alu_in2_ex_mem         (fwd_alu_in2_ex_mem), // forward to alu in 2 from src res in ex mem (X)
+        .fwd_alu_in1_mem_wb         (fwd_alu_in1_mem_wb), // forward to alu in 1 from src res in ex mem (X)
+        .fwd_alu_in2_mem_wb         (fwd_alu_in2_mem_wb)  // forward to alu in 2 from src res in ex mem (X)
+    );
 
-        // shared checks if if/id data required collides with if/ex, hence raises hazard early
-        raw_hazard_id_ex = id_ex_reg_write && (id_ex_rdst != '0) &&
-            ((rs1_used && (id_ex_rdst == if_id_rs1)) || (rs2_used && (id_ex_rdst == if_id_rs2)));
-
-        condition_2a = id_ex_mem_read  && raw_hazard_id_ex;   // true load-use hazard
-        condition_2b = !id_ex_mem_read && raw_hazard_id_ex;   // non-load RAW hazard (no forwarding implemetned yet)
-
-        if (branch_taken) begin // Condition 1
-            if_id_clear = 1'b1;
-            id_ex_clear = 1'b1;
-            meta_branch_flush = 1'b1;
-        // Condition 2a, true load-use hazard: create bubble by freezing
-        end else if (condition_2a) begin
-            pc_enable     = 1'b0;
-            if_id_enable  = 1'b0;
-            id_ex_clear   = 1'b1;
-            meta_is_stall = 1'b1;
-            meta_is_l_use = 1'b1;
-        // Condition 2b, non-load RAW hazard from EX stage (no forwarding yet): create bubble by freezing
-        end else if (condition_2b) begin
-            pc_enable     = 1'b0;
-            if_id_enable  = 1'b0;
-            id_ex_clear   = 1'b1;
-            meta_is_stall = 1'b1;
-        // Condition 3, create a bubble
-        end else if (rs1_hazard_ex_mem || rs2_hazard_ex_mem) begin
-            pc_enable     = 1'b0;
-            if_id_enable  = 1'b0;
-            id_ex_clear   = 1'b1;
-            meta_is_stall = 1'b1;
-        end
-    end
-
-endmodule/
+endmodule

@@ -16,7 +16,6 @@ module stall_unit(
     output logic id_ex_clear,
     output logic pc_enable,
     output logic if_id_enable,
-    output logic id_ex_clear,
     // METADATA
     output logic meta_branch_flush,
     output logic meta_is_stall,
@@ -42,7 +41,7 @@ module stall_unit(
 
         is_l_use_no_gap = id_ex_mem_read && id_ex_reg_write && id_ex_rd_not_x0 &&
             ((if_id_rs1_valid && dep_id_ex_rd_if_id_rs1) || (if_id_rs2_valid && dep_ex_mem_rd_id_ex_rs2));
-            
+
         if (branch_taken) begin  // prioritize control hazards
             if_id_clear = 1'b1;
             id_ex_clear = 1'b1;
