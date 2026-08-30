@@ -13,8 +13,8 @@ module fwd_unit (
     input logic id_ex_rs1_not_x0,
     input logic id_ex_rs2_not_x0,
     // if read registers are even valid to begin with
-    input logic id_ex_id_ex_rs1_valid,
-    input logic id_ex_id_ex_rs2_valid,
+    input logic id_ex_rs1_valid,
+    input logic id_ex_rs2_valid,
     // write signal from registers
     input logic ex_mem_reg_write,
     input logic mem_wb_reg_write,
