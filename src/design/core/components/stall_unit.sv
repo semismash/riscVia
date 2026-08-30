@@ -1,6 +1,4 @@
 module stall_unit(
-    // from if_id_register
-    input OpCode if_id_opcode,
     // ID/EX - IF/ID dependencies
     input logic dep_id_ex_rd_if_id_rs1,
     input logic dep_id_ex_rd_if_id_rs2,
@@ -11,8 +9,8 @@ module stall_unit(
     input logic id_ex_reg_write,    // if writing to reg (mostly to disqualify non-load instructions)
     input logic branch_taken,       // check if a branch was taken, to stall control hazards for now
     // if read registers are even valid to begin with
-    input logic rs1_valid,
-    input logic rs2_valid,
+    input logic if_id_rs1_valid,
+    input logic if_id_rs2_valid,
     // OUTPUTS
     output logic if_id_clear,
     output logic id_ex_clear,
@@ -32,8 +30,19 @@ module stall_unit(
     logic is_l_use_no_gap;
 
     always_comb begin
+
+        pc_enable = 1'b1;
+        if_id_enable = 1'b1;
+        if_id_clear = 1'b0;
+        id_ex_clear = 1'b0;
+
+        meta_is_stall = 1'b0;
+        meta_is_l_use = 1'b0;
+        meta_branch_flush = 1'b0;
+
         is_l_use_no_gap = id_ex_mem_read && id_ex_reg_write && id_ex_rd_not_x0 &&
-            ((rs1_valid && dep_id_ex_rd_if_id_rs1) || (rs2_valid && dep_ex_mem_rd_id_ex_rs2));
+            ((if_id_rs1_valid && dep_id_ex_rd_if_id_rs1) || (if_id_rs2_valid && dep_ex_mem_rd_id_ex_rs2));
+            
         if (branch_taken) begin  // prioritize control hazards
             if_id_clear = 1'b1;
             id_ex_clear = 1'b1;
