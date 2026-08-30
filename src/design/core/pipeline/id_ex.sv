@@ -6,6 +6,7 @@ module id_ex (  // 162 bits
     input logic stall,
     input logic clear,  // synchronous active high clear
 
+    input OpCode i_opcode,        // 7 bits
     input Word i_pc,              // 32 bits
     input RegAddr i_rs1_addr,     // 5 bits
     input RegAddr i_rs2_addr,     // 5 bits
@@ -30,6 +31,7 @@ module id_ex (  // 162 bits
     input logic i_is_stop,        // meta bit for debugging to stop CPU at a certain stage of pipelined
     input logic i_valid_instr, // 1 bit
 
+    output OpCode o_opcode,
     output Word o_pc,
     output RegAddr o_rs1_addr,
     output RegAddr o_rs2_addr,
@@ -57,6 +59,7 @@ module id_ex (  // 162 bits
 
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n || clear) begin
+            o_opcode       <= OP_NOP;
             o_pc           <= '0;
             o_rs1_addr     <= '0;
             o_rs2_addr     <= '0;
@@ -81,6 +84,7 @@ module id_ex (  // 162 bits
             o_is_stop      <= '0;
             o_valid_instr  <= '0;
         end else if (!stall) begin  // do normal logic if NOT a stall
+            o_opcode       <= i_opcode;
             o_pc           <= i_pc;
             o_rs1_addr     <= i_rs1_addr;
             o_rs2_addr     <= i_rs2_addr;

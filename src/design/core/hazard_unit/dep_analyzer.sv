@@ -34,7 +34,7 @@ module dep_analyzer (   // dependency analyzer
     output logic if_id_rs1_valid,   // for stall unit (load use with no gap)
     output logic if_id_rs2_valid,
     output logic id_ex_rs1_valid,   // for forwardable hazards
-    output logic id_ex_rs2_valid,
+    output logic id_ex_rs2_valid
 );
 
     // for stalls (catches load-use early)
@@ -42,8 +42,8 @@ module dep_analyzer (   // dependency analyzer
     assign dep_id_ex_rd_if_id_rs2 = (id_ex_rd == if_id_rs2);
 
     // for forwarding
-    assign dep_ex_mem_rd_id_ex_rs1 = (mem_wb_rd == id_ex_rs1);
-    assign dep_ex_mem_rd_id_ex_rs2 = (mem_wb_rd == id_ex_rs2);
+    assign dep_ex_mem_rd_id_ex_rs1 = (ex_mem_rd == id_ex_rs1);
+    assign dep_ex_mem_rd_id_ex_rs2 = (ex_mem_rd == id_ex_rs2);
     
     assign dep_mem_wb_rd_id_ex_rs1 = (mem_wb_rd == id_ex_rs1);
     assign dep_mem_wb_rd_id_ex_rs2 = (mem_wb_rd == id_ex_rs2);

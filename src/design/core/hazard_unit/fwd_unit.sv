@@ -22,7 +22,7 @@ module fwd_unit (
     output logic fwd_alu_in1_ex_mem, // forward to alu in 1 from src res in ex mem
     output logic fwd_alu_in2_ex_mem, // forward to alu in 2 from src res in ex mem
     output logic fwd_alu_in1_mem_wb, // forward to alu in 1 from src res in ex mem
-    output logic fwd_alu_in2_mem_wb, // forward to alu in 2 from src res in ex mem
+    output logic fwd_alu_in2_mem_wb  // forward to alu in 2 from src res in ex mem
 );
 
     // Conditions for forwarding
