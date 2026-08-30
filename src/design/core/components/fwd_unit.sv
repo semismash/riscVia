@@ -32,28 +32,34 @@ module fwd_unit (
     3. If MEM/WB[rd] == ID/EX[rs1 | rs2] for load type instructions
     */
 
-    logic rs1_hazard_ex_mem;
-    logic rs1_hazard_mem_wb;
-    logic rs2_hazard_ex_mem;
-    logic rs2_hazard_mem_wb;
+    // logic rs1_hazard_ex_mem;
+    // logic rs1_hazard_mem_wb;
+    // logic rs2_hazard_ex_mem;
+    // logic rs2_hazard_mem_wb;
 
-    always_comb begin
+    // always_comb begin
 
-        fwd_alu_in1_ex_mem = 1'b0;
-        fwd_alu_in2_ex_mem = 1'b0;
-        fwd_alu_in1_mem_wb = 1'b0;
-        fwd_alu_in2_mem_wb = 1'b0;
+    //     fwd_alu_in1_ex_mem = 1'b0;
+    //     fwd_alu_in2_ex_mem = 1'b0;
+    //     fwd_alu_in1_mem_wb = 1'b0;
+    //     fwd_alu_in2_mem_wb = 1'b0;
 
-        rs1_hazard_ex_mem = id_ex_rs1_valid && id_ex_rs1_not_x0 && ex_mem_reg_write && dep_ex_mem_rd_id_ex_rs1;
-        rs1_hazard_mem_wb = id_ex_rs1_valid && id_ex_rs1_not_x0 && mem_wb_reg_write && dep_mem_wb_rd_id_ex_rs1;
-        rs2_hazard_ex_mem = id_ex_rs2_valid && id_ex_rs2_not_x0 && ex_mem_reg_write && dep_ex_mem_rd_id_ex_rs2;
-        rs2_hazard_mem_wb = id_ex_rs2_valid && id_ex_rs2_not_x0 && mem_wb_reg_write && dep_mem_wb_rd_id_ex_rs2;
+    //     rs1_hazard_ex_mem = id_ex_rs1_valid && id_ex_rs1_not_x0 && ex_mem_reg_write && dep_ex_mem_rd_id_ex_rs1;
+    //     rs1_hazard_mem_wb = id_ex_rs1_valid && id_ex_rs1_not_x0 && mem_wb_reg_write && dep_mem_wb_rd_id_ex_rs1;
+    //     rs2_hazard_ex_mem = id_ex_rs2_valid && id_ex_rs2_not_x0 && ex_mem_reg_write && dep_ex_mem_rd_id_ex_rs2;
+    //     rs2_hazard_mem_wb = id_ex_rs2_valid && id_ex_rs2_not_x0 && mem_wb_reg_write && dep_mem_wb_rd_id_ex_rs2;
 
-        if (rs1_hazard_ex_mem) fwd_alu_in1_ex_mem = 1'b1;   // prioritize EX/MEM above MEM/WB
-        else (rs1_hazard_mem_wb) fwd_alu_in1_mem_wb = 1'b1;
-        if (rs2_hazard_ex_mem) fwd_alu_in1_ex_mem = 1'b1; 
-        else (rs2_hazard_mem_wb) fwd_alu_in1_mem_wb = 1'b1;
+    //     if (rs1_hazard_ex_mem) fwd_alu_in1_ex_mem = 1'b1;   // prioritize EX/MEM above MEM/WB
+    //     else (rs1_hazard_mem_wb) fwd_alu_in1_mem_wb = 1'b1;
+    //     if (rs2_hazard_ex_mem) fwd_alu_in1_ex_mem = 1'b1; 
+    //     else (rs2_hazard_mem_wb) fwd_alu_in1_mem_wb = 1'b1;
 
-    end
+    // end
+
+    assign fwd_alu_in1_ex_mem = id_ex_rs1_valid && id_ex_rs1_not_x0 && ex_mem_reg_write && dep_ex_mem_rd_id_ex_rs1;
+    assign fwd_alu_in1_mem_wb = id_ex_rs1_valid && id_ex_rs1_not_x0 && mem_wb_reg_write && dep_mem_wb_rd_id_ex_rs1;
+    assign fwd_alu_in2_ex_mem = id_ex_rs2_valid && id_ex_rs2_not_x0 && ex_mem_reg_write && dep_ex_mem_rd_id_ex_rs2;
+    assign fwd_alu_in2_mem_wb = id_ex_rs2_valid && id_ex_rs2_not_x0 && mem_wb_reg_write && dep_mem_wb_rd_id_ex_rs2;
+
 
 endmodule
