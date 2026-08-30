@@ -13,16 +13,16 @@ module fwd_unit (
     input logic id_ex_rs1_not_x0,
     input logic id_ex_rs2_not_x0,
     // if read registers are even valid to begin with
-    input logic id_ex_rs1_valid,
-    input logic id_ex_rs2_valid,
+    input logic id_ex_id_ex_rs1_valid,
+    input logic id_ex_id_ex_rs2_valid,
     // write signal from registers
     input logic ex_mem_reg_write,
     input logic mem_wb_reg_write,
     // OUTPUT
-    output logic fwd_alu_in1_id_ex, // forward to alu in 1 from src res
-    output logic fwd_alu_in2_id_ex, // forward to alu in 2 from src res
-    output Word alu_in1_data,       // multiplexed data to alu in 1
-    output Word alu_in2_data        // multiplexed data to alu in 2
+    output logic fwd_alu_in1_ex_mem, // forward to alu in 1 from src res in ex mem
+    output logic fwd_alu_in2_ex_mem, // forward to alu in 2 from src res in ex mem
+    output logic fwd_alu_in1_mem_wb, // forward to alu in 1 from src res in ex mem
+    output logic fwd_alu_in2_mem_wb, // forward to alu in 2 from src res in ex mem
 );
 
     // Conditions for forwarding
@@ -38,10 +38,22 @@ module fwd_unit (
     logic rs2_hazard_mem_wb;
 
     always_comb begin
-        rs1_hazard_ex_mem = rs1_valid && id_ex_rs1_not_x0 && ex_mem_reg_write && (if_id_rs1 == ex_mem_rdst);
-        rs1_hazard_mem_wb = rs1_valid && id_ex_rs1_not_x0 && mem_wb_reg_write && (if_id_rs1 == mem_wb_rdst);
-        rs2_hazard_ex_mem = rs2_valid && id_ex_rs2_not_x0 && ex_mem_reg_write && (if_id_rs2 == ex_mem_rdst);
-        rs2_hazard_mem_wb = rs2_valid && id_ex_rs2_not_x0 && mem_wb_reg_write && (if_id_rs2 == mem_wb_rdst);
+
+        fwd_alu_in1_ex_mem = 1'b0;
+        fwd_alu_in2_ex_mem = 1'b0;
+        fwd_alu_in1_mem_wb = 1'b0;
+        fwd_alu_in2_mem_wb = 1'b0;
+
+        rs1_hazard_ex_mem = id_ex_rs1_valid && id_ex_rs1_not_x0 && ex_mem_reg_write && dep_ex_mem_rd_id_ex_rs1;
+        rs1_hazard_mem_wb = id_ex_rs1_valid && id_ex_rs1_not_x0 && mem_wb_reg_write && dep_mem_wb_rd_id_ex_rs1;
+        rs2_hazard_ex_mem = id_ex_rs2_valid && id_ex_rs2_not_x0 && ex_mem_reg_write && dep_ex_mem_rd_id_ex_rs2;
+        rs2_hazard_mem_wb = id_ex_rs2_valid && id_ex_rs2_not_x0 && mem_wb_reg_write && dep_mem_wb_rd_id_ex_rs2;
+
+        if (rs1_hazard_ex_mem) fwd_alu_in1_ex_mem = 1'b1;   // prioritize EX/MEM above MEM/WB
+        else (rs1_hazard_mem_wb) fwd_alu_in1_mem_wb = 1'b1;
+        if (rs2_hazard_ex_mem) fwd_alu_in1_ex_mem = 1'b1; 
+        else (rs2_hazard_mem_wb) fwd_alu_in1_mem_wb = 1'b1;
+
     end
 
 endmodule
