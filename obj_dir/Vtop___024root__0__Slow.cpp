@@ -139,8 +139,14 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
         }
     }
     vlSelfRef.top__DOT__if_addr = vlSelfRef.top__DOT__u_cpu__DOT__u_pc__DOT__pc;
+    vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__if_id_rs2_valid 
+        = ((0x33U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr)) 
+           | ((0x23U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr)) 
+              | (0x63U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr))));
     vlSelfRef.top__DOT__data_addr = vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_result;
     vlSelfRef.top__DOT__req_bytes = 0U;
+    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_0 = ((IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_is_jal) 
+                                                | (IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_is_jalr));
     vlSelfRef.top__DOT__u_cpu__DOT__u_decoder__DOT__opcode 
         = (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr);
     vlSelfRef.top__DOT__u_cpu__DOT__alu_in1_sel = 0U;
@@ -369,8 +375,6 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
     } else {
         vlSelfRef.top__DOT__u_cpu__DOT__d_valid_instr = 0U;
     }
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_0 = ((IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_is_jal) 
-                                                | (IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_is_jalr));
     vlSelfRef.top__DOT__u_cpu__DOT__u_alu__DOT__data1 = 0U;
     vlSelfRef.top__DOT__u_cpu__DOT__u_alu__DOT__data2 = 0U;
     if (vlSelfRef.top__DOT__u_cpu__DOT__id_ex_alu_bypass) {
@@ -603,11 +607,11 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
                         << 8U) | (0x000000ffU & vlSelfRef.top__DOT__read_data)));
         }
     }
-    vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__branch_taken 
+    vlSelfRef.top__DOT__u_cpu__DOT__u_pc__DOT__pcinc_in2_doi 
         = (((IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_is_branch) 
             & (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_branch_unit__DOT__branch_passed)) 
            | (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_0));
-    if (vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__branch_taken) {
+    if (vlSelfRef.top__DOT__u_cpu__DOT__u_pc__DOT__pcinc_in2_doi) {
         if (vlSelfRef.top__DOT__u_cpu__DOT__id_ex_pc_in1_sel) {
             vlSelfRef.top__DOT__u_cpu__DOT__u_pc__DOT__unnamedblk1__DOT__in1 
                 = vlSelfRef.top__DOT__u_cpu__DOT__id_ex_rs1_data;
@@ -630,70 +634,32 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
     vlSelfRef.top__DOT__u_cpu__DOT__hz_pc_enable = 1U;
     vlSelfRef.top__DOT__u_cpu__DOT__hz_if_id_enable = 1U;
     vlSelfRef.top__DOT__u_cpu__DOT__hz_id_ex_clear = 0U;
-    vlSelfRef.top__DOT__u_cpu__DOT__hz_meta_is_stall = 0U;
-    vlSelfRef.top__DOT__u_cpu__DOT__hz_meta_is_l_use = 0U;
-    vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs1_used 
-        = (((((((0x33U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr)) 
-                | (0x13U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr))) 
-               | (3U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr))) 
-              | (0x23U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr))) 
-             | (0x63U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr))) 
-            | (0x67U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr))) 
-           | (0x73U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr)));
-    vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs2_used 
-        = (((0x33U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr)) 
-            | (0x23U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr))) 
-           | (0x63U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr)));
-    vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs1_hazard_ex_mem 
-        = ((((IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs1_used) 
-             & (0U != (0x0000001fU & (vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr 
-                                      >> 0x0000000fU)))) 
-            & (IData)(vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_reg_write)) 
-           & ((0x0000001fU & (vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr 
-                              >> 0x0000000fU)) == (IData)(vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_rd_addr)));
-    vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs2_hazard_ex_mem 
-        = ((((IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs2_used) 
-             & (0U != (0x0000001fU & (vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr 
-                                      >> 0x00000014U)))) 
-            & (IData)(vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_reg_write)) 
-           & ((0x0000001fU & (vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr 
-                              >> 0x00000014U)) == (IData)(vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_rd_addr)));
-    vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__raw_hazard_id_ex 
-        = (((IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_reg_write) 
+    vlSelfRef.top__DOT__u_cpu__DOT__meta_is_stall = 0U;
+    vlSelfRef.top__DOT__u_cpu__DOT__meta_is_l_use = 0U;
+    vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__u_stall_unit__DOT__is_l_use_no_gap 
+        = ((((IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_mem_read) 
+             & (IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_reg_write)) 
             & (0U != (IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_rd_addr))) 
-           & (((IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs1_used) 
+           & ((((IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__if_id_rs2_valid) 
+                | ((0x13U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr)) 
+                   | ((3U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr)) 
+                      | ((0x67U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr)) 
+                         | (0x73U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr)))))) 
                & ((IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_rd_addr) 
                   == (0x0000001fU & (vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr 
                                      >> 0x0000000fU)))) 
-              | ((IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs2_used) 
+              | ((IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__if_id_rs2_valid) 
                  & ((IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_rd_addr) 
                     == (0x0000001fU & (vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr 
                                        >> 0x00000014U))))));
-    vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__condition_2a 
-        = ((IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_mem_read) 
-           & (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__raw_hazard_id_ex));
-    vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__condition_2b 
-        = ((~ (IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_mem_read)) 
-           & (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__raw_hazard_id_ex));
-    if (vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__branch_taken) {
+    if (vlSelfRef.top__DOT__u_cpu__DOT__u_pc__DOT__pcinc_in2_doi) {
         vlSelfRef.top__DOT__u_cpu__DOT__hz_id_ex_clear = 1U;
-    } else if (vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__condition_2a) {
+    } else if (vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__u_stall_unit__DOT__is_l_use_no_gap) {
         vlSelfRef.top__DOT__u_cpu__DOT__hz_pc_enable = 0U;
         vlSelfRef.top__DOT__u_cpu__DOT__hz_if_id_enable = 0U;
         vlSelfRef.top__DOT__u_cpu__DOT__hz_id_ex_clear = 1U;
-        vlSelfRef.top__DOT__u_cpu__DOT__hz_meta_is_stall = 1U;
-        vlSelfRef.top__DOT__u_cpu__DOT__hz_meta_is_l_use = 1U;
-    } else if (vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__condition_2b) {
-        vlSelfRef.top__DOT__u_cpu__DOT__hz_pc_enable = 0U;
-        vlSelfRef.top__DOT__u_cpu__DOT__hz_if_id_enable = 0U;
-        vlSelfRef.top__DOT__u_cpu__DOT__hz_id_ex_clear = 1U;
-        vlSelfRef.top__DOT__u_cpu__DOT__hz_meta_is_stall = 1U;
-    } else if (((IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs1_hazard_ex_mem) 
-                | (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs2_hazard_ex_mem))) {
-        vlSelfRef.top__DOT__u_cpu__DOT__hz_pc_enable = 0U;
-        vlSelfRef.top__DOT__u_cpu__DOT__hz_if_id_enable = 0U;
-        vlSelfRef.top__DOT__u_cpu__DOT__hz_id_ex_clear = 1U;
-        vlSelfRef.top__DOT__u_cpu__DOT__hz_meta_is_stall = 1U;
+        vlSelfRef.top__DOT__u_cpu__DOT__meta_is_stall = 1U;
+        vlSelfRef.top__DOT__u_cpu__DOT__meta_is_l_use = 1U;
     }
 }
 
@@ -797,6 +763,7 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->top__DOT__u_cpu__DOT__hz_id_ex_clear = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5469036487018072866ull);
     vlSelf->top__DOT__u_cpu__DOT__hz_meta_is_stall = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12873730535212990782ull);
     vlSelf->top__DOT__u_cpu__DOT__hz_meta_is_l_use = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16572838530136802213ull);
+    vlSelf->top__DOT__u_cpu__DOT__hz_meta_branch_flush = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15078727076717298173ull);
     vlSelf->top__DOT__u_cpu__DOT__reg_w_enable = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10223263319588754604ull);
     vlSelf->top__DOT__u_cpu__DOT__rdst_data = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 17065176272422443287ull);
     vlSelf->top__DOT__u_cpu__DOT__pc_in1_sel = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4031094445959648418ull);
@@ -857,20 +824,19 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->top__DOT__u_cpu__DOT__mem_wb_reg_write = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5380692490876238206ull);
     vlSelf->top__DOT__u_cpu__DOT__mem_wb_stop = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7768551789704405039ull);
     vlSelf->top__DOT__u_cpu__DOT__mem_wb_valid_instr = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 3769117203145249260ull);
+    vlSelf->top__DOT__u_cpu__DOT__id_ex_opcode = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7288527285578457779ull);
+    vlSelf->top__DOT__u_cpu__DOT__meta_is_stall = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14985430870743088885ull);
+    vlSelf->top__DOT__u_cpu__DOT__meta_is_l_use = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17130976420207120270ull);
+    vlSelf->top__DOT__u_cpu__DOT__ex_mem_rd_data = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12716939341128838084ull);
     for (int __Vi0 = 0; __Vi0 < 32; ++__Vi0) {
         vlSelf->top__DOT__u_cpu__DOT__u_reg_file__DOT__registers[__Vi0] = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 1375488913775379883ull);
     }
     vlSelf->top__DOT__u_cpu__DOT__u_reg_file__DOT__i = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 3297519375640141125ull);
+    vlSelf->top__DOT__u_cpu__DOT__u_pc__DOT__pcinc_in2_doi = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17573726952508183958ull);
     vlSelf->top__DOT__u_cpu__DOT__u_pc__DOT__pc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 1399258308895884909ull);
     vlSelf->top__DOT__u_cpu__DOT__u_pc__DOT__pc_next = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 11855832878590989954ull);
-    vlSelf->top__DOT__u_cpu__DOT__u_hazard_unit__DOT__branch_taken = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2196127443208838396ull);
-    vlSelf->top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs1_used = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14557736970513262118ull);
-    vlSelf->top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs2_used = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 674782243641964174ull);
-    vlSelf->top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs1_hazard_ex_mem = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10011277278807520323ull);
-    vlSelf->top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs2_hazard_ex_mem = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16121802667778846638ull);
-    vlSelf->top__DOT__u_cpu__DOT__u_hazard_unit__DOT__raw_hazard_id_ex = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13732699593121480886ull);
-    vlSelf->top__DOT__u_cpu__DOT__u_hazard_unit__DOT__condition_2a = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5319100980540005581ull);
-    vlSelf->top__DOT__u_cpu__DOT__u_hazard_unit__DOT__condition_2b = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7905160534759646526ull);
+    vlSelf->top__DOT__u_cpu__DOT__u_hazard_unit__DOT__if_id_rs2_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8193924015858267261ull);
+    vlSelf->top__DOT__u_cpu__DOT__u_hazard_unit__DOT__u_stall_unit__DOT__is_l_use_no_gap = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4307761914958492497ull);
     vlSelf->top__DOT__u_cpu__DOT__u_decoder__DOT__opcode = VL_SCOPED_RAND_RESET_I(7, __VscopeHash, 14033807547098626134ull);
     vlSelf->top__DOT__u_cpu__DOT__u_decoder__DOT__imm_type = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 4286665488713578528ull);
     vlSelf->top__DOT__u_cpu__DOT__u_alu__DOT__data1 = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 14033296306717898790ull);

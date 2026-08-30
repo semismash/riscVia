@@ -28,6 +28,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         CData/*0:0*/ top__DOT__u_cpu__DOT__hz_id_ex_clear;
         CData/*0:0*/ top__DOT__u_cpu__DOT__hz_meta_is_stall;
         CData/*0:0*/ top__DOT__u_cpu__DOT__hz_meta_is_l_use;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__hz_meta_branch_flush;
         CData/*0:0*/ top__DOT__u_cpu__DOT__reg_w_enable;
         CData/*0:0*/ top__DOT__u_cpu__DOT__pc_in1_sel;
         CData/*0:0*/ top__DOT__u_cpu__DOT__mem_to_reg;
@@ -76,16 +77,15 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         CData/*0:0*/ top__DOT__u_cpu__DOT__mem_wb_reg_write;
         CData/*0:0*/ top__DOT__u_cpu__DOT__mem_wb_stop;
         CData/*0:0*/ top__DOT__u_cpu__DOT__mem_wb_valid_instr;
-        CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__branch_taken;
-        CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs1_used;
-        CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs2_used;
-        CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs1_hazard_ex_mem;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__id_ex_opcode;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__meta_is_stall;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__meta_is_l_use;
     };
     struct {
-        CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__rs2_hazard_ex_mem;
-        CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__raw_hazard_id_ex;
-        CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__condition_2a;
-        CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__condition_2b;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__ex_mem_rd_data;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__u_pc__DOT__pcinc_in2_doi;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__if_id_rs2_valid;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__u_stall_unit__DOT__is_l_use_no_gap;
         CData/*6:0*/ top__DOT__u_cpu__DOT__u_decoder__DOT__opcode;
         CData/*2:0*/ top__DOT__u_cpu__DOT__u_decoder__DOT__imm_type;
         CData/*0:0*/ top__DOT__u_cpu__DOT__u_branch_unit__DOT__branch_passed;

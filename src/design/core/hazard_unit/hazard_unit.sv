@@ -77,7 +77,7 @@ module hazard_unit (
         .dep_ex_mem_rd_id_ex_rs2    (dep_ex_mem_rd_id_ex_rs2),  // x
         // MEM/WB
         .dep_mem_wb_rd_id_ex_rs1    (dep_mem_wb_rd_id_ex_rs1),  // x
-        .dep_mem_wb_rd_id_ex_rs1    (dep_mem_wb_rd_id_ex_rs1),  // x
+        .dep_mem_wb_rd_id_ex_rs2    (dep_mem_wb_rd_id_ex_rs2),  // x
         // extra bits to check if its not zero regiter
         .id_ex_rs1_not_x0           (id_ex_rs1_not_x0), // x
         .id_ex_rs2_not_x0           (id_ex_rs2_not_x0), // x
@@ -125,7 +125,7 @@ module hazard_unit (
         .dep_ex_mem_rd_id_ex_rs2    (dep_ex_mem_rd_id_ex_rs2),  // x
         // MEM/WB
         .dep_mem_wb_rd_id_ex_rs1    (dep_mem_wb_rd_id_ex_rs1),  // x
-        .dep_mem_wb_rd_id_ex_rs1    (dep_mem_wb_rd_id_ex_rs1),  // x
+        .dep_mem_wb_rd_id_ex_rs2    (dep_mem_wb_rd_id_ex_rs2),  // x
         // non-zero bits to prevent accidental stalls if using locked zero register
         .id_ex_rs1_not_x0           (id_ex_rs1_not_x0),     // x
         .id_ex_rs2_not_x0           (id_ex_rs2_not_x0),     // x

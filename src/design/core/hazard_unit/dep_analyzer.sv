@@ -13,7 +13,7 @@ module dep_analyzer (   // dependency analyzer
     // EX/MEM
     input RegAddr ex_mem_rd,
     // MEM/WB
-    input RegAddr mem_wb_rd
+    input RegAddr mem_wb_rd,
 
     // outputs (naming scheme = dep_source_dest)
     // ID/EX
@@ -24,7 +24,7 @@ module dep_analyzer (   // dependency analyzer
     output logic dep_ex_mem_rd_id_ex_rs2,
     // MEM/WB
     output logic dep_mem_wb_rd_id_ex_rs1,
-    output logic dep_mem_wb_rd_id_ex_rs1,
+    output logic dep_mem_wb_rd_id_ex_rs2,
 
     // extra bits to check if its not zero regiter
     output logic id_ex_rs1_not_x0,
