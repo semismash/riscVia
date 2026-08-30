@@ -1,5 +1,5 @@
 #
-# TEST CODE FOR XORI
+# TEST CODE FOR SH
 #
         # -----------------------------------------
         # Program section (known as text)
@@ -15,19 +15,32 @@ _start: .global _start
 # Label for entry point of test code
 main:
         ### TEST CODE STARTS HERE ###
-       
-        # 100 ^ 150 = 242 (nonzero answer)
-        li      x1, 100          # set x1 to 100 (0x00000064)
-        xori    x2, x1, 150      # xori x1(100) to 150, x2=242 (0x000000F2) 
         
-        # 100 ^ 100 = 0 (zero answer)
-        xori    x3, x1, 100      # xor x1(100) to 100, x3=0 (0x00000000)
+        # store halfword with zero immediate
+        li      x1, 0x12345678  # set x1 to 0x12345678 
+        li      x2, 0x1008      # set x2 to 0x1008
+        sh      x1, 0(x2)       # store halfword from x1 (0x12345678) to 0x1008, mem_hw(0x1008)=0x5678 
         
-        #self-check  
-        li      x4, 242         # set x4 to 242 (expected value for x3)
+        # store halfword with positive immediate
+        li      x3, 0xAABBCCDD  # set x3 to 0xAABBCCDD
+        sh      x3, 2(x2)       # store halfword from x3 (0xAABBCCDD) to 0x100a, mem_hw(0x100a)=0xCCDD
+        
+        #store halfword with negative immediate
+        sh      x3, -4(x2)      # store halfword from x3(0xAABBCCDD) to 0x1004, mem_hw(0x1004)=0xCCDD
+         
+        # self-check 
+        li      x4, 0x5678      # set x4 to 0x5678 (expected value for mem_hw(0x1008)
         beqz    x4, fail0       # make sure x4 has value
-        bne     x2, x4, fail1   #
-        bnez    x3, fail2       # branch to fail if not equal to expected value
+        li      x5, 0xCCDD      # set x5 to 0xCCDD (expected value for mem_hw(0x100a) and mem_hw(0x1004) )
+        beqz    x5, fail0       # make sure x5 has value
+        lhu     x6, 0(x2)       # load halfword from address 0x1008 to x6 (0x5678)
+        lhu     x7, 2(x2)       # load halfword from address 0x100a to x7 (0xCCDD)
+        lhu     x8, -4(x2)      # load halfword from address 0x1004 to x8 (0xCCDD)
+        bne     x6, x4, fail1   #
+        bne     x7, x5, fail2   # branch to fail if not equal to expected value
+        bne     x8, x5, fail3   #
+        
+
          
         ###    END OF TEST CODE   ###
 
@@ -52,6 +65,11 @@ main:
         li      a7, 93          # reached end of code
         ebreak
         
+        fail3:
+        li      a0, 6           # fail code
+        li      a7, 93          # reached end of code
+        ebreak
+
         # -----------------------------------------
         # Data section. Note starts at 0x1000, as 
         # set by DATAADDR variable in rv_asm.bat.
