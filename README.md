@@ -67,14 +67,17 @@ The CPU above was tested using Verilator v5.048. The testbench for the CPU is ac
 
 To test the processor, the following toolchain(s) were used -
 
-- `Verilator v5.048`, built using the `GCC` compiler in `C++23`
-- `MSYS UCRT64 shell`
-- `GTKWave` (optional, accessible via `waveform.vcd`)
-- `Python 3.11.0` to build the RISC-V hex dump generator
+- `Verilator v5.048`: Built using the `GCC` compiler in `C++23`
+- `MSYS UCRT64 shell`: Shell used for compilation and running the simulation
+- `RISC-V Toolchain`: `riscv64-unknown-elf-as` assembler, `riscv64-unknown-elf-ld` linker, and `riscv64-unknown-elf-objcopy` object copy
+- `GTKWave`: (optional, accessible via `waveform.vcd`)
+- `Python 3.11.0`: To build the RISC-V hex dump generator
 
-To try it out yourself -
+The CPU simulation can be done in two different ways -
 
-1. Install the aforementioned toolchains from the respective websites online.
+### By compiling an existing assembly program
+
+1. Install the aforementioned tools from their respective websites online.
 
 2. Go to your directory and clone the repository -
   
@@ -82,9 +85,34 @@ To try it out yourself -
     git clone https://github.com/semismash/riscVia
     ```
 
-3. Using a basic program in RV32I, use an [online visualizer](https://risc-v-cpu-visualizer.vercel.app/) to convert the program into raw binary.
+3. Name your assembly file to `program.s` and place it in the root folder. The assembly must contain only base RV32I instructions for the CPU to execute properly.
+**NOTE: Sample assembly programs are present in the [progs](progs/) directly, which can be used for testing the CPU.**
 
-4. Launch bingen.py via -
+4. Open the `MSYS UCRT64` shell,  and run the program using -
+
+   ```bash
+   make clean && make run
+   ```
+
+   Alternatively, `make run` can be directly used if all the program binaries have been cleared.
+
+5. After this, the testbench can be monitored as normal. By default, the testbench shows 31 general purpose registers (from `x1` - `x31`) and their respective values every cycle, although this may be changed to a custom rain within [`sim_main.cpp`](src/sim_main.cpp). After the simulation ends, the program will display whether the simulation stopped safely, crashed due to reaching the max cycle count, or unexpectedly crashed after the CPu generated a halt signal. In addition, it will display telemetry regarding the CPU's final CPI, stalls and flushes.
+
+### If program.bin already exists
+
+1. Install the aforementioned tools from their respective websites online.
+
+2. Go to your directory and clone the repository -
+  
+    ```bash
+    git clone https://github.com/semismash/riscVia
+    ```
+
+3. If you already have a RISC-V binary file, rename it to `program.bin`, place it in the root directory, and proceed directly to step 6. Otherwise, you may follow the next few steps.
+
+4. Using a basic program in RV32I, use an [online visualizer](https://risc-v-cpu-visualizer.vercel.app/) to convert the program into raw binary.
+
+5. Launch bingen.py via -
 
     ```bash
     py bingen.py
@@ -94,16 +122,18 @@ To try it out yourself -
 
     (NOTE: Alternatives, if you already have an RV32I binary, you can just name it `program.bin` and place it in the project's root directory.)
 
-5. Open the `MSYS UCRT64` shell, and execute the following commands to clean the directory, place the hex-dump into the folder, and run the testbench.
+6. Open the `MSYS UCRT64` shell, and execute the following commands to clean the directory, place the hex-dump into the folder, and run the testbench.
 
     ```bash
     cd path/to/your/repo
     make clean
     printf "<your hex dump>" > program.bin
-    make run
+    make sim
     ```
 
-6. After this, the testbench can be monitored as normal. Currently only monitoring the first 4 GPRs (`x1` - `x4`) is supported, although support for more advanced testing is coming in the future.
+    If you already have a binary file, name it `program.bin`, place it in the root directory, and run `make sim` directly.
+
+7. After this, the testbench can be monitored as normal. By default, the testbench shows 31 general purpose registers (from `x1` - `x31`) and their respective values every cycle, although this may be changed to a custom rain within [`sim_main.cpp`](src/sim_main.cpp). After the simulation ends, the program will display whether the simulation stopped safely, crashed due to reaching the max cycle count, or unexpectedly crashed after the CPu generated a halt signal. In addition, it will display telemetry regarding the CPU's final CPI, stalls and flushes.
 
 ## Example program  
 
@@ -112,6 +142,7 @@ printf "\x17\x02\x00\x00\x13\x02\x02\x01\xe7\x00\x02\x00\x13\x01\x30\x06\x93\x01
 ```
 
 For reference, the given program does the following -
+
 ```riscv
 auipc x4, 0             # x4 = current PC
 addi  x4, x4, 16        # x4 = label
