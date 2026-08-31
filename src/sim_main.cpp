@@ -36,9 +36,9 @@ int main(int argc, char** argv) {
     Verilated::commandArgs(argc, argv);
     Verilated::traceEverOn(true);
 
-    std::ifstream file("program.bin", std::ios::binary | std::ios::ate);
+    std::ifstream file("tmp/program.bin", std::ios::binary | std::ios::ate);
     if (!file.is_open()) {
-        std::cerr << "[TB ERROR] Could not open program.bin!" << std::endl;
+        std::cerr << "[TB ERROR] Could not open program binary (program.bin)!" << std::endl;
         return -1;
     }
 

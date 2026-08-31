@@ -48,12 +48,12 @@ asm:
 		exit 1; \
 	fi
 	@echo "[MAKE] Assembling program.s..."
-	$(AS) -march=rv32i -mabi=ilp32 -o program.o program.s
+	$(AS) -march=rv32i -mabi=ilp32 -o tmp/program.o program.s
 	@echo "[MAKE] Linking ELF image at base address 0x0..."
-	$(LD) -m elf32lriscv -Ttext 0x0 -o program.elf program.o
-	@echo "[MAKE] Extracting raw machine bytes to program.bin..."
-	$(OBJCOPY) -O binary program.elf program.bin
-	@rm -f program.o program.elf
+	$(LD) -m elf32lriscv -Ttext 0x0 -o tmp/program.elf tmp/program.o
+	@echo "[MAKE] Extracting raw machine bytes to binary..."
+	$(OBJCOPY) -O binary tmp/program.elf tmp/program.bin
+	@rm -f tmp/program.o tmp/program.elf
 	@echo "[MAKE] Assembly compilation complete!"
 
 compile: $(VERILOG_SRCS) $(CPP_SRCS)
@@ -70,4 +70,4 @@ run: asm compile
 
 clean:
 	@echo "[MAKE] Sweeping away generated simulation files..."
-	rm -rf obj_dir program.bin program.o program.elf
+	rm -rf obj_dir tmp/program.bin tmp/program.o tmp/program.elf
