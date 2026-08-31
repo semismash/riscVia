@@ -36,12 +36,10 @@ VERILOG_SRCS = \
 # testbench
 CPP_SRCS = $(SRC_DIR)/sim_main.cpp
 
-# --- Build Rules ---
-.PHONY: all compile run clean asm
+.PHONY: all compile run sim clean asm
 
 all: compile
 
-# Target to compile your assembly source file into the expected program.bin
 asm:
 	@if [ ! -f program.s ]; then \
 		echo "[MAKE ERROR] program.s not found in root directory!"; \
@@ -63,9 +61,16 @@ compile: $(VERILOG_SRCS) $(CPP_SRCS)
 		-LDFLAGS "-O2" \
 		$(VERILOG_SRCS) $(CPP_SRCS) --top-module top
 
-# Updated run rule: Automatically rebuilds program.bin if program.s changes
 run: asm compile
 	@echo "[MAKE] Executing simulation wrapper..."
+	$(SIM_EXE)
+
+sim:
+	@if [ ! -f $(SIM_EXE) ]; then \
+		echo "[MAKE ERROR] Simulation executable $(SIM_EXE) not found! Run 'make compile' first."; \
+		exit 1; \
+	fi
+	@echo "[MAKE] Executing simulation wrapper directly..."
 	$(SIM_EXE)
 
 clean:
