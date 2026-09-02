@@ -50,4 +50,19 @@ package rv32i;
         I, S, B, U, J, N // default
     } ImmPackFmt;
 
+    // branch predictor constants
+    localparam PC_IDX_BIT_C = 8;
+    localparam HISTORY_BIT_C = 8;
+    localparam PHT_ENTRY_C = 1 << HISTORY_BIT_C;    // 2 ^ HISTORY_BIT_C
+    localparam BTB_WAYS_C = 4;
+    localparam BTB_SET_C = 1 << PC_IDX_BIT_C;       // 2 ^ PC_IDX_BIT_C
+    localparam BTB_ENTRY_C = BTB_WAYS_C * BTB_SET_C;
+
+    typedef enum logic [1:0] {
+        STRONG_NT   = 2'b00;
+        WEAK_NT     = 2'b01;
+        WEAK_T      = 2'b10;
+        STRONG_T    = 2'b11;
+    } BranchConfidenceState;
+
 endpackage
