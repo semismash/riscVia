@@ -52,11 +52,17 @@ package rv32i;
 
     // branch predictor constants
     localparam PC_IDX_BIT_C = 8;
+    localparam BHT_ENTRY_C = 1 << PC_IDX_BIT_C;     // 2 ^ PC_IDX_BIT_C
     localparam HISTORY_BIT_C = 8;
     localparam PHT_ENTRY_C = 1 << HISTORY_BIT_C;    // 2 ^ HISTORY_BIT_C
     localparam BTB_WAYS_C = 4;
     localparam BTB_SET_C = 1 << PC_IDX_BIT_C;       // 2 ^ PC_IDX_BIT_C
-    localparam BTB_ENTRY_C = BTB_WAYS_C * BTB_SET_C;
+    //localparam BTB_ENTRY_C = BTB_WAYS_C * BTB_SET_C;
+    //localparam BTB_ENTRY_BITS_C = (DATA_WIDTH - UNUSED_BIT_C) + (DATA_WIDTH - PC_IDX_BIT_C - UNUSED_BIT_C) + (1);   // 53 bits = 30 + 22 +1
+    // layout is {TARGET_ADDR, PC TAG BITS, VALID BIT}
+    // ^^ "but smash, you can just write it as 2*DATA_WIDTH_C - 2*UNUSED_BIT_C - PC_IDX_BIT_C + 1 :((("
+    // stfu gng im doing it for your own readability, you ingrate
+    localparam PLRU_BIT_C = BTB_WAYS_C - 1; // 3
 
     localparam UNUSED_BIT_C = 2;
 
@@ -71,5 +77,11 @@ package rv32i;
     typedef logic [HISTORY_BIT_C - 1:0] BranchHistory;
     typedef logic [DATA_WIDTH - UNUSED_BIT_C - 1 : 0] PCAddrNoUnused;
     typedef logic [DATA_WIDTH - PC_IDX_BIT_C - UNUSED_BIT_C - 1 : 0] PCTag;
+
+    typedef struct packed {
+        PCAddrNoUnused target_addr,
+        PCTag pc_tag,
+        logic valid,
+    } BTBEntry;
 
 endpackage
