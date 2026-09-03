@@ -58,11 +58,18 @@ package rv32i;
     localparam BTB_SET_C = 1 << PC_IDX_BIT_C;       // 2 ^ PC_IDX_BIT_C
     localparam BTB_ENTRY_C = BTB_WAYS_C * BTB_SET_C;
 
+    localparam UNUSED_BIT_C = 2;
+
     typedef enum logic [1:0] {
         STRONG_NT   = 2'b00;
         WEAK_NT     = 2'b01;
         WEAK_T      = 2'b10;
         STRONG_T    = 2'b11;
     } BranchConfidenceState;
+
+    typedef logic [PC_IDX_BIT_C - 1:0] PCIndex;
+    typedef logic [HISTORY_BIT_C - 1:0] BranchHistory;
+    typedef logic [DATA_WIDTH - UNUSED_BIT_C - 1 : 0] PCAddrNoUnused;
+    typedef logic [DATA_WIDTH - PC_IDX_BIT_C - UNUSED_BIT_C - 1 : 0] PCTag;
 
 endpackage
