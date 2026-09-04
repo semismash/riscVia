@@ -1,28 +1,28 @@
 import rv32i::*;
 
-module mispredictor (
+module branch_validator (
     // INPUTS:
     // classification for misprediction
-    input logic is_branch;
-    input logic br_taken_predict;   // 1 is taken, 0 is not taken
-    input logic br_taken_actual;    // 1 is taken, 0 is not taken
+    input logic is_branch,
+    input logic br_taken_predict,   // 1 is taken, 0 is not taken
+    input logic br_taken_actual,    // 1 is taken, 0 is not taken
     // history bits from pipeline register
-    //input logic new_history_bit;
-    input BranchHistory old_history;
-    input Word pc_addr;             // PC from pipeline register directly from EX phase
-    input Word imm_val;             // immediate value from pipeline register in EX phase
+    //input logic new_history_bit,
+    input BranchHistory old_history,
+    input Word pc_addr,             // PC from pipeline register directly from EX phase
+    input Word imm_val,             // immediate value from pipeline register in EX phase
     // OUTPUTS:
     // BHT
-    output logic overwrite_bht;
-    output BranchHistory restored_bh;
+    output logic overwrite_bht,
+    output BranchHistory restored_bh,
     // PHT
-    output logic update_pht;
-    output logic inc_or_dec;    // inc = 1, dec = 0
+    output logic update_pht,
+    output logic inc_or_dec,    // inc = 1, dec = 0
     // BTB
-    output logic btb_write_en;
-    output PCIndex pc_index_out;
-    output PCTag pc_tag_out;
-    output PCAddrNoUnused pc_tgt_out;
+    output logic btb_write_en,
+    output PCIndex pc_index_out,
+    output PCTag pc_tag_out,
+    output PCAddrNoUnused pc_tgt_out
 );
 
     logic misprediction;
