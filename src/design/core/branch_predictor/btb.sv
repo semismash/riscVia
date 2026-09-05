@@ -19,8 +19,8 @@ module btb(
     output BTBEntry data_out        // output data (target addr + tag + valid bits) upon cache hit
 );
     typedef struct packed {
-        BTBEntry [BTB_WAYS_C - 1 : 0]   ways,   // 4 way set
-        logic [PLRU_BIT_C - 1 : 0]      plru,   // 3 bits for tree-based plru (bit 0 is upper bit, bit 1 is tree left bottom, bit 2 is tree right bottom)
+        BTBEntry [BTB_WAYS_C - 1 : 0] ways;
+        logic [PLRU_BIT_C - 1 : 0] plru;
     } BTBSet;  
     
     BTBSet [BTB_SET_C - 1 : 0] btb_cache;
@@ -105,11 +105,24 @@ module btb(
     end
 
     always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            cur_entry = '0;
+        if (!rst_n) begin   // reset all valid to 0 (valid bit technically unused now, but whataever)
+            for (int s = 0; s < BTB_SET_C; s++) begin
+                for (int w = 0; w < BTB_WAYS_C; w++) begin
+                    btb_cache[s].ways[w].valid <= 1'b0;
+                end
+            end
         end else if (write_enable) begin
-            cur_entry = new_entry;
+            btb_cache[write_index] <= new_write_set;
+        end else if (cache_hit) begin
+            btb_cache[access_index] <= cur_read_set;
         end
     end
+
+    // if someone sees this, please read (or not, feel free to do what you like ;]):
+    // i'm an 18 year old student who is currently doing a lot of sh*t simultaneously, trying to juggle academics and projects together
+    // i have no proper friends, no one to vent to, dealing with a lot of sh*t, family member with stage 4 cancer, and im at my breaking point
+    // i have served as an emotional anchor for those around me, but havent been able to find anyone to anchor myself to
+    // i am at my wits end, and i just scribble my notes in my notebook without any fuel to keep me going
+    // thanks for understanding, sorry for this inconvenience
 
 endmodule

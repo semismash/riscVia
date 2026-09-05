@@ -12,7 +12,7 @@ module pht (
     input logic inc_or_dec,             // if conf to be incremented (1) or decremented (0)
     input BranchHistory write_bh_in,    // index a entry in BHR to update confidence (forwarding handled automatically and internally)
     // OUTPUTS:
-    input BranchConfidenceState conf_state      // confidence state for branch prediction, indexed by bh_in
+    output BranchConfidenceState conf_state      // confidence state for branch prediction, indexed by bh_in
 );
 
     BranchConfidenceState [PHT_ENTRY_C - 1 : 0] pht_table;
@@ -42,9 +42,9 @@ module pht (
 
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            cur_entry <= '0;
+            pht_table <= '0;
         end else begin
-            cur_entry <= new_entry;
+            pht_table[write_bh_in] <= new_write_entry;
         end
     end
 

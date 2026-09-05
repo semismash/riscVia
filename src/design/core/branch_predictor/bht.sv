@@ -27,14 +27,14 @@ module bht(
 
         // initializing
         bh_out = '0;
-        cur_read_bhr = bh_in[read_pc_index];
-        cur_write_bhr = bh_in[write_pc_index];
+        cur_read_bhr = bht_table[read_pc_index]; 
+        cur_write_bhr = bht_table[write_pc_index];
         new_write_bhr = cur_write_bhr;
 
         if (bh_overwrite) begin
             new_write_bhr = bh_in;
         end else if (bh_shift) begin
-            new_write_bhr = {br_history_in, cur_write_bhr[HISTORY_BIT_C - 1 : 1]}
+            new_write_bhr = {br_history_in, cur_write_bhr[HISTORY_BIT_C - 1 : 1]};
         end
         bh_out = cur_read_bhr;
         
@@ -42,9 +42,9 @@ module bht(
 
     always_ff @(posedge clk or negedge rst_n) begin
         if(!rst_n) begin
-            cur_write_bhr <= '0;
+            bht_table <= '0;
         end else begin
-            cur_write_bhr <= new_write_bhr;
+            bht_table[write_pc_index] <= new_write_bhr;
         end
     end
 
