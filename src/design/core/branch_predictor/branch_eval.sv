@@ -13,7 +13,7 @@ module branch_eval( // purely combinational
     always_comb begin
         take_branch = 1'b0;
         branch_addr = btb_entry.target_addr;
-        if (btb_hit && (BranchConfidenceState == STRONG_T || BranchConfidenceState == WEAK_T)) take_branch = 1'b1;
+        if (btb_hit && (conf_state_in == STRONG_T || conf_state_in == WEAK_T)) take_branch = 1'b1;
     end
 
 endmodule
