@@ -67,10 +67,10 @@ package rv32i;
     localparam UNUSED_BIT_C = 2;
 
     typedef enum logic [1:0] {
-        STRONG_NT   = 2'b00;
-        WEAK_NT     = 2'b01;
-        WEAK_T      = 2'b10;
-        STRONG_T    = 2'b11;
+        STRONG_NT   = 2'b00,
+        WEAK_NT     = 2'b01,
+        WEAK_T      = 2'b10,
+        STRONG_T    = 2'b11
     } BranchConfidenceState;
 
     typedef logic [PC_IDX_BIT_C - 1:0] PCIndex;
@@ -79,9 +79,9 @@ package rv32i;
     typedef logic [DATA_WIDTH - PC_IDX_BIT_C - UNUSED_BIT_C - 1 : 0] PCTag;
 
     typedef struct packed {
-        PCAddrNoUnused target_addr,
-        PCTag pc_tag,
-        logic valid,
+        PCAddrNoUnused target_addr;
+        PCTag pc_tag;
+        logic valid;
     } BTBEntry;
 
 endpackage

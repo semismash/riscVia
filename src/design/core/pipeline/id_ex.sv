@@ -29,7 +29,10 @@ module id_ex (  // 162 bits
     input logic i_imm_to_reg,     // 1 bit
     input logic i_mem_to_reg,     // 1 bit
     input logic i_is_stop,        // meta bit for debugging to stop CPU at a certain stage of pipelined
-    input logic i_valid_instr, // 1 bit
+    input logic i_valid_instr,      // 1 bit
+    input logic i_br_taken_predict,     // 1 bit
+    input BranchHistory i_br_history,   // 8 bits
+    input logic i_btb_hit,              // 1 bit
 
     output OpCode o_opcode,
     output Word o_pc,
@@ -54,7 +57,10 @@ module id_ex (  // 162 bits
     output logic o_imm_to_reg,
     output logic o_mem_to_reg,
     output logic o_is_stop,
-    output logic o_valid_instr
+    output logic o_valid_instr,
+    output logic o_br_taken_predict,
+    output BranchHistory o_br_history,
+    output logic o_btb_hit
 );
 
     always_ff @(posedge clk or negedge rst_n) begin
@@ -83,6 +89,9 @@ module id_ex (  // 162 bits
             o_mem_to_reg   <= '0;
             o_is_stop      <= '0;
             o_valid_instr  <= '0;
+            o_br_taken_predict <= '0;
+            o_br_history       <= '0;
+            o_btb_hit          <= '0;
         end else if (!stall) begin  // do normal logic if NOT a stall
             o_opcode       <= i_opcode;
             o_pc           <= i_pc;
@@ -108,6 +117,9 @@ module id_ex (  // 162 bits
             o_mem_to_reg   <= i_mem_to_reg;
             o_is_stop      <= i_is_stop;
             o_valid_instr  <= i_valid_instr;
+            o_br_taken_predict <= i_br_taken_predict;
+            o_br_history       <= i_br_history;
+            o_btb_hit          <= i_btb_hit;
         end
     end
 

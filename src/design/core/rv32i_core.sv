@@ -52,12 +52,23 @@ module rv32i_core (
     logic pc_in1_sel;
     logic pc_in2_sel;
 
+    // branch predictor (IF)
+    logic bp_branch_taken;
+    Word bp_pc_addr;
+    logic bp_is_branch;
+    BranchHistory bp_br_history;
+    logic bp_btb_hit;
+    logic bp_mispredict;
+
     // IF/ID
     Word if_id_pc;
     Instruction if_id_instr;
     OpCode if_id_opcode;
     RegAddr if_id_rs1_addr;
     RegAddr if_id_rs2_addr;
+    logic if_id_br_taken_predict;
+    BranchHistory if_id_br_history;
+    logic if_id_btb_hit;
 
     // decoder
     logic mem_to_reg;
@@ -98,6 +109,9 @@ module rv32i_core (
     logic id_ex_mem_to_reg;
     logic id_ex_stop;
     logic id_ex_valid_instr;
+    logic id_ex_br_taken_predict;
+    BranchHistory id_ex_br_history;
+    logic id_ex_btb_hit;
 
     // alu
     AluOp alu_op;
@@ -109,6 +123,11 @@ module rv32i_core (
 
     // branch unit
     logic branch_taken;
+
+    // branch predictor EX-stage override arbitration (NOTE: bottom three nets were added/fixed using AI)
+    Word branch_target_resolved;   // actual resolved branch target (id_ex_pc + id_ex_imm_val), used to update BTB and as PC's jump-path immediate
+    logic ex_override_en;          // true only for JAL/JALR (always) or an actual OP_B misprediction (not on every taken branch)
+    Word pc_imm_final;             // imm fed to pc.sv's adder; forced to 4 to roll back a wrongly-predicted-taken branch
 
     // EX/MEM
     Word ex_mem_rs2_val;
@@ -175,34 +194,13 @@ module rv32i_core (
         // from reg and imm gen, based on decoder signal
         .rs1_in         (id_ex_rs1_data),
         .pc_in          (id_ex_pc),
-        .imm_in         (id_ex_imm_val),
+        .imm_in         (pc_imm_final),
+        // from branch predictor (IF-stage speculative
+        .bp_taken       (bp_branch_taken),
+        .bp_pc_addr     (bp_pc_addr),
         // out
         .pc_out         (pc)
     );
-
-    // hazard_unit u_hazard_unit (
-    //     // input
-    //     .if_id_opcode       (if_id_opcode),
-    //     .if_id_rs1          (if_id_rs1_addr),
-    //     .if_id_rs2          (if_id_rs2_addr),
-    //     .id_ex_mem_read     (id_ex_mem_read),
-    //     .id_ex_reg_write    (id_ex_reg_write),
-    //     .id_ex_rdst         (id_ex_rd_addr),
-    //     .branch_taken       (branch_taken),
-    //     .ex_mem_reg_write   (ex_mem_reg_write),
-    //     .ex_mem_rdst        (ex_mem_rd_addr),
-    //     .mem_wb_reg_write   (mem_wb_reg_write),
-    //     .mem_wb_rdst        (mem_wb_rd_addr),
-    //     // output
-    //     .pc_enable          (hz_pc_enable),
-    //     .if_id_enable       (hz_if_id_enable),
-    //     .if_id_clear        (hz_if_id_clear),
-    //     .id_ex_clear        (hz_id_ex_clear),
-    //     // metadata
-    //     .meta_is_stall      (hz_meta_is_stall),
-    //     .meta_is_l_use      (hz_meta_is_l_use),
-    //     .meta_branch_flush  (hz_meta_branch_flush)
-    // );
 
     hazard_unit u_hazard_unit (
     // IF/ID (incl. OpCode bits)
@@ -221,7 +219,7 @@ module rv32i_core (
     // TO STALL UNIT DIRECTLY
     .id_ex_mem_read        (id_ex_mem_read),    // if load (X)
     .id_ex_reg_write       (id_ex_reg_write),   // if reg write (X)
-    .branch_taken          (branch_taken),      // check if a branch was taken, to stall control hazards for now (X)
+    .branch_taken          (ex_override_en),    // if branch taken
     // TO FORWARDING UNIT DIRECTLY
     .ex_mem_reg_write      (ex_mem_reg_write),
     .mem_wb_reg_write      (mem_wb_reg_write),
@@ -253,6 +251,32 @@ module rv32i_core (
         .mem_fault      (if_fault_out)
     );
 
+    branch_predictor u_branch_predictor (
+        // clk and reset
+        .clk                    (clk),
+        .rst_n                  (rst_n),
+        // IF-stage inputs
+        .instr                  (instr),
+        .pc                     (if_addr),
+        // EX-stage verification inputs
+        .ex_pc                  (id_ex_pc),
+        .ex_is_branch           (id_ex_is_branch),
+        .ex_br_taken_predict    (id_ex_br_taken_predict),
+        .ex_br_taken_actual     (branch_taken),
+        .ex_br_history          (id_ex_br_history),
+        .ex_btb_hit             (id_ex_btb_hit),
+        .ex_br_target           (branch_target_resolved),
+        // to PC (IF-stage speculative)
+        .branch_taken           (bp_branch_taken),
+        .pc_addr                (bp_pc_addr),
+        // to IF/ID
+        .is_branch_out          (bp_is_branch),
+        .br_history_out         (bp_br_history),
+        .btb_hit_out            (bp_btb_hit),
+        // EX-stage misprediction flag
+        .mispredict_out         (bp_mispredict)
+    );
+
     if_id u_if_id (
         // clk and reset
         .clk            (clk),
@@ -262,9 +286,15 @@ module rv32i_core (
         // input
         .i_pc           (if_addr),
         .i_instr        (instr),
+        .i_br_taken_predict (bp_branch_taken), 
+        .i_br_history       (bp_br_history),
+        .i_btb_hit          (bp_btb_hit),
         // output
         .o_pc           (if_id_pc),
-        .o_instr        (if_id_instr)
+        .o_instr        (if_id_instr),
+        .o_br_taken_predict (if_id_br_taken_predict),
+        .o_br_history       (if_id_br_history),
+        .o_btb_hit          (if_id_btb_hit)
     );
 
     // direct primitive slice (does not require explicit decoding)
@@ -338,6 +368,9 @@ module rv32i_core (
         .i_mem_to_reg     (mem_to_reg),
         .i_is_stop        (d_stop),
         .i_valid_instr    (d_valid_instr),
+        .i_br_taken_predict (if_id_br_taken_predict),
+        .i_br_history       (if_id_br_history),
+        .i_btb_hit          (if_id_btb_hit),
         // output
         .o_pc             (id_ex_pc),
         .o_rs1_addr       (id_ex_rs1_addr),
@@ -361,7 +394,10 @@ module rv32i_core (
         .o_imm_to_reg     (id_ex_imm_to_reg),
         .o_mem_to_reg     (id_ex_mem_to_reg),
         .o_is_stop        (id_ex_stop),
-        .o_valid_instr    (id_ex_valid_instr)
+        .o_valid_instr    (id_ex_valid_instr),
+        .o_br_taken_predict (id_ex_br_taken_predict),
+        .o_br_history       (id_ex_br_history),
+        .o_btb_hit          (id_ex_btb_hit)
     );
 
     alu u_alu(  // x
@@ -402,7 +438,15 @@ module rv32i_core (
         .branch_taken   (branch_taken)
     );
 
-    assign pc_in2_sel = branch_taken;
+    // NOTE: the bottom four assign statements were fixed/optimized using AI
+    // actual resolved branch target (pc + imm), needed by branch_predictor to refill the BTB and by pc.sv's jump-path adder
+    assign branch_target_resolved = id_ex_pc + id_ex_imm_val;
+    // only override/flush for JAL/JALR (never predicted) or a genuine OP_B misprediction -- NOT every taken branch
+    assign ex_override_en = id_ex_is_jal || id_ex_is_jalr || bp_mispredict;
+    // on a wrongly-predicted-taken branch (predicted taken, actually not taken) roll back to pc_in + 4 instead of pc_in + imm
+    assign pc_imm_final = (bp_mispredict && !branch_taken) ? 32'd4 : id_ex_imm_val;
+    // was branch_taken; now only forces the EX-stage jump path on JAL/JALR/misprediction
+    assign pc_in2_sel = ex_override_en;
 
     // forwards data for storing too as rs2 never actually went through ALU, js pass into EX/MEM directly here
     assign fwd_store_data = fwd_alu_in2_ex_mem ? ex_mem_result : fwd_alu_in2_mem_wb ? mem_wb_rd_data : id_ex_rs2_data;

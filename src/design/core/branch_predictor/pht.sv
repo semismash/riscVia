@@ -29,9 +29,9 @@ module pht (
         new_write_entry = cur_write_entry;
 
         if (inc_or_dec) begin
-            new_write_entry = (cur_write_entry == STRONG_T) ? STRONG_T : cur_write_entry + 1'b1;
+            new_write_entry = (cur_write_entry == STRONG_T) ? STRONG_T : BranchConfidenceState'(cur_write_entry + 1'b1);
         end else begin
-            new_write_entry = (cur_write_entry == STRONG_NT) ? STRONG_NT : cur_write_entry - 1'b1;
+            new_write_entry = (cur_write_entry == STRONG_NT) ? STRONG_NT : BranchConfidenceState'(cur_write_entry - 1'b1);
         end
         if (update_conf && (read_bh_in == write_bh_in)) begin // forward new value if updation
             conf_state = new_write_entry;     
