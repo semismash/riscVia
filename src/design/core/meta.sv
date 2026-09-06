@@ -9,12 +9,16 @@ module meta (
     input logic is_stall,
     input logic is_l_use,
     input logic is_br_flush,
+    input logic is_branch_resolved,
+    input logic is_mispredict,
     // output
     output logic stop_out,
     output MetaCount meta_instr_count,
     output MetaCount meta_stall_count,
     output MetaCount meta_l_use_count,
-    output MetaCount meta_br_flush_count
+    output MetaCount meta_br_flush_count,
+    output MetaCount meta_br_count,         // BPU
+    output MetaCount meta_mispred_count,    // BPU
 );
 
     logic stop_signal;

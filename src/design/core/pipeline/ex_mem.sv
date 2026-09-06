@@ -1,6 +1,6 @@
 import rv32i::*;
 
-module ex_mem ( // 77 bits
+module ex_mem ( // 79 bits
     input logic clk,
     input logic rst_n,  // asynchronous active low reset
     input logic stall,
@@ -16,6 +16,8 @@ module ex_mem ( // 77 bits
     input logic i_mem_to_reg,     // 1 bit
     input logic i_is_stop,        // 1 bit
     input logic i_valid_instr,    // 1 bit
+    input logic i_is_branch,      // 1 bit
+    input logic i_bp_mispredict,  // 1 bit
 
     output Word o_rs2_val,
     output RegAddr o_rd_addr,
@@ -26,7 +28,9 @@ module ex_mem ( // 77 bits
     output logic o_reg_write,
     output logic o_mem_to_reg,
     output logic o_is_stop,
-    output logic o_valid_instr
+    output logic o_valid_instr,
+    output logic o_is_branch,
+    output logic o_bp_mispredict
 );
 
     always_ff @(posedge clk or negedge rst_n) begin
@@ -41,6 +45,8 @@ module ex_mem ( // 77 bits
             o_mem_to_reg    <= '0;
             o_is_stop       <= '0;
             o_valid_instr   <= '0;
+            o_is_branch     <= '0;
+            o_bp_mispredict <= '0;
         end else if (!stall) begin  // do normal logic if NOT a stall
             o_rs2_val       <= i_rs2_val;
             o_rd_addr       <= i_rd_addr;
@@ -52,6 +58,8 @@ module ex_mem ( // 77 bits
             o_mem_to_reg    <= i_mem_to_reg;
             o_is_stop       <= i_is_stop;
             o_valid_instr   <= i_valid_instr;
+            o_is_branch     <= i_is_branch;
+            o_bp_mispredict <= i_bp_mispredict;
         end
     end
 

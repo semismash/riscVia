@@ -1,6 +1,6 @@
 import rv32i::*;
 
-module id_ex (  // 162 bits
+module id_ex (  // 181 bits
     input logic clk,
     input logic rst_n,  // asynchronous active low reset
     input logic stall,
@@ -29,7 +29,7 @@ module id_ex (  // 162 bits
     input logic i_imm_to_reg,     // 1 bit
     input logic i_mem_to_reg,     // 1 bit
     input logic i_is_stop,        // meta bit for debugging to stop CPU at a certain stage of pipelined
-    input logic i_valid_instr,      // 1 bit
+    input logic i_valid_instr,          // 1 bit
     input logic i_br_taken_predict,     // 1 bit
     input BranchHistory i_br_history,   // 8 bits
     input logic i_btb_hit,              // 1 bit

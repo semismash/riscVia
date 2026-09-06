@@ -267,6 +267,7 @@ module rv32i_core (
         .ex_br_history          (id_ex_br_history),
         .ex_btb_hit             (id_ex_btb_hit),
         .ex_br_target           (branch_target_resolved),
+        .predict_valid          (hz_if_id_enable && !hz_if_id_clear),
         // to PC (IF-stage speculative)
         .branch_taken           (bp_branch_taken),
         .pc_addr                (bp_pc_addr),

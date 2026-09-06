@@ -1,5 +1,5 @@
 #
-# TEST CODE FOR BEQ
+# TEST CODE FOR BNE
 #
         # -----------------------------------------
         # Program section (known as text)
@@ -20,8 +20,8 @@ main:
         li      x2, 100         # set x2 to 100 (0x00000064)
         
         beq     x1, x0, fail0   # make sure x1 has value 
-        beq     x1, x2, pass    # if x1 equas x2, branch to pass
-        j       fail1           # jump to fail
+        bne     x1, x2, fail1   # if x1 not equal to x2, branch to fail
+      
 
         ###    END OF TEST CODE   ###
 

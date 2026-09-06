@@ -150,10 +150,6 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
             }
         }
     }
-    vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__if_id_rs2_valid 
-        = ((0x33U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr)) 
-           | ((0x23U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr)) 
-              | (0x63U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr))));
     vlSelfRef.top__DOT__data_addr = vlSelfRef.top__DOT__u_cpu__DOT__ex_mem_result;
     vlSelfRef.top__DOT__req_bytes = 0U;
     vlSelfRef.top__DOT__u_cpu__DOT__u_decoder__DOT__opcode 
@@ -384,6 +380,10 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
     } else {
         vlSelfRef.top__DOT__u_cpu__DOT__d_valid_instr = 0U;
     }
+    vlSelfRef.top__DOT__u_cpu__DOT__u_hazard_unit__DOT__if_id_rs2_valid 
+        = ((0x33U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr)) 
+           | ((0x23U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr)) 
+              | (0x63U == (0x0000007fU & vlSelfRef.top__DOT__u_cpu__DOT__if_id_instr))));
     vlSelfRef.top__DOT__u_cpu__DOT__u_branch_predictor__DOT__u_pht__DOT__cur_write_entry 
         = (3U & (((0U == (0x0000001fU & ((IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_br_history) 
                                          << 1U))) ? 0U
@@ -1208,7 +1208,9 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
     }
     vlSelfRef.top__DOT__u_cpu__DOT__u_branch_predictor__DOT__bh_shift 
         = ((1U & (~ (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_branch_predictor__DOT__u_bht__DOT__bh_overwrite))) 
-           && (IData)(vlSelfRef.top__DOT__u_cpu__DOT__bp_is_branch));
+           && ((IData)(vlSelfRef.top__DOT__u_cpu__DOT__bp_is_branch) 
+               & ((~ (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_pc__DOT__pcinc_in2_doi)) 
+                  & (IData)(vlSelfRef.top__DOT__u_cpu__DOT__hz_if_id_enable))));
     vlSelfRef.top__DOT__u_cpu__DOT__u_branch_predictor__DOT__bht_write_index 
         = (0x000000ffU & ((IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_branch_predictor__DOT__u_bht__DOT__bh_overwrite)
                            ? (vlSelfRef.top__DOT__u_cpu__DOT__id_ex_pc 
