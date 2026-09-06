@@ -57,7 +57,7 @@ module branch_predictor (
     PCTag btb_write_tag;
     PCAddrNoUnused btb_write_tgt;
 
-    always_comb begin
+    always_comb begin   
 
         // decode
         opcode = OpCode'(instr[6:0]);

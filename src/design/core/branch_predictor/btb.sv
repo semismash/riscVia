@@ -71,16 +71,16 @@ module btb(
         // forwarding values to check, else check normally
         if (access_index == write_index) begin
             forwarded = 1'b1;
-            read_0_eq = (new_write_set.ways[0].pc_tag == read_tag);
-            read_1_eq = (new_write_set.ways[1].pc_tag == read_tag);
-            read_2_eq = (new_write_set.ways[2].pc_tag == read_tag);
-            read_3_eq = (new_write_set.ways[3].pc_tag == read_tag);
+            read_0_eq = new_write_set.ways[0].valid && (new_write_set.ways[0].pc_tag == read_tag);
+            read_1_eq = new_write_set.ways[1].valid && (new_write_set.ways[1].pc_tag == read_tag);
+            read_2_eq = new_write_set.ways[2].valid && (new_write_set.ways[2].pc_tag == read_tag);
+            read_3_eq = new_write_set.ways[3].valid && (new_write_set.ways[3].pc_tag == read_tag);
         end else begin
             forwarded = 1'b0;
-            read_0_eq = (cur_read_set.ways[0].pc_tag == read_tag);
-            read_1_eq = (cur_read_set.ways[1].pc_tag == read_tag);
-            read_2_eq = (cur_read_set.ways[2].pc_tag == read_tag);
-            read_3_eq = (cur_read_set.ways[3].pc_tag == read_tag);
+            read_0_eq = cur_read_set.ways[0].valid && (cur_read_set.ways[0].pc_tag == read_tag);
+            read_1_eq = cur_read_set.ways[1].valid && (cur_read_set.ways[1].pc_tag == read_tag); 
+            read_2_eq = cur_read_set.ways[2].valid && (cur_read_set.ways[2].pc_tag == read_tag);
+            read_3_eq = cur_read_set.ways[3].valid && (cur_read_set.ways[3].pc_tag == read_tag);
         end
 
         // check if cache hit using read set
@@ -88,16 +88,16 @@ module btb(
             cache_hit = 1'b1;
             cur_read_set.plru[0] = !cur_read_set.plru[0];   // flip bit to update plru tree
             if (read_0_eq) begin
-                data_out = (forwarded) ? new_write_set.ways[0].target_addr : cur_read_set.ways[0].target_addr;
+                data_out = (forwarded) ? new_write_set.ways[0] : cur_read_set.ways[0];
                 cur_read_set.plru[1] = !cur_read_set.plru[1];
             end else if (read_1_eq) begin
-                data_out = (forwarded) ? new_write_set.ways[1].target_addr : cur_read_set.ways[1].target_addr;
+                data_out = (forwarded) ? new_write_set.ways[1] : cur_read_set.ways[1];
                 cur_read_set.plru[1] = !cur_read_set.plru[1];
             end else if (read_2_eq) begin
-                data_out = (forwarded) ? new_write_set.ways[2].target_addr : cur_read_set.ways[2].target_addr;
+                data_out = (forwarded) ? new_write_set.ways[2] : cur_read_set.ways[2];
                 cur_read_set.plru[2] = !cur_read_set.plru[2];
             end else begin
-                data_out = (forwarded) ? new_write_set.ways[3].target_addr : cur_read_set.ways[3].target_addr;
+                data_out = (forwarded) ? new_write_set.ways[3] : cur_read_set.ways[3];
                 cur_read_set.plru[2] = !cur_read_set.plru[2];
             end
         end

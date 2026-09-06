@@ -112,6 +112,7 @@ module rv32i_core (
     logic id_ex_br_taken_predict;
     BranchHistory id_ex_br_history;
     logic id_ex_btb_hit;
+    OpCode id_ex_opcode;
 
     // alu
     AluOp alu_op;
@@ -371,6 +372,7 @@ module rv32i_core (
         .i_br_taken_predict (if_id_br_taken_predict),
         .i_br_history       (if_id_br_history),
         .i_btb_hit          (if_id_btb_hit),
+        .i_opcode           (if_id_opcode),
         // output
         .o_pc             (id_ex_pc),
         .o_rs1_addr       (id_ex_rs1_addr),
@@ -397,7 +399,8 @@ module rv32i_core (
         .o_valid_instr    (id_ex_valid_instr),
         .o_br_taken_predict (id_ex_br_taken_predict),
         .o_br_history       (id_ex_br_history),
-        .o_btb_hit          (id_ex_btb_hit)
+        .o_btb_hit          (id_ex_btb_hit),
+        .o_opcode           (id_ex_opcode)
     );
 
     alu u_alu(  // x

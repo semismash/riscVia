@@ -16,7 +16,7 @@ constexpr size_t PIPELINE_STAGES = 5;
 
 // --- GPR TRACKING CONFIGURATION (Compile-Time Validated) ---
 constexpr int MIN_GPR = 1; // inclusive
-constexpr int MAX_GPR = 31; // inclusive
+constexpr int MAX_GPR = 20; // inclusive
 
 static_assert(MIN_GPR >= 1 && MIN_GPR <= 31, "[COMPILE ERROR] MIN_GPR must be between 1 and 31!");
 static_assert(MAX_GPR >= 1 && MAX_GPR <= 31, "[COMPILE ERROR] MAX_GPR must be between 1 and 31!");
