@@ -43,7 +43,7 @@ module pht (
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             pht_table <= '0;
-        end else begin
+        end else if (update_conf) begin
             pht_table[write_bh_in] <= new_write_entry;
         end
     end
