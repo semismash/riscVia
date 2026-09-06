@@ -16,6 +16,7 @@ module branch_predictor (
     input BranchHistory ex_br_history,  // OLD "correct" history carried from IF, used to restore/index on misprediction
     input logic ex_btb_hit,
     input Word ex_br_target,
+    input logic predict_valid,          // check if prediction is valid, and not stalling to advance
     // OUTPUTS:
     // to PC
     output logic branch_taken,      // high when branch taken (also to IF/ID)
@@ -57,7 +58,7 @@ module branch_predictor (
     PCTag btb_write_tag;
     PCAddrNoUnused btb_write_tgt;
 
-    always_comb begin   
+    always_comb begin
 
         // decode
         opcode = OpCode'(instr[6:0]);
@@ -88,7 +89,7 @@ module branch_predictor (
         end else begin
             bht_write_index = pc_index;
             bh_overwrite = 1'b0;
-            bh_shift = is_branch_out;
+            bh_shift = is_branch_out && predict_valid; // only shift this instruction if advancing, not if stalled
             br_history_in = take_branch;
         end
 

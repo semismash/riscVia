@@ -1,6 +1,6 @@
 import rv32i::*;
 
-module if_id (  // 64 bits
+module if_id (  // 74 bits
     input logic clk,
     input logic rst_n,  // asynchronous active low reset
     input logic stall,
