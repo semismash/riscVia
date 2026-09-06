@@ -23,7 +23,8 @@ module branch_predictor (
     // to IF/ID
     output logic is_branch_out,             // to IF/ID
     output BranchHistory br_history_out,    // to IF/ID 
-    output logic btb_hit_out
+    output logic btb_hit_out,
+    output logic mispredict_out             // only overrides or flushes on a genuine misprediction
 );
 
     OpCode  opcode;
@@ -40,6 +41,7 @@ module branch_predictor (
 
     logic misprediction;
     assign misprediction = ex_is_branch && (ex_br_taken_predict != ex_br_taken_actual);
+    assign mispredict_out = misprediction;
 
     // SPECULATION
     PCIndex bht_write_index;
@@ -58,7 +60,7 @@ module branch_predictor (
     always_comb begin
 
         // decode
-        opcode = instr[6:0];
+        opcode = OpCode'(instr[6:0]);
         pc_index = pc[9:2];
         pc_tag = pc[31:10];
 

@@ -13,6 +13,9 @@ module pc(
     input Word pc_in,       // take pc value from pipeline register to accurate jump
     input Word imm_in,      // take imm_in if req
 
+    input logic bp_taken,   // BPU: if to be overrided with branch prediction address
+    input Word bp_pc_addr,  // BPU: the address to be overridden with
+
     output Word pc_out      // pc output (cur val)
 );
 
@@ -23,8 +26,13 @@ module pc(
         Word in1;
         Word in2;
         if (pcinc_in2_doi == 1'b0) begin        // PC = PC + 4
-            in1 = pc;   // check if PC or pc_in (i think its PC only but still)
-            in2 = INST_BYTE_SIZE;
+            if (bp_taken) begin  // override PC accordingly upon branch prediction
+                in1 = bp_pc_addr;
+                in2 = '0;
+            end else begin 
+                in1 = pc;
+                in2 = INST_BYTE_SIZE;
+            end
         end else if (pcinc_in1_pcor == 1'b1) begin      // JALR -> PC = rs1 + imm
             in1 = rs1_in;
             in2 = imm_in;

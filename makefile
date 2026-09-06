@@ -13,6 +13,11 @@ VERILOG_SRCS = \
 	$(SRC_DIR)/design/rv32i.sv \
     $(SRC_DIR)/design/core/components/pc.sv \
     $(SRC_DIR)/design/core/components/reg_file.sv \
+	$(SRC_DIR)/design/core/branch_predictor/bht.sv \
+	$(SRC_DIR)/design/core/branch_predictor/pht.sv \
+	$(SRC_DIR)/design/core/branch_predictor/btb.sv \
+	$(SRC_DIR)/design/core/branch_predictor/branch_eval.sv \
+	$(SRC_DIR)/design/core/branch_predictor/branch_predictor.sv \
     $(SRC_DIR)/design/core/pipeline/ex_mem.sv \
     $(SRC_DIR)/design/core/pipeline/id_ex.sv \
     $(SRC_DIR)/design/core/pipeline/if_id.sv \
