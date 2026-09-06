@@ -174,10 +174,12 @@ int main(int argc, char** argv) {
     }
 
     // Capture telemetry signals directly from the new hardware output ports
-    uint32_t total_retired_instr = DUT->meta_instr_count;
-    uint32_t total_stalls        = DUT->meta_stall_count;
-    uint32_t load_use_stalls     = DUT->meta_l_use_count;
-    uint32_t branch_flushes      = DUT->meta_br_flush_count;
+    uint32_t total_retired_instr    = DUT->meta_instr_count;
+    uint32_t total_stalls           = DUT->meta_stall_count;
+    uint32_t load_use_stalls        = DUT->meta_l_use_count;
+    uint32_t branch_flushes         = DUT->meta_br_flush_count;
+    uint32_t branches_resolved      = DUT->meta_br_count;
+    uint32_t mispredictions         = DUT->meta_mispred_count;
 
     std::cout << "\n------------------- PERFORMANCE METRICS -------------------" << std::endl;
     std::cout << "Total Clock Cycles:       " << std::dec << cycles << std::endl;
@@ -205,9 +207,15 @@ int main(int argc, char** argv) {
         std::cout << " (0.0%)" << std::endl;
     }
 
-    std::cout << " -> Load-Use Stalls:      " << load_use_stalls << std::endl;
-    std::cout << " -> Structural/ALU Stalls:" << (total_stalls - load_use_stalls) << std::endl;
-    std::cout << "Total Branch Flush Cycles:" << branch_flushes << std::endl;
+    std::cout << " -> Load-Use Stalls:             " << load_use_stalls << std::endl;
+    std::cout << " -> Structural/ALU Stalls:       " << (total_stalls - load_use_stalls) << std::endl;
+    std::cout << " -> Total Branches Resolved:     " << branches_resolved << std::endl;
+    std::cout << " -> Total Branch Mispredictions: " << mispredictions << std::endl;
+    std::cout << " -> Total Branch Flush Cycles:   " << branch_flushes << std::endl;
+    float bp_accuracy = static_cast<float>(branches_resolved - mispredictions) * 100.0f / branches_resolved;
+    std::cout << " -> Branch Predictor Accuracy:   ";
+    if (branches_resolved != 0) { std::cout << std::fixed << std::setprecision(3) << bp_accuracy << "%"; } else { std::cout << "NA"; }
+    std::cout << std::endl;
 
     std::cout << " ------------------- SIMULATION SPEED ---------------------" << std::endl;
     std::cout << "Elapsed Compute Time:     " << std::fixed << std::setprecision(6) << elapsed_seconds.count() << " seconds" << std::endl;

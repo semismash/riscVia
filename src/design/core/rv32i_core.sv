@@ -23,6 +23,8 @@ module rv32i_core (
     output MetaCount meta_stall_count,
     output MetaCount meta_l_use_count,
     output MetaCount meta_br_flush_count,
+    output MetaCount meta_br_count,
+    output MetaCount meta_mispred_count
 );
 
     // hazard unit
@@ -141,6 +143,8 @@ module rv32i_core (
     logic ex_mem_mem_to_reg;
     logic ex_mem_stop;
     logic ex_mem_valid_instr;
+    logic ex_mem_is_branch;
+    logic ex_mem_bp_mispredict;
 
     // lsu
     logic [2:0] funct3;
@@ -154,6 +158,8 @@ module rv32i_core (
     logic mem_wb_reg_write;
     logic mem_wb_stop;
     logic mem_wb_valid_instr;
+    logic mem_wb_is_branch;
+    logic mem_wb_bp_mispredict;
 
     // forwarding unit
     logic fwd_alu_in1_ex_mem;
@@ -236,9 +242,9 @@ module rv32i_core (
     .fwd_alu_in1_mem_wb    (fwd_alu_in1_mem_wb),    // forward to alu in 1 from src res in ex mem (X)
     .fwd_alu_in2_mem_wb    (fwd_alu_in2_mem_wb),    // forward to alu in 2 from src res in ex mem (X)
     // METADATA
-    .meta_branch_flush     (meta_branch_flush),
-    .meta_is_stall         (meta_is_stall),
-    .meta_is_l_use         (meta_is_l_use)
+    .meta_branch_flush     (hz_meta_branch_flush),
+    .meta_is_stall         (hz_meta_is_stall),
+    .meta_is_l_use         (hz_meta_is_l_use)
 );
 
     fetch u_fetch(  // x
@@ -472,6 +478,8 @@ module rv32i_core (
         .i_mem_to_reg   (id_ex_mem_to_reg),
         .i_is_stop      (id_ex_stop),
         .i_valid_instr  (id_ex_valid_instr),
+        .i_is_branch    (id_ex_is_branch),
+        .i_bp_mispredict(bp_mispredict),
         // output
         .o_rs2_val      (ex_mem_rs2_val),
         .o_rd_addr      (ex_mem_rd_addr),
@@ -482,7 +490,9 @@ module rv32i_core (
         .o_reg_write    (ex_mem_reg_write),
         .o_mem_to_reg   (ex_mem_mem_to_reg),
         .o_is_stop      (ex_mem_stop),
-        .o_valid_instr  (ex_mem_valid_instr)
+        .o_valid_instr  (ex_mem_valid_instr),
+        .o_is_branch    (ex_mem_is_branch),
+        .o_bp_mispredict(ex_mem_bp_mispredict)
     );
 
     lsu u_lsu(
@@ -514,12 +524,16 @@ module rv32i_core (
         .i_reg_write    (ex_mem_reg_write),
         .i_is_stop      (ex_mem_stop),
         .i_valid_instr  (ex_mem_valid_instr),
+        .i_is_branch    (ex_mem_is_branch),
+        .i_bp_mispredict(ex_mem_bp_mispredict),
         // output
         .o_rd_addr      (mem_wb_rd_addr),
         .o_rd_data      (mem_wb_rd_data),
         .o_reg_write    (mem_wb_reg_write),
         .o_is_stop      (mem_wb_stop),
-        .o_valid_instr  (mem_wb_valid_instr)
+        .o_valid_instr  (mem_wb_valid_instr),
+        .o_is_branch    (mem_wb_is_branch),
+        .o_bp_mispredict(mem_wb_bp_mispredict)
     );
 
     meta u_meta (
@@ -530,11 +544,15 @@ module rv32i_core (
         .is_stall               (hz_meta_is_stall),
         .is_l_use               (hz_meta_is_l_use),
         .is_br_flush            (hz_meta_branch_flush),
+        .is_branch_resolved     (mem_wb_is_branch),
+        .is_mispredict          (mem_wb_bp_mispredict),
         .stop_out               (stop),
         .meta_instr_count       (meta_instr_count),
         .meta_stall_count       (meta_stall_count),
         .meta_l_use_count       (meta_l_use_count),
-        .meta_br_flush_count    (meta_br_flush_count)
+        .meta_br_flush_count    (meta_br_flush_count),
+        .meta_br_count          (meta_br_count),
+        .meta_mispred_count     (meta_mispred_count)
     );
 
     assign halt = if_fault_out | data_fault | illegal_instr;
