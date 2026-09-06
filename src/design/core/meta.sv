@@ -28,6 +28,8 @@ module meta (
     MetaCount stall_count;
     MetaCount l_use_count;
     MetaCount br_flush_count;
+    MetaCount br_count;
+    MetaCount mispred_count;
 
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
@@ -36,12 +38,16 @@ module meta (
             stall_count <= '0;
             l_use_count <= '0;
             br_flush_count <= '0;
+            br_count <= '0;
+            mispred_count <= '0;
         end else begin
             stop_signal <= stop_in;
             if (valid_instr)    instr_count <= instr_count + 1'b1;
             if (is_stall)       stall_count <= stall_count + 1'b1;
             if (is_l_use)       l_use_count <= l_use_count + 1'b1;
             if (is_br_flush)    br_flush_count <= br_flush_count + 2'd2;    // add 2 cycles here since flushes void 2 cycles worth of instructions
+            if (is_branch_resolved) br_count <= br_count + 1'b1;
+            if (is_mispredict)  mispred_count <= mispred_count + 1'b1;
         end
     end
 
@@ -50,5 +56,7 @@ module meta (
     assign meta_stall_count = stall_count;
     assign meta_l_use_count = l_use_count;
     assign meta_br_flush_count = br_flush_count;
+    assign meta_br_count = br_count;
+    assign meta_mispred_count = mispred_count;
 
 endmodule

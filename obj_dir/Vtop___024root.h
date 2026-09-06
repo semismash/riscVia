@@ -28,7 +28,6 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         CData/*0:0*/ top__DOT__u_cpu__DOT__hz_id_ex_clear;
         CData/*0:0*/ top__DOT__u_cpu__DOT__hz_meta_is_stall;
         CData/*0:0*/ top__DOT__u_cpu__DOT__hz_meta_is_l_use;
-        CData/*0:0*/ top__DOT__u_cpu__DOT__hz_meta_branch_flush;
         CData/*0:0*/ top__DOT__u_cpu__DOT__reg_w_enable;
         CData/*0:0*/ top__DOT__u_cpu__DOT__pc_in1_sel;
         CData/*0:0*/ top__DOT__u_cpu__DOT__bp_branch_taken;
@@ -80,17 +79,19 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         CData/*0:0*/ top__DOT__u_cpu__DOT__ex_mem_reg_write;
         CData/*0:0*/ top__DOT__u_cpu__DOT__ex_mem_mem_to_reg;
         CData/*0:0*/ top__DOT__u_cpu__DOT__ex_mem_stop;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__ex_mem_valid_instr;
     };
     struct {
-        CData/*0:0*/ top__DOT__u_cpu__DOT__ex_mem_valid_instr;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__ex_mem_is_branch;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__ex_mem_bp_mispredict;
         CData/*0:0*/ top__DOT__u_cpu__DOT__mem_read;
         CData/*0:0*/ top__DOT__u_cpu__DOT__mem_write;
         CData/*4:0*/ top__DOT__u_cpu__DOT__mem_wb_rd_addr;
         CData/*0:0*/ top__DOT__u_cpu__DOT__mem_wb_reg_write;
         CData/*0:0*/ top__DOT__u_cpu__DOT__mem_wb_stop;
         CData/*0:0*/ top__DOT__u_cpu__DOT__mem_wb_valid_instr;
-        CData/*0:0*/ top__DOT__u_cpu__DOT__meta_is_stall;
-        CData/*0:0*/ top__DOT__u_cpu__DOT__meta_is_l_use;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__mem_wb_is_branch;
+        CData/*0:0*/ top__DOT__u_cpu__DOT__mem_wb_bp_mispredict;
         CData/*0:0*/ top__DOT__u_cpu__DOT__u_pc__DOT__pcinc_in2_doi;
         CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__fwd_alu_in2_ex_mem;
         CData/*0:0*/ top__DOT__u_cpu__DOT__u_hazard_unit__DOT__fwd_alu_in2_mem_wb;
@@ -140,14 +141,16 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         VL_OUT(meta_stall_count,31,0);
         VL_OUT(meta_l_use_count,31,0);
         VL_OUT(meta_br_flush_count,31,0);
+        VL_OUT(meta_br_count,31,0);
+        VL_OUT(meta_mispred_count,31,0);
         IData/*31:0*/ top__DOT__if_addr;
         IData/*31:0*/ top__DOT__data_addr;
         IData/*31:0*/ top__DOT__write_data;
+    };
+    struct {
         IData/*31:0*/ top__DOT__instr;
         IData/*31:0*/ top__DOT__read_data;
         IData/*31:0*/ top__DOT__u_cpu__DOT__rdst_data;
-    };
-    struct {
         IData/*31:0*/ top__DOT__u_cpu__DOT__bp_pc_addr;
         IData/*31:0*/ top__DOT__u_cpu__DOT__if_id_pc;
         IData/*31:0*/ top__DOT__u_cpu__DOT__if_id_instr;
@@ -173,6 +176,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final {
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_meta__DOT__stall_count;
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_meta__DOT__l_use_count;
         IData/*31:0*/ top__DOT__u_cpu__DOT__u_meta__DOT__br_flush_count;
+        IData/*31:0*/ top__DOT__u_cpu__DOT__u_meta__DOT__br_count;
+        IData/*31:0*/ top__DOT__u_cpu__DOT__u_meta__DOT__mispred_count;
         IData/*31:0*/ top__DOT__u_instr_mem__DOT__addr_reg;
         IData/*31:0*/ __VactIterCount;
         QData/*52:0*/ top__DOT__u_cpu__DOT__u_branch_predictor__DOT__btb_data;
