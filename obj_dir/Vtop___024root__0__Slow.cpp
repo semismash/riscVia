@@ -1136,9 +1136,9 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
         }
     }
     vlSelfRef.top__DOT__u_cpu__DOT__u_branch_predictor__DOT__u_pht__DOT__conf_state 
-        = (3U & ((((IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_br_history) 
-                   == (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_branch_predictor__DOT__u_bht__DOT__bh_out)) 
-                  & (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_branch_predictor__DOT__u_bht__DOT__bh_overwrite))
+        = (3U & (((IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_is_branch) 
+                  & ((IData)(vlSelfRef.top__DOT__u_cpu__DOT__id_ex_br_history) 
+                     == (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_branch_predictor__DOT__u_bht__DOT__bh_out)))
                   ? (IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_branch_predictor__DOT__u_pht__DOT__new_write_entry)
                   : (((0U == (0x0000001fU & ((IData)(vlSelfRef.top__DOT__u_cpu__DOT__u_branch_predictor__DOT__u_bht__DOT__bh_out) 
                                              << 1U)))

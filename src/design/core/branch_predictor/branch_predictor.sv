@@ -94,7 +94,7 @@ module branch_predictor (
         end
 
         // pht update
-        update_conf = misprediction;
+        update_conf = ex_is_branch;
         conf_inc_or_dec = ex_br_taken_actual; // increment if actually taken, decrement if actually not taken
         // btb update
         btb_write_en = misprediction;
