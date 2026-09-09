@@ -1,0 +1,3136 @@
+Extras -
+
+1. add.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 30]  Executing at PC: 0x00000058
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x000000fa | x04: 0xffffff6a
+ -> x05: 0xffffffce | x06: 0x00000000 | x07: 0x000000fa | x08: 0xffffffce
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       30
+Instructions Retired:     18
+Measured CPI (w/ Overhead): 1.67
+Steady-State CPI (True):    1.44
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       8 (26.7% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:8
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.091641 seconds
+Simulation Frequency:     327.36 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 22]  Executing at PC: 0x00000058
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x000000fa | x04: 0xffffff6a
+ -> x05: 0xffffffce | x06: 0x00000000 | x07: 0x000000fa | x08: 0xffffffce
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       22
+Instructions Retired:     18
+Measured CPI (w/ Overhead): 1.22
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.062754 seconds
+Simulation Frequency:     350.58 Hz
+========================================================
+
+
+2. addi.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 27]  Executing at PC: 0x0000004c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x000000fa | x03: 0xffffffce | x04: 0xffffff6a
+ -> x05: 0x00000000 | x06: 0x000000fa | x07: 0xffffffce | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       27
+Instructions Retired:     15
+Measured CPI (w/ Overhead): 1.80
+Steady-State CPI (True):    1.53
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       8 (29.6% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:8
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.079547 seconds
+Simulation Frequency:     339.42 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 19]  Executing at PC: 0x0000004c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x000000fa | x03: 0xffffffce | x04: 0xffffff6a
+ -> x05: 0x00000000 | x06: 0x000000fa | x07: 0xffffffce | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       19
+Instructions Retired:     15
+Measured CPI (w/ Overhead): 1.27
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.056298 seconds
+Simulation Frequency:     337.49 Hz
+========================================================
+
+
+3. and.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 19]  Executing at PC: 0x0000003c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x00000004 | x04: 0x00000000
+ -> x05: 0x00000004 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       19
+Instructions Retired:     11
+Measured CPI (w/ Overhead): 1.73
+Steady-State CPI (True):    1.36
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       4 (21.1% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:4
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.062504 seconds
+Simulation Frequency:     303.98 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 15]  Executing at PC: 0x0000003c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x00000004 | x04: 0x00000000
+ -> x05: 0x00000004 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       15
+Instructions Retired:     11
+Measured CPI (w/ Overhead): 1.36
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.041134 seconds
+Simulation Frequency:     364.66 Hz
+========================================================
+
+
+4. andi.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 18]  Executing at PC: 0x00000038
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000004 | x03: 0x00000000 | x04: 0x00000004
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       18
+Instructions Retired:     10
+Measured CPI (w/ Overhead): 1.80
+Steady-State CPI (True):    1.40
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       4 (22.2% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:4
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.083761 seconds
+Simulation Frequency:     214.90 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 14]  Executing at PC: 0x00000038
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000004 | x03: 0x00000000 | x04: 0x00000004
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       14
+Instructions Retired:     10
+Measured CPI (w/ Overhead): 1.40
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.037840 seconds
+Simulation Frequency:     369.98 Hz
+========================================================
+
+
+5. auipc.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 36]  Executing at PC: 0x00000050
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0xabcde008 | x02: 0xabcde008 | x03: 0x00000000 | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       36
+Instructions Retired:     16
+Measured CPI (w/ Overhead): 2.25
+Steady-State CPI (True):    2.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       16 (44.4% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:16
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.111332 seconds
+Simulation Frequency:     323.36 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 20]  Executing at PC: 0x00000050
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0xabcde008 | x02: 0xabcde008 | x03: 0x00000000 | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       20
+Instructions Retired:     16
+Measured CPI (w/ Overhead): 1.25
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.061499 seconds
+Simulation Frequency:     325.21 Hz
+========================================================
+
+
+6. beq.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 14]  Executing at PC: 0x00000030
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000064 | x03: 0x00000000 | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       14
+Instructions Retired:     7
+Measured CPI (w/ Overhead): 2.00
+Steady-State CPI (True):    1.43
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       1 (7.1% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:1
+Total Branch Flush Cycles:2
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.037046 seconds
+Simulation Frequency:     377.91 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 13]  Executing at PC: 0x00000030
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000064 | x03: 0x00000000 | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       13
+Instructions Retired:     7
+Measured CPI (w/ Overhead): 1.86
+Steady-State CPI (True):    1.29
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:2
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.049819 seconds
+Simulation Frequency:     260.94 Hz
+========================================================
+
+
+7. bge.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 22]  Executing at PC: 0x00000044
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000032 | x02: 0x00000064 | x03: 0xffffffce | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       22
+Instructions Retired:     11
+Measured CPI (w/ Overhead): 2.00
+Steady-State CPI (True):    1.64
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       3 (13.6% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:3
+Total Branch Flush Cycles:4
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.056573 seconds
+Simulation Frequency:     388.88 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 19]  Executing at PC: 0x00000044
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000032 | x02: 0x00000064 | x03: 0xffffffce | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       19
+Instructions Retired:     11
+Measured CPI (w/ Overhead): 1.73
+Steady-State CPI (True):    1.36
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:4
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.055336 seconds
+Simulation Frequency:     343.36 Hz
+========================================================
+
+
+8. bgeu.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 22]  Executing at PC: 0x00000044
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000032 | x02: 0x00000064 | x03: 0xffffffce | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       22
+Instructions Retired:     11
+Measured CPI (w/ Overhead): 2.00
+Steady-State CPI (True):    1.64
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       3 (13.6% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:3
+Total Branch Flush Cycles:4
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.070606 seconds
+Simulation Frequency:     311.59 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 19]  Executing at PC: 0x00000044
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000032 | x02: 0x00000064 | x03: 0xffffffce | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       19
+Instructions Retired:     11
+Measured CPI (w/ Overhead): 1.73
+Steady-State CPI (True):    1.36
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:4
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.069949 seconds
+Simulation Frequency:     271.62 Hz
+========================================================
+
+
+9. blt.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 20]  Executing at PC: 0x00000040
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000032 | x02: 0x00000064 | x03: 0xffffffce | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       20
+Instructions Retired:     11
+Measured CPI (w/ Overhead): 1.82
+Steady-State CPI (True):    1.45
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       3 (15.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:3
+Total Branch Flush Cycles:2
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.060059 seconds
+Simulation Frequency:     333.00 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 17]  Executing at PC: 0x00000040
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000032 | x02: 0x00000064 | x03: 0xffffffce | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       17
+Instructions Retired:     11
+Measured CPI (w/ Overhead): 1.55
+Steady-State CPI (True):    1.18
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:2
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.050276 seconds
+Simulation Frequency:     338.14 Hz
+========================================================
+
+
+10. bltu.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 20]  Executing at PC: 0x00000040
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000032 | x02: 0x00000064 | x03: 0xffffffce | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       20
+Instructions Retired:     11
+Measured CPI (w/ Overhead): 1.82
+Steady-State CPI (True):    1.45
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       3 (15.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:3
+Total Branch Flush Cycles:2
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.056852 seconds
+Simulation Frequency:     351.79 Hz
+========================================================
+
+RESULT (FWD):
+
+========================================================
+[CYCLE 17]  Executing at PC: 0x00000040
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000032 | x02: 0x00000064 | x03: 0xffffffce | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       17
+Instructions Retired:     11
+Measured CPI (w/ Overhead): 1.55
+Steady-State CPI (True):    1.18
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:2
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.047046 seconds
+Simulation Frequency:     361.35 Hz
+========================================================
+
+
+11. bne.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 12]  Executing at PC: 0x0000002c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000064 | x03: 0x00000000 | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       12
+Instructions Retired:     7
+Measured CPI (w/ Overhead): 1.71
+Steady-State CPI (True):    1.14
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       1 (8.3% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:1
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.051651 seconds
+Simulation Frequency:     232.33 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 11]  Executing at PC: 0x0000002c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000064 | x03: 0x00000000 | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       11
+Instructions Retired:     7
+Measured CPI (w/ Overhead): 1.57
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.031499 seconds
+Simulation Frequency:     349.22 Hz
+========================================================
+
+
+12. branch_hazard.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 43]  Executing at PC: 0x000000e0
+ -> Raw Instruction Hex:  0x00000000
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x000000fa | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x0 | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x0
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       43
+Instructions Retired:     37
+Measured CPI (w/ Overhead): 1.16
+Steady-State CPI (True):    1.05
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:2
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.119776 seconds
+Simulation Frequency:     359.00 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 43]  Executing at PC: 0x000000e0
+ -> Raw Instruction Hex:  0x00000000
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x000000fa | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x0 | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x0
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       43
+Instructions Retired:     37
+Measured CPI (w/ Overhead): 1.16
+Steady-State CPI (True):    1.05
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:2
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.153503 seconds
+Simulation Frequency:     280.13 Hz
+========================================================
+
+
+13. csr_op.s -
+RESULT: N/A
+
+14. data_hazard.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 58]  Executing at PC: 0x000000e0
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x000000fa | x04: 0x000000fa
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       58
+Instructions Retired:     52
+Measured CPI (w/ Overhead): 1.12
+Steady-State CPI (True):    1.04
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       2 (3.4% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:2
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.173707 seconds
+Simulation Frequency:     333.90 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 56]  Executing at PC: 0x000000e0
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x000000fa | x04: 0x000000fa
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       56
+Instructions Retired:     52
+Measured CPI (w/ Overhead): 1.08
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.148137 seconds
+Simulation Frequency:     378.03 Hz
+========================================================
+
+
+15. exceptions.s -
+RESULT: N/A
+
+16. helloworld.s -
+RESULT: N/A
+
+17. instret.s -
+RESULT: N/A
+
+18. interrupts.s -
+RESULT: N/A
+
+19. jal.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 33]  Executing at PC: 0x0000006c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x0000000c | x02: 0x00000024 | x03: 0x0000000c | x04: 0x00000024
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       33
+Instructions Retired:     17
+Measured CPI (w/ Overhead): 1.94
+Steady-State CPI (True):    1.71
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       8 (24.2% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:8
+Total Branch Flush Cycles:4
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.104502 seconds
+Simulation Frequency:     315.78 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 25]  Executing at PC: 0x0000006c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x0000000c | x02: 0x00000024 | x03: 0x0000000c | x04: 0x00000024
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       25
+Instructions Retired:     17
+Measured CPI (w/ Overhead): 1.47
+Steady-State CPI (True):    1.24
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:4
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.074817 seconds
+Simulation Frequency:     334.15 Hz
+========================================================
+
+
+20. jalr.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 39]  Executing at PC: 0x00000074
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000020 | x02: 0x00000014 | x03: 0x0000002c | x04: 0x00000014
+ -> x05: 0x0000002c | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       39
+Instructions Retired:     19
+Measured CPI (w/ Overhead): 2.05
+Steady-State CPI (True):    1.84
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       12 (30.8% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:12
+Total Branch Flush Cycles:4
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.132868 seconds
+Simulation Frequency:     293.53 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 34]  Executing at PC: 0x00000074
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000020 | x02: 0x00000014 | x03: 0x0000002c | x04: 0x00000014
+ -> x05: 0x0000002c | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       34
+Instructions Retired:     24
+Measured CPI (w/ Overhead): 1.42
+Steady-State CPI (True):    1.25
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:6
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.120019 seconds
+Simulation Frequency:     283.29 Hz
+========================================================
+
+
+21. lb.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 34]  Executing at PC: 0x00000058
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00001080 | x02: 0x00000077 | x03: 0xffffffab | x04: 0x00000034
+ -> x05: 0x00000077 | x06: 0xffffffab | x07: 0x00000034 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       34
+Instructions Retired:     18
+Measured CPI (w/ Overhead): 1.89
+Steady-State CPI (True):    1.67
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       12 (35.3% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:12
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.117653 seconds
+Simulation Frequency:     288.98 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 22]  Executing at PC: 0x00000058
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00001080 | x02: 0x00000077 | x03: 0xffffffab | x04: 0x00000034
+ -> x05: 0x00000077 | x06: 0xffffffab | x07: 0x00000034 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       22
+Instructions Retired:     18
+Measured CPI (w/ Overhead): 1.22
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.059148 seconds
+Simulation Frequency:     371.95 Hz
+========================================================
+
+
+22. lbu.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 34]  Executing at PC: 0x00000058
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00001080 | x02: 0x00000077 | x03: 0x000000ab | x04: 0x00000034
+ -> x05: 0x00000077 | x06: 0x000000ab | x07: 0x00000034 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       34
+Instructions Retired:     18
+Measured CPI (w/ Overhead): 1.89
+Steady-State CPI (True):    1.67
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       12 (35.3% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:12
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.092783 seconds
+Simulation Frequency:     366.44 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 22]  Executing at PC: 0x00000058
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00001080 | x02: 0x00000077 | x03: 0x000000ab | x04: 0x00000034
+ -> x05: 0x00000077 | x06: 0x000000ab | x07: 0x00000034 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       22
+Instructions Retired:     18
+Measured CPI (w/ Overhead): 1.22
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.078527 seconds
+Simulation Frequency:     280.16 Hz
+========================================================
+
+
+23. lh.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 43]  Executing at PC: 0x00000064
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x0000108c | x02: 0x00005577 | x03: 0xffffabcd | x04: 0x00001234
+ -> x05: 0x00005577 | x06: 0xffffabcd | x07: 0x00001234 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       43
+Instructions Retired:     21
+Measured CPI (w/ Overhead): 2.05
+Steady-State CPI (True):    1.86
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       18 (41.9% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:18
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.148695 seconds
+Simulation Frequency:     289.18 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 25]  Executing at PC: 0x00000064
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x0000108c | x02: 0x00005577 | x03: 0xffffabcd | x04: 0x00001234
+ -> x05: 0x00005577 | x06: 0xffffabcd | x07: 0x00001234 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       25
+Instructions Retired:     21
+Measured CPI (w/ Overhead): 1.19
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.070152 seconds
+Simulation Frequency:     356.37 Hz
+========================================================
+
+
+24. lhu.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 43]  Executing at PC: 0x00000064
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x0000108c | x02: 0x00005577 | x03: 0xffffabcd | x04: 0x00001234
+ -> x05: 0x00005577 | x06: 0xffffabcd | x07: 0x00001234 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       43
+Instructions Retired:     21
+Measured CPI (w/ Overhead): 2.05
+Steady-State CPI (True):    1.86
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       18 (41.9% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:18
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.151996 seconds
+Simulation Frequency:     282.90 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 25]  Executing at PC: 0x00000064
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x0000108c | x02: 0x00005577 | x03: 0x0000abcd | x04: 0x00001234
+ -> x05: 0x00005577 | x06: 0x0000abcd | x07: 0x00001234 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       25
+Instructions Retired:     21
+Measured CPI (w/ Overhead): 1.19
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.082672 seconds
+Simulation Frequency:     302.40 Hz
+========================================================
+
+
+25. lui.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 31]  Executing at PC: 0x00000044
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0xabcde000 | x02: 0xabcde000 | x03: 0x00000000 | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       31
+Instructions Retired:     13
+Measured CPI (w/ Overhead): 2.38
+Steady-State CPI (True):    2.08
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       14 (45.2% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:14
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.086759 seconds
+Simulation Frequency:     357.31 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 17]  Executing at PC: 0x00000044
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0xabcde000 | x02: 0xabcde000 | x03: 0x00000000 | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       17
+Instructions Retired:     13
+Measured CPI (w/ Overhead): 1.31
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.048289 seconds
+Simulation Frequency:     352.05 Hz
+========================================================
+
+
+26. lw.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 43]  Executing at PC: 0x00000064
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x0000108c | x02: 0x11335577 | x03: 0xabcdef19 | x04: 0x12345678
+ -> x05: 0x11335577 | x06: 0xabcdef19 | x07: 0x12345678 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       43
+Instructions Retired:     21
+Measured CPI (w/ Overhead): 2.05
+Steady-State CPI (True):    1.86
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       18 (41.9% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:18
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.126862 seconds
+Simulation Frequency:     338.95 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 25]  Executing at PC: 0x00000064
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x0000108c | x02: 0x11335577 | x03: 0xabcdef19 | x04: 0x12345678
+ -> x05: 0x11335577 | x06: 0xabcdef19 | x07: 0x12345678 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       25
+Instructions Retired:     21
+Measured CPI (w/ Overhead): 1.19
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.066498 seconds
+Simulation Frequency:     375.95 Hz
+========================================================
+
+
+27. no_hazard.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 40]  Executing at PC: 0x000000a0
+ -> Raw Instruction Hex:  0x00000000
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x000000fa | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x0 | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x0
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       40
+Instructions Retired:     36
+Measured CPI (w/ Overhead): 1.11
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.112724 seconds
+Simulation Frequency:     354.85 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 40]  Executing at PC: 0x000000a0
+ -> Raw Instruction Hex:  0x00000000
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x000000fa | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x0 | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x0
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       40
+Instructions Retired:     36
+Measured CPI (w/ Overhead): 1.11
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.109483 seconds
+Simulation Frequency:     365.35 Hz
+========================================================
+
+
+28. or.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 27]  Executing at PC: 0x0000004c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x000000f6 | x04: 0xfffff800
+ -> x05: 0x000007ff | x06: 0xffffffff | x07: 0x000000f6 | x08: 0xffffffff
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       27
+Instructions Retired:     15
+Measured CPI (w/ Overhead): 1.80
+Steady-State CPI (True):    1.53
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       8 (29.6% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:8
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.138769 seconds
+Simulation Frequency:     194.57 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 19]  Executing at PC: 0x0000004c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x000000f6 | x04: 0xfffff800
+ -> x05: 0x000007ff | x06: 0xffffffff | x07: 0x000000f6 | x08: 0xffffffff
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       19
+Instructions Retired:     15
+Measured CPI (w/ Overhead): 1.27
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.051177 seconds
+Simulation Frequency:     371.26 Hz
+========================================================
+
+
+29. ori.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 25]  Executing at PC: 0x00000044
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x000000f6 | x03: 0xfffff800 | x04: 0xffffffff
+ -> x05: 0x000000f6 | x06: 0xffffffff | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       25
+Instructions Retired:     13
+Measured CPI (w/ Overhead): 1.92
+Steady-State CPI (True):    1.62
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       8 (32.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:8
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.073428 seconds
+Simulation Frequency:     340.47 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 17]  Executing at PC: 0x00000044
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x000000f6 | x03: 0xfffff800 | x04: 0xffffffff
+ -> x05: 0x000000f6 | x06: 0xffffffff | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       17
+Instructions Retired:     13
+Measured CPI (w/ Overhead): 1.31
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.063408 seconds
+Simulation Frequency:     268.11 Hz
+========================================================
+
+
+30. sb.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 40]  Executing at PC: 0x00000068
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x12345678 | x02: 0x00001008 | x03: 0xaabbccdd | x04: 0x00000078
+ -> x05: 0x000000dd | x06: 0x00000078 | x07: 0x000000dd | x08: 0x000000dd
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       40
+Instructions Retired:     22
+Measured CPI (w/ Overhead): 1.82
+Steady-State CPI (True):    1.64
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       14 (35.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:14
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.106586 seconds
+Simulation Frequency:     375.28 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 20]  Executing at PC: 0x00000074
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000678 | x02: 0x00000008 | x03: 0xfffffcdd | x04: 0x00000078
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000001 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       20
+Instructions Retired:     14
+Measured CPI (w/ Overhead): 1.43
+Steady-State CPI (True):    1.14
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.076851 seconds
+Simulation Frequency:     260.24 Hz
+========================================================
+
+
+31. sh.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 46]  Executing at PC: 0x00000070
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x12345678 | x02: 0x00001008 | x03: 0xaabbccdd | x04: 0x00005678
+ -> x05: 0x0000ccdd | x06: 0x00005678 | x07: 0x0000ccdd | x08: 0x0000ccdd
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       46
+Instructions Retired:     24
+Measured CPI (w/ Overhead): 1.92
+Steady-State CPI (True):    1.75
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       18 (39.1% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:18
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.122608 seconds
+Simulation Frequency:     375.18 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 21]  Executing at PC: 0x0000007c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000678 | x02: 0x00000008 | x03: 0xfffffcdd | x04: 0x00000678
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000001 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       21
+Instructions Retired:     15
+Measured CPI (w/ Overhead): 1.40
+Steady-State CPI (True):    1.13
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.059192 seconds
+Simulation Frequency:     354.78 Hz
+========================================================
+
+
+32. sll.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 27]  Executing at PC: 0x0000004c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000032 | x02: 0x00000005 | x03: 0x00000640 | x04: 0x0000001f
+ -> x05: 0x00000000 | x06: 0x000007e5 | x07: 0x00000640 | x08: 0x00000640
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       27
+Instructions Retired:     15
+Measured CPI (w/ Overhead): 1.80
+Steady-State CPI (True):    1.53
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       8 (29.6% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:8
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.098753 seconds
+Simulation Frequency:     273.41 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 19]  Executing at PC: 0x0000004c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000032 | x02: 0x00000005 | x03: 0x00000640 | x04: 0x0000001f
+ -> x05: 0x00000000 | x06: 0x000007e5 | x07: 0x00000640 | x08: 0x00000640
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       19
+Instructions Retired:     15
+Measured CPI (w/ Overhead): 1.27
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.093226 seconds
+Simulation Frequency:     203.80 Hz
+========================================================
+
+
+33. slli.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 18]  Executing at PC: 0x00000038
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000032 | x02: 0x00000640 | x03: 0x00000000 | x04: 0x00000640
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       18
+Instructions Retired:     10
+Measured CPI (w/ Overhead): 1.80
+Steady-State CPI (True):    1.40
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       4 (22.2% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:4
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.049697 seconds
+Simulation Frequency:     362.20 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 14]  Executing at PC: 0x00000038
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000032 | x02: 0x00000640 | x03: 0x00000000 | x04: 0x00000640
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       14
+Instructions Retired:     10
+Measured CPI (w/ Overhead): 1.40
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.043049 seconds
+Simulation Frequency:     325.21 Hz
+========================================================
+
+
+34. slt.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 23]  Executing at PC: 0x0000004c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x00000001 | x04: 0x00000000
+ -> x05: 0xffffff9c | x06: 0xffffff6a | x07: 0x00000001 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       23
+Instructions Retired:     15
+Measured CPI (w/ Overhead): 1.53
+Steady-State CPI (True):    1.27
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       4 (17.4% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:4
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.064381 seconds
+Simulation Frequency:     357.25 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 19]  Executing at PC: 0x0000004c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x00000001 | x04: 0x00000000
+ -> x05: 0xffffff9c | x06: 0xffffff6a | x07: 0x00000001 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       19
+Instructions Retired:     15
+Measured CPI (w/ Overhead): 1.27
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.063709 seconds
+Simulation Frequency:     298.23 Hz
+========================================================
+
+
+35. slti.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 21]  Executing at PC: 0x00000044
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000001 | x03: 0x00000000 | x04: 0xffffff6a
+ -> x05: 0x00000001 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       21
+Instructions Retired:     13
+Measured CPI (w/ Overhead): 1.62
+Steady-State CPI (True):    1.31
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       4 (19.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:4
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.057320 seconds
+Simulation Frequency:     366.36 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 17]  Executing at PC: 0x00000044
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000001 | x03: 0x00000000 | x04: 0xffffff6a
+ -> x05: 0x00000001 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       17
+Instructions Retired:     13
+Measured CPI (w/ Overhead): 1.31
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.051387 seconds
+Simulation Frequency:     330.82 Hz
+========================================================
+
+
+36. sltiu.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 23]  Executing at PC: 0x0000004c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000001 | x03: 0x00000000 | x04: 0xffffff6a
+ -> x05: 0x00000001 | x06: 0x00000000 | x07: 0x00000001 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       23
+Instructions Retired:     15
+Measured CPI (w/ Overhead): 1.53
+Steady-State CPI (True):    1.27
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       4 (17.4% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:4
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.063530 seconds
+Simulation Frequency:     362.04 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 19]  Executing at PC: 0x0000004c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000001 | x03: 0x00000000 | x04: 0xffffff6a
+ -> x05: 0x00000001 | x06: 0x00000000 | x07: 0x00000001 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       19
+Instructions Retired:     15
+Measured CPI (w/ Overhead): 1.27
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.054190 seconds
+Simulation Frequency:     350.62 Hz
+========================================================
+
+
+37. sltu.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 25]  Executing at PC: 0x00000054
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x00000001 | x04: 0x00000000
+ -> x05: 0xffffff9c | x06: 0xffffff6a | x07: 0x00000001 | x08: 0x00000000
+ -> x09: 0x00000001 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       25
+Instructions Retired:     17
+Measured CPI (w/ Overhead): 1.47
+Steady-State CPI (True):    1.24
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       4 (16.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:4
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.069007 seconds
+Simulation Frequency:     362.28 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 21]  Executing at PC: 0x00000054
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x00000001 | x04: 0x00000000
+ -> x05: 0xffffff9c | x06: 0xffffff6a | x07: 0x00000001 | x08: 0x00000000
+ -> x09: 0x00000001 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       21
+Instructions Retired:     17
+Measured CPI (w/ Overhead): 1.24
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.063499 seconds
+Simulation Frequency:     330.71 Hz
+========================================================
+
+
+38. sra.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 31]  Executing at PC: 0x00000054
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000400 | x02: 0x00000005 | x03: 0x00000020 | x04: 0xfffffc00
+ -> x05: 0xffffffe0 | x06: 0x000007e5 | x07: 0xffffffe0 | x08: 0x00000020
+ -> x09: 0xffffffe0 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       31
+Instructions Retired:     17
+Measured CPI (w/ Overhead): 1.82
+Steady-State CPI (True):    1.59
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       10 (32.3% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:10
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.115183 seconds
+Simulation Frequency:     269.14 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 21]  Executing at PC: 0x00000054
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000400 | x02: 0x00000005 | x03: 0x00000020 | x04: 0xfffffc00
+ -> x05: 0xffffffe0 | x06: 0x000007e5 | x07: 0xffffffe0 | x08: 0x00000020
+ -> x09: 0xffffffe0 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       21
+Instructions Retired:     17
+Measured CPI (w/ Overhead): 1.24
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.055380 seconds
+Simulation Frequency:     379.20 Hz
+========================================================
+
+
+39. srai.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 25]  Executing at PC: 0x00000044
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000400 | x02: 0x00000020 | x03: 0xfffffc00 | x04: 0xffffffe0
+ -> x05: 0x00000020 | x06: 0xffffffe0 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       25
+Instructions Retired:     13
+Measured CPI (w/ Overhead): 1.92
+Steady-State CPI (True):    1.62
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       8 (32.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:8
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.067210 seconds
+Simulation Frequency:     371.97 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 17]  Executing at PC: 0x00000044
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000400 | x02: 0x00000020 | x03: 0xfffffc00 | x04: 0xffffffe0
+ -> x05: 0x00000020 | x06: 0xffffffe0 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       17
+Instructions Retired:     13
+Measured CPI (w/ Overhead): 1.31
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.050621 seconds
+Simulation Frequency:     335.83 Hz
+========================================================
+
+
+40. srl.s - 
+RESULT: PASS
+
+========================================================
+[CYCLE 37]  Executing at PC: 0x00000064
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000400 | x02: 0x00000005 | x03: 0x00000020 | x04: 0x0000000b
+ -> x05: 0x00000000 | x06: 0x000007e5 | x07: 0x00000020 | x08: 0xfffffc00
+ -> x09: 0x00000017 | x10: 0x00000000 | x11: 0x000001ff | x12: 0x00000020
+ -> x13: 0x000001ff | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       37
+Instructions Retired:     21
+Measured CPI (w/ Overhead): 1.76
+Steady-State CPI (True):    1.57
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       12 (32.4% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:12
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.165006 seconds
+Simulation Frequency:     224.23 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 25]  Executing at PC: 0x00000064
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000400 | x02: 0x00000005 | x03: 0x00000020 | x04: 0x0000000b
+ -> x05: 0x00000000 | x06: 0x000007e5 | x07: 0x00000020 | x08: 0xfffffc00
+ -> x09: 0x00000017 | x10: 0x00000000 | x11: 0x000001ff | x12: 0x00000020
+ -> x13: 0x000001ff | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       25
+Instructions Retired:     21
+Measured CPI (w/ Overhead): 1.19
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.064243 seconds
+Simulation Frequency:     389.15 Hz
+========================================================
+
+
+41. srli.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 27]  Executing at PC: 0x0000004c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000400 | x02: 0x00000020 | x03: 0x00000000 | x04: 0xfffffc00
+ -> x05: 0x000001ff | x06: 0x00000020 | x07: 0x000001ff | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       27
+Instructions Retired:     15
+Measured CPI (w/ Overhead): 1.80
+Steady-State CPI (True):    1.53
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       8 (29.6% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:8
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.079873 seconds
+Simulation Frequency:     338.03 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 19]  Executing at PC: 0x0000004c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000400 | x02: 0x00000020 | x03: 0x00000000 | x04: 0xfffffc00
+ -> x05: 0x000001ff | x06: 0x00000020 | x07: 0x000001ff | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       19
+Instructions Retired:     15
+Measured CPI (w/ Overhead): 1.27
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.063733 seconds
+Simulation Frequency:     298.12 Hz
+========================================================
+
+
+42. sub.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 28]  Executing at PC: 0x00000050
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x00000032 | x04: 0xffffffce
+ -> x05: 0xffffff9c | x06: 0x00000064 | x07: 0x00000032 | x08: 0xffffffce
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       28
+Instructions Retired:     16
+Measured CPI (w/ Overhead): 1.75
+Steady-State CPI (True):    1.50
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       8 (28.6% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:8
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.076733 seconds
+Simulation Frequency:     364.90 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 20]  Executing at PC: 0x00000050
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x00000032 | x04: 0xffffffce
+ -> x05: 0xffffff9c | x06: 0x00000064 | x07: 0x00000032 | x08: 0xffffffce
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       20
+Instructions Retired:     16
+Measured CPI (w/ Overhead): 1.25
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.056426 seconds
+Simulation Frequency:     354.45 Hz
+========================================================
+
+
+43. sw.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 46]  Executing at PC: 0x00000070
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x12345678 | x02: 0x00001008 | x03: 0xaabbccdd | x04: 0x12345678
+ -> x05: 0xaabbccdd | x06: 0x12345678 | x07: 0xaabbccdd | x08: 0xaabbccdd
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       46
+Instructions Retired:     24
+Measured CPI (w/ Overhead): 1.92
+Steady-State CPI (True):    1.75
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       18 (39.1% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:18
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.131218 seconds
+Simulation Frequency:     350.56 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 21]  Executing at PC: 0x0000007c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000678 | x02: 0x00000008 | x03: 0xfffffcdd | x04: 0x00000678
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000001 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       21
+Instructions Retired:     15
+Measured CPI (w/ Overhead): 1.40
+Steady-State CPI (True):    1.13
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.070677 seconds
+Simulation Frequency:     297.13 Hz
+========================================================
+
+
+44. xor.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 19]  Executing at PC: 0x0000003c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x000000f2 | x04: 0x00000000
+ -> x05: 0x000000f2 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       19
+Instructions Retired:     11
+Measured CPI (w/ Overhead): 1.73
+Steady-State CPI (True):    1.36
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       4 (21.1% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:4
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.050427 seconds
+Simulation Frequency:     376.78 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 15]  Executing at PC: 0x0000003c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x000000f2 | x04: 0x00000000
+ -> x05: 0x000000f2 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       15
+Instructions Retired:     11
+Measured CPI (w/ Overhead): 1.36
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.040226 seconds
+Simulation Frequency:     372.89 Hz
+========================================================
+
+
+45: xori.s -
+RESULT: PASS
+
+========================================================
+[CYCLE 18]  Executing at PC: 0x00000038
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x000000f2 | x03: 0x00000000 | x04: 0x000000f2
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       18
+Instructions Retired:     10
+Measured CPI (w/ Overhead): 1.80
+Steady-State CPI (True):    1.40
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       4 (22.2% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:4
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.052670 seconds
+Simulation Frequency:     341.75 Hz
+========================================================
+
+RESULT (FWD): PASS
+
+========================================================
+[CYCLE 14]  Executing at PC: 0x00000038
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x000000f2 | x03: 0x00000000 | x04: 0x000000f2
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ -> x21: 0x00000000 | x22: 0x00000000 | x23: 0x00000000 | x24: 0x00000000
+ -> x25: 0x00000000 | x26: 0x00000000 | x27: 0x00000000 | x28: 0x00000000
+ -> x29: 0x00000000 | x30: 0x00000000 | x31: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       14
+Instructions Retired:     10
+Measured CPI (w/ Overhead): 1.40
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:      0
+ -> Structural/ALU Stalls:0
+Total Branch Flush Cycles:0
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.049742 seconds
+Simulation Frequency:     281.45 Hz
+========================================================
+

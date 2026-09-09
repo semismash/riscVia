@@ -71,5 +71,4 @@ Testing/
 design_module_ref.sv
 design_module_ref.sv.bak
 !test.txt
-*.txt
 hazard_unit_old.sv
