@@ -1,0 +1,79 @@
+Branch Predictor Parts - 
+1. Branch History Table
+2. Branch History Register
+3. Pattern History Table
+4. Saturating Counters
+5. Branch Target Buffer
+6. Branch Evaluator
+7. Misprediction Unit
+
+Constants -
+I = Number of PC Index Bits (8)
+N = Number of History Bits per entry of BHT (I = 8)
+P = Number of PHT entries (2^N = 256)
+C = Number of Bits for PHT entry for confidence (2)
+W = Number of ways per set in BTB (4)
+B = Number of Entries in the BTB (W*(2^I) = 1024)
+S = Number of sets in the BTB (B/W => 2^I = 256)
+
+Components Description -
+1. Branch History Table (Local History Predictor)
+> Keeps track of the branch prediction histories, indexed by I bits of PC[9:2]
+> Every entry in the BHT has N bits, with the histories of the previous 8 branch predictions pertaining to that address.
+> The entries in the table utilize SIPO shifting logic, shifting an outcome in whenever there is a prediction made to that address.
+
+2. Branch History Register
+> There are N BHRs as there are 2^N entries in the BHT.
+> BHRs comprise the entire BHT, with there being N of them within the Table.
+> Described as above in (1).
+
+3. Pattern History Table
+> Keeps track of the confidence level corresponding to the history bits corresponding to the select BHR via cascaded indexing.
+> Contains P entries.
+> Uses C bits for confidence, hence there are 4 confidence levels - 00, 01, 10, 11 from lowest to highest.
+> If the MSB of the corresponding PHT entry is 1, output is branch taken. Otherwise, branch not taken.
+> Employs an internal data forwarding bypass MUX to resolve read/write structural hazards when the IF stage reads a history pattern that the EX stage is writing to.
+> If the 8-bit read history matches the active 8-bit write history from EX, the bypass intercepts the memory readout and forwards the newly calculated next-state confidence level directly to the prediction logic.
+
+4. Saturating Counters
+> P total counters, one of each entry of the PHT.
+> C bits each, saturating meaning does not wrap around after reaching 1 or going down to 0.
+> Up-Down counters, direction it counts in depends on whether it branch was taken (up) or not taken (down).
+
+5. Branch Target Buffer
+> Contains B entries in total, each is 53-bit (30 for target address, 22 for PC tag bits PC[31:10], and 1 for checking slot validity), arranged as an W-way set associative cache.
+> Contains S sets in total, being indexed by the I PC[9:2] bits.
+> Based on the set selected, uses a combination of XNOR, AND, and OR to compare with the upper tag bits [31:10] of the PC address to the tag bits of the BTB set and check if its a cache hit within that set. (NOTE: MUST EVALUATE IN SINGLE CLOCK CYCLE.)
+> Based on the slot where the hit came from, index the 30 target address bits and send for branching.
+> Uses PLRU cache replacement policy.
+> Integrates internal write-first forwarding logic to bypass structural conflicts caused by simultaneous IF-stage reads and EX-stage writes to the same set and way.
+> When a read-set match occurs during a write cycle, the bypass MUX routes the fresh tag, target, and valid data directly to the tag comparators, preventing stale-data lookups.
+
+6. Branch Evaluator 
+> Evaluates the final branch prediction based on the confidence level of the corresponding PHT entry, and the cache hit/miss within the BTB.
+- If there is a miss within the BTB, assumes that the instruction is not a branch, the predictor is deactivated, and PC increments by 4.
+- If there is a hit within the BTB and the branch prediction is taken, agrees with BTB hit and updates PC to take branch prematurely.
+- If there is a hit within the BTB and the branch prediction is not taken, continues control flow as normal, incrementing PC by 4.
+
+7. Misprediction Unit
+> Deals with branch mispredictions, using data from the branch unit in the EX stage (which finally verifies if the branch prediction was right or wrong).
+> Uses branch history from the pipeline registers
+> Upon a misprediction, the following is done -
+- PC updated to correct value (rolled back or jump), while IF/ID and ID/EX is flushed.
+- Index the BHT with the I bits from PC[9:2] and update the history with the old 'correct' history from the pipeline register.
+- Indexing using the old 'correct' history bits in the PHT and updates its confidence value (increments if branch was meant to be taken but predicted not taken, decrements if branch was not meant to be taken but predicted taken).
+- Updates BTB by indexing using the I bits from PC[9:2], and updates with new PC address using respective replacement policy.
+
+TO BE DONE (IMPORTANT):	
+> On prediction:
+- Update branch history (clk posedge) via shifting
+- Leave PHT untouched
+- Leave BTB untouched
+> On verification:
+- Overwrite branch history to old correct one (do this ONLY if it was a misprediction)
+- Update PHT confidence value to reflect branch outcome
+- Update BTB with new address from the pipeline register 
+
+To be updated to current design -
+> Add branch prediction unit to if stage itself, and integrate with PC.
+> Widen IF/ID and ID/EX registers to accommodate extra bits for PC[9:2] (for ID/EX only, full PC is already a field in IF/ID), is branch (classify if branch instruction or not), branch prediction result (for branch instructions only), and branch history (corresponding to the PC address for the instruction, used for flushing) + btb hit metadata.
