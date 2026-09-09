@@ -163,3 +163,5 @@ addi  x3, x0, 42        # x3 = 42
 ### Message from the Developer
 
 Thanks for checking out my project! Stay tuned for more updates :D
+
+PS: Check out the [`rambles`](rambles/) folder to check out some of the notes that I wrote (and nearly lost my mind over) trying to figure out the design. ;)
