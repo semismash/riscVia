@@ -1,5 +1,4 @@
 import rv32i::*;
-localparam INST_BYTE_SIZE = DATA_WIDTH >> 3;
 
 module pc(
     input logic clk,
@@ -18,6 +17,8 @@ module pc(
 
     output Word pc_out      // pc output (cur val)
 );
+
+    localparam INST_BYTE_SIZE = DATA_WIDTH >> 3;
 
     Word pc;      // pc cur value
     Word pc_next; // pc next value

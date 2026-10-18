@@ -69,7 +69,7 @@ module btb(
         new_write_set.plru[0] = !new_write_set.plru[0];
         
         // forwarding values to check, else check normally
-        if (access_index == write_index) begin
+        if (write_enable && (access_index == write_index)) begin
             forwarded = 1'b1;
             read_0_eq = new_write_set.ways[0].valid && (new_write_set.ways[0].pc_tag == read_tag);
             read_1_eq = new_write_set.ways[1].valid && (new_write_set.ways[1].pc_tag == read_tag);
@@ -86,19 +86,19 @@ module btb(
         // check if cache hit using read set
         if (read_0_eq || read_1_eq || read_2_eq || read_3_eq) begin
             cache_hit = 1'b1;
-            cur_read_set.plru[0] = !cur_read_set.plru[0];   // flip bit to update plru tree
+            cur_read_set.plru[0] = (read_0_eq || read_1_eq);   // set bit to update plru tree
             if (read_0_eq) begin
                 data_out = (forwarded) ? new_write_set.ways[0] : cur_read_set.ways[0];
-                cur_read_set.plru[1] = !cur_read_set.plru[1];
+                cur_read_set.plru[1] = 1'b1;    // hit way 0 -> next victim in this half is way 1 (was a flip, which could point back at way 0)
             end else if (read_1_eq) begin
                 data_out = (forwarded) ? new_write_set.ways[1] : cur_read_set.ways[1];
-                cur_read_set.plru[1] = !cur_read_set.plru[1];
+                cur_read_set.plru[1] = 1'b0;    // hit way 1 -> next victim in this half is way 0
             end else if (read_2_eq) begin
                 data_out = (forwarded) ? new_write_set.ways[2] : cur_read_set.ways[2];
-                cur_read_set.plru[2] = !cur_read_set.plru[2];
+                cur_read_set.plru[2] = 1'b1;    // hit way 2 -> next victim in this half is way 3
             end else begin
                 data_out = (forwarded) ? new_write_set.ways[3] : cur_read_set.ways[3];
-                cur_read_set.plru[2] = !cur_read_set.plru[2];
+                cur_read_set.plru[2] = 1'b0;    // hit way 3 -> next victim in this half is way 2
             end
         end
 
@@ -110,6 +110,7 @@ module btb(
                 for (int w = 0; w < BTB_WAYS_C; w++) begin
                     btb_cache[s].ways[w].valid <= 1'b0;
                 end
+                btb_cache[s].plru <= '0;
             end
         end else if (write_enable) begin
             btb_cache[write_index] <= new_write_set;
@@ -117,12 +118,5 @@ module btb(
             btb_cache[access_index] <= cur_read_set;
         end
     end
-
-    // if someone sees this, please read (or not, feel free to do what you like ;]):
-    // i'm an 18 year old student who is currently doing a lot of sh*t simultaneously, trying to juggle academics and projects together
-    // i have no proper friends, no one to vent to, dealing with a lot of sh*t, family issues, and im at my breaking point
-    // i have served as an emotional anchor for those around me, but havent been able to find anyone to anchor myself to
-    // i am at my wits end, and i just scribble my notes in my notebook without any fuel to keep me going
-    // thanks for understanding, sorry for this inconvenience
 
 endmodule

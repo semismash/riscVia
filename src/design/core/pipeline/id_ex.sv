@@ -29,7 +29,7 @@ module id_ex (  // 181 bits
     input logic i_imm_to_reg,     // 1 bit
     input logic i_mem_to_reg,     // 1 bit
     input logic i_is_stop,        // meta bit for debugging to stop CPU at a certain stage of pipelined
-    input logic i_valid_instr,          // 1 bit
+    input logic i_illegal,        // 1 bit, illegal instruction OR fetch fault for this instruction (replaces i_valid_instr)
     input logic i_br_taken_predict,     // 1 bit
     input BranchHistory i_br_history,   // 8 bits
     input logic i_btb_hit,              // 1 bit
@@ -57,15 +57,45 @@ module id_ex (  // 181 bits
     output logic o_imm_to_reg,
     output logic o_mem_to_reg,
     output logic o_is_stop,
-    output logic o_valid_instr,
+    output logic o_illegal,
     output logic o_br_taken_predict,
     output BranchHistory o_br_history,
     output logic o_btb_hit
 );
 
+    initial begin   // power-up value is a NOP bubble identical to the decoder's output for addi x0, x0, 0
+        o_opcode       = OP_I;   // bubble opcode is OP_I (canonical NOP is addi x0, x0, 0) instead of OP_NOP
+        o_pc           = '0;     
+        o_rs1_addr     = '0;     
+        o_rs2_addr     = '0;     
+        o_rd_addr      = '0;     
+        o_rs1_data     = '0;     
+        o_rs2_data     = '0;     
+        o_imm_val      = '0;     
+        o_alu_in1_ropc = '0;     
+        o_alu_in2_roi  = 1'b1;   // NOP takes ALU in2 from imm, same as the decoder's output for addi
+        o_alu_op       = ADD;    
+        o_alu_bypass   = '0;     
+        o_mem_read     = '0;     
+        o_mem_write    = '0;     
+        o_funct3       = '0;     
+        o_pc_in1_sel   = '0;     
+        o_is_branch    = '0;     
+        o_is_jal       = '0;     
+        o_is_jalr      = '0;     
+        o_reg_write    = '0;     
+        o_imm_to_reg   = '0;     
+        o_mem_to_reg   = '0;     
+        o_is_stop      = '0;     
+        o_illegal      = '0;     
+        o_br_taken_predict = '0; 
+        o_br_history       = '0; 
+        o_btb_hit          = '0; 
+    end
+
     always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n || clear) begin
-            o_opcode       <= OP_NOP;
+        if (!rst_n) begin   // async reset split from the synchronous clear (was `!rst_n || clear`, which is a sim/synthesis mismatch)
+            o_opcode       <= OP_I;   // bubble opcode is OP_I (canonical NOP is addi x0, x0, 0) instead of OP_NOP
             o_pc           <= '0;
             o_rs1_addr     <= '0;
             o_rs2_addr     <= '0;
@@ -74,8 +104,8 @@ module id_ex (  // 181 bits
             o_rs2_data     <= '0;
             o_imm_val      <= '0;
             o_alu_in1_ropc <= '0;
-            o_alu_in2_roi  <= '0;
-            o_alu_op       <= ADD;    // add by default
+            o_alu_in2_roi  <= 1'b1;   // NOP takes ALU in2 from imm, same as the decoder's output for addi
+            o_alu_op       <= ADD;
             o_alu_bypass   <= '0;
             o_mem_read     <= '0;
             o_mem_write    <= '0;
@@ -88,10 +118,38 @@ module id_ex (  // 181 bits
             o_imm_to_reg   <= '0;
             o_mem_to_reg   <= '0;
             o_is_stop      <= '0;
-            o_valid_instr  <= '0;
+            o_illegal      <= '0;     // replaces o_valid_instr reset
             o_br_taken_predict <= '0;
             o_br_history       <= '0;
             o_btb_hit          <= '0;
+        end else if (clear) begin   // synchronous clear (flush / load-use bubble / stop squash), now its own branch
+            o_opcode       <= OP_I;   // bubble opcode is OP_I (canonical NOP is addi x0, x0, 0) instead of OP_NOP
+            o_pc           <= '0;     
+            o_rs1_addr     <= '0;     
+            o_rs2_addr     <= '0;     
+            o_rd_addr      <= '0;     
+            o_rs1_data     <= '0;     
+            o_rs2_data     <= '0;     
+            o_imm_val      <= '0;     
+            o_alu_in1_ropc <= '0;     
+            o_alu_in2_roi  <= 1'b1;   // NOP takes ALU in2 from imm, same as the decoder's output for addi
+            o_alu_op       <= ADD;    
+            o_alu_bypass   <= '0;     
+            o_mem_read     <= '0;     
+            o_mem_write    <= '0;     
+            o_funct3       <= '0;     
+            o_pc_in1_sel   <= '0;     
+            o_is_branch    <= '0;     
+            o_is_jal       <= '0;     
+            o_is_jalr      <= '0;     
+            o_reg_write    <= '0;     
+            o_imm_to_reg   <= '0;     
+            o_mem_to_reg   <= '0;     
+            o_is_stop      <= '0;     
+            o_illegal      <= '0;     
+            o_br_taken_predict <= '0;
+            o_br_history       <= '0; 
+            o_btb_hit          <= '0; 
         end else if (!stall) begin  // do normal logic if NOT a stall
             o_opcode       <= i_opcode;
             o_pc           <= i_pc;
@@ -116,7 +174,7 @@ module id_ex (  // 181 bits
             o_imm_to_reg   <= i_imm_to_reg;
             o_mem_to_reg   <= i_mem_to_reg;
             o_is_stop      <= i_is_stop;
-            o_valid_instr  <= i_valid_instr;
+            o_illegal      <= i_illegal;
             o_br_taken_predict <= i_br_taken_predict;
             o_br_history       <= i_br_history;
             o_btb_hit          <= i_btb_hit;

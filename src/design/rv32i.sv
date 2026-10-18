@@ -8,6 +8,8 @@ package rv32i;
     typedef logic [7:0] Byte;
     typedef logic [ADDR_WIDTH-1:0] RegAddr;
 
+    localparam Instruction NOP_INSTR = 32'h00000013;  // canonical NOP (addi x0, x0, 0), the only encoding used for bubbles/clears anywhere in the CPU
+
     typedef logic [31:0] MetaCount;
 
     localparam BITS_FIT = $clog2(DATA_WIDTH>>3) + 1;    // 3
@@ -19,7 +21,6 @@ package rv32i;
     } ReqBytes;
 
     typedef enum logic [6:0] {  //7 bits for opcode
-        OP_NOP      = 7'b0000000,
         OP_R        = 7'b0110011,
         OP_I        = 7'b0010011,
         OP_I_L      = 7'b0000011,
@@ -30,7 +31,7 @@ package rv32i;
         OP_LUI      = 7'b0110111,
         OP_AUIPC    = 7'b0010111,
         OP_I_E      = 7'b1110011,
-        OP_STOP     = 7'b1111111
+        OP_FENCE    = 7'b0001111
     } OpCode;
 
     typedef enum logic [3:0] { 

@@ -11,6 +11,8 @@ module stall_unit(
     // if read registers are even valid to begin with
     input logic if_id_rs1_valid,
     input logic if_id_rs2_valid,
+    // an ECALL/EBREAK is in EX, MEM, WB or already latched in meta, so anything in ID is younger than it
+    input logic stop_in_flight,
     // OUTPUTS
     output logic if_id_clear,
     output logic id_ex_clear,
@@ -19,7 +21,8 @@ module stall_unit(
     // METADATA
     output logic meta_branch_flush,
     output logic meta_is_stall,
-    output logic meta_is_l_use
+    output logic meta_is_l_use,
+    output logic meta_is_instr      // the instruction in ID is real and advances this cycle (meta additionally masks the bubble right after a flush)
 );
 
     // stall unit currently handles two things -
@@ -38,6 +41,7 @@ module stall_unit(
         meta_is_stall = 1'b0;
         meta_is_l_use = 1'b0;
         meta_branch_flush = 1'b0;
+        meta_is_instr = 1'b0;   // default, set below only when the ID instruction actually advances
 
         is_l_use_no_gap = id_ex_mem_read && id_ex_reg_write && id_ex_rd_not_x0 &&
             ((if_id_rs1_valid && dep_id_ex_rd_if_id_rs1) || (if_id_rs2_valid && dep_id_ex_rd_if_id_rs2));
@@ -46,12 +50,16 @@ module stall_unit(
             if_id_clear = 1'b1;
             id_ex_clear = 1'b1;
             meta_branch_flush = 1'b1;
+        end else if (stop_in_flight) begin  // squash everything younger than ECALL/EBREAK (no stores/reg writes/faults after a STOP)
+            id_ex_clear = 1'b1;             // ID instruction becomes a NOP bubble in ID/EX
         end else if (is_l_use_no_gap) begin // stall for load-use no gap hazard
             pc_enable     = 1'b0;
             if_id_enable  = 1'b0;
             id_ex_clear   = 1'b1;
             meta_is_stall = 1'b1;
             meta_is_l_use = 1'b1;
+        end else begin                      // no flush, no squash, no stall -> the ID instruction moves on to EX
+            meta_is_instr = 1'b1;           // count it
         end
     end
 

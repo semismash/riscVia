@@ -35,10 +35,20 @@ module rv32i_core (
     logic hz_meta_is_stall;
     logic hz_meta_is_l_use;
     logic hz_meta_branch_flush;
+    logic hz_meta_is_instr;
+
+    // branch predictor (IF)
+    logic bp_branch_taken;
+    Word bp_pc_addr;
+    logic bp_is_branch;
+    BranchHistory bp_br_history;
+    logic bp_btb_hit;
+    logic bp_mispredict;
 
     // fetch
     logic if_fault_out;
     Instruction instr;
+    logic if_id_fault;
 
     // Reg File
     logic   reg_w_enable;
@@ -53,14 +63,6 @@ module rv32i_core (
     Word pc;
     logic pc_in1_sel;
     logic pc_in2_sel;
-
-    // branch predictor (IF)
-    logic bp_branch_taken;
-    Word bp_pc_addr;
-    logic bp_is_branch;
-    BranchHistory bp_br_history;
-    logic bp_btb_hit;
-    logic bp_mispredict;
 
     // IF/ID
     Word if_id_pc;
@@ -80,7 +82,6 @@ module rv32i_core (
     logic d_is_jal;
     logic d_is_jalr;
     logic d_stop;
-    logic d_valid_instr;
 
     // imm
     Word imm_val;
@@ -111,7 +112,7 @@ module rv32i_core (
     logic id_ex_imm_to_reg;
     logic id_ex_mem_to_reg;
     logic id_ex_stop;
-    logic id_ex_valid_instr;
+    logic id_ex_illegal;
     logic id_ex_br_taken_predict;
     BranchHistory id_ex_br_history;
     logic id_ex_btb_hit;
@@ -142,7 +143,6 @@ module rv32i_core (
     logic ex_mem_reg_write;
     logic ex_mem_mem_to_reg;
     logic ex_mem_stop;
-    logic ex_mem_valid_instr;
     logic ex_mem_is_branch;
     logic ex_mem_bp_mispredict;
 
@@ -157,7 +157,6 @@ module rv32i_core (
     Word mem_wb_rd_data;
     logic mem_wb_reg_write;
     logic mem_wb_stop;
-    logic mem_wb_valid_instr;
     logic mem_wb_is_branch;
     logic mem_wb_bp_mispredict;
 
@@ -170,6 +169,12 @@ module rv32i_core (
     // temp fix
     Word ex_result;
     Word pc_plus4;
+
+    Word fwd_jalr_rs1;          // forwarded rs1 for the JALR target adder in the PC (previously took the stale id_ex_rs1_data)
+    logic stop_in_flight;       // ECALL/EBREAK in EX, MEM, WB or already latched in meta -> squash anything younger in ID
+
+    assign fwd_jalr_rs1 = fwd_alu_in1_ex_mem ? ex_mem_result : fwd_alu_in1_mem_wb ? mem_wb_rd_data : id_ex_rs1_data;
+    assign stop_in_flight = id_ex_stop | ex_mem_stop | mem_wb_stop | stop;
 
     assign pc_plus4  = id_ex_pc + 32'd4;
     assign ex_result = (id_ex_is_jal || id_ex_is_jalr) ? pc_plus4 : alu_out;
@@ -199,7 +204,7 @@ module rv32i_core (
         .pcinc_in1_pcor (id_ex_pc_in1_sel),
         .pcinc_in2_doi  (pc_in2_sel),
         // from reg and imm gen, based on decoder signal
-        .rs1_in         (id_ex_rs1_data),
+        .rs1_in         (fwd_jalr_rs1),
         .pc_in          (id_ex_pc),
         .imm_in         (pc_imm_final),
         // from branch predictor (IF-stage speculative
@@ -230,6 +235,8 @@ module rv32i_core (
     // TO FORWARDING UNIT DIRECTLY
     .ex_mem_reg_write      (ex_mem_reg_write),
     .mem_wb_reg_write      (mem_wb_reg_write),
+    // STOP SQUASH
+    .stop_in_flight        (stop_in_flight),
     // OUTPUTS
     // STALLING
     .pc_enable             (hz_pc_enable),
@@ -244,7 +251,8 @@ module rv32i_core (
     // METADATA
     .meta_branch_flush     (hz_meta_branch_flush),
     .meta_is_stall         (hz_meta_is_stall),
-    .meta_is_l_use         (hz_meta_is_l_use)
+    .meta_is_l_use         (hz_meta_is_l_use),
+    .meta_is_instr         (hz_meta_is_instr)
 );
 
     fetch u_fetch(  // x
@@ -287,22 +295,24 @@ module rv32i_core (
 
     if_id u_if_id (
         // clk and reset
-        .clk            (clk),
-        .rst_n          (rst_n),
-        .stall          (!hz_if_id_enable),
-        .clear          (hz_if_id_clear),
+        .clk                (clk),
+        .rst_n              (rst_n),
+        .stall              (!hz_if_id_enable),
+        .clear              (hz_if_id_clear),
         // input
-        .i_pc           (if_addr),
-        .i_instr        (instr),
+        .i_pc               (if_addr),
+        .i_instr            (instr),
         .i_br_taken_predict (bp_branch_taken), 
         .i_br_history       (bp_br_history),
         .i_btb_hit          (bp_btb_hit),
+        .i_fault            (if_fault_out),
         // output
-        .o_pc           (if_id_pc),
-        .o_instr        (if_id_instr),
+        .o_pc               (if_id_pc),
+        .o_instr            (if_id_instr),
         .o_br_taken_predict (if_id_br_taken_predict),
         .o_br_history       (if_id_br_history),
-        .o_btb_hit          (if_id_btb_hit)
+        .o_btb_hit          (if_id_btb_hit),
+        .o_fault            (if_id_fault)
     );
 
     // direct primitive slice (does not require explicit decoding)
@@ -342,8 +352,7 @@ module rv32i_core (
         .funct3         (funct3),
         // panic
         .illegal_instr  (illegal_instr),
-        .stop           (d_stop),
-        .valid_instr    (d_valid_instr)
+        .stop           (d_stop)
     );
 
     id_ex u_id_ex (
@@ -376,7 +385,7 @@ module rv32i_core (
         .i_imm_to_reg     (imm_to_reg),
         .i_mem_to_reg     (mem_to_reg),
         .i_is_stop        (d_stop),
-        .i_valid_instr    (d_valid_instr),
+        .i_illegal        (illegal_instr | if_id_fault),
         .i_br_taken_predict (if_id_br_taken_predict),
         .i_br_history       (if_id_br_history),
         .i_btb_hit          (if_id_btb_hit),
@@ -404,7 +413,7 @@ module rv32i_core (
         .o_imm_to_reg     (id_ex_imm_to_reg),
         .o_mem_to_reg     (id_ex_mem_to_reg),
         .o_is_stop        (id_ex_stop),
-        .o_valid_instr    (id_ex_valid_instr),
+        .o_illegal        (id_ex_illegal),
         .o_br_taken_predict (id_ex_br_taken_predict),
         .o_br_history       (id_ex_br_history),
         .o_btb_hit          (id_ex_btb_hit)
@@ -477,7 +486,6 @@ module rv32i_core (
         .i_reg_write    (id_ex_reg_write),
         .i_mem_to_reg   (id_ex_mem_to_reg),
         .i_is_stop      (id_ex_stop),
-        .i_valid_instr  (id_ex_valid_instr),
         .i_is_branch    (id_ex_is_branch),
         .i_bp_mispredict(bp_mispredict),
         // output
@@ -490,7 +498,6 @@ module rv32i_core (
         .o_reg_write    (ex_mem_reg_write),
         .o_mem_to_reg   (ex_mem_mem_to_reg),
         .o_is_stop      (ex_mem_stop),
-        .o_valid_instr  (ex_mem_valid_instr),
         .o_is_branch    (ex_mem_is_branch),
         .o_bp_mispredict(ex_mem_bp_mispredict)
     );
@@ -523,7 +530,6 @@ module rv32i_core (
         .i_rd_data      (reg_write_data),
         .i_reg_write    (ex_mem_reg_write),
         .i_is_stop      (ex_mem_stop),
-        .i_valid_instr  (ex_mem_valid_instr),
         .i_is_branch    (ex_mem_is_branch),
         .i_bp_mispredict(ex_mem_bp_mispredict),
         // output
@@ -531,7 +537,6 @@ module rv32i_core (
         .o_rd_data      (mem_wb_rd_data),
         .o_reg_write    (mem_wb_reg_write),
         .o_is_stop      (mem_wb_stop),
-        .o_valid_instr  (mem_wb_valid_instr),
         .o_is_branch    (mem_wb_is_branch),
         .o_bp_mispredict(mem_wb_bp_mispredict)
     );
@@ -540,7 +545,7 @@ module rv32i_core (
         .clk                    (clk),
         .rst_n                  (rst_n),
         .stop_in                (mem_wb_stop),
-        .valid_instr            (mem_wb_valid_instr),
+        .is_instr               (hz_meta_is_instr),
         .is_stall               (hz_meta_is_stall),
         .is_l_use               (hz_meta_is_l_use),
         .is_br_flush            (hz_meta_branch_flush),
@@ -555,6 +560,6 @@ module rv32i_core (
         .meta_mispred_count     (meta_mispred_count)
     );
 
-    assign halt = if_fault_out | data_fault | illegal_instr;
+    assign halt = id_ex_illegal | data_fault;
 
 endmodule

@@ -1,10 +1,12 @@
 // metadata unit (flip-flop) for debugging, and instruction counter too
 
+import rv32i::*;
+
 module meta (
     input logic clk,
     input logic rst_n,
     input logic stop_in,
-    input logic valid_instr,
+    input logic is_instr,
     // from hazard unit for telemetry data
     input logic is_stall,
     input logic is_l_use,
@@ -18,7 +20,7 @@ module meta (
     output MetaCount meta_l_use_count,
     output MetaCount meta_br_flush_count,
     output MetaCount meta_br_count,         // BPU
-    output MetaCount meta_mispred_count,    // BPU
+    output MetaCount meta_mispred_count     // BPU
 );
 
     logic stop_signal;
@@ -31,6 +33,19 @@ module meta (
     MetaCount br_count;
     MetaCount mispred_count;
 
+    logic post_flush;   // high in the cycle right after a branch flush (and at power-up/reset), when ID can only hold a NOP bubble
+
+    initial begin               // power-up values, so counting is correct even if the testbench never pulses rst_n
+        stop_signal = 1'b0;     
+        instr_count = '0;       
+        stall_count = '0;       
+        l_use_count = '0;       
+        br_flush_count = '0;    
+        br_count = '0;          
+        mispred_count = '0;     
+        post_flush = 1'b1;      // ID holds the power-up bubble in the first cycle
+    end                         
+
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             stop_signal <= 1'b0;
@@ -40,14 +55,16 @@ module meta (
             br_flush_count <= '0;
             br_count <= '0;
             mispred_count <= '0;
+            post_flush <= 1'b1;     // ID holds the reset bubble in the first cycle after reset
         end else begin
-            stop_signal <= stop_in;
-            if (valid_instr)    instr_count <= instr_count + 1'b1;
+            if (stop_in) stop_signal <= 1'b1;   // stop is sticky
+            if (is_instr && !post_flush)    instr_count <= instr_count + 1'b1;   // counted at ID when the instruction advances; the post-flush bubble is skipped
             if (is_stall)       stall_count <= stall_count + 1'b1;
             if (is_l_use)       l_use_count <= l_use_count + 1'b1;
             if (is_br_flush)    br_flush_count <= br_flush_count + 2'd2;    // add 2 cycles here since flushes void 2 cycles worth of instructions
             if (is_branch_resolved) br_count <= br_count + 1'b1;
             if (is_mispredict)  mispred_count <= mispred_count + 1'b1;
+            post_flush <= is_br_flush;  // the cycle after a flush has a bubble in ID (mispredicts flush exactly like JAL/JALR, so this holds)
         end
     end
 

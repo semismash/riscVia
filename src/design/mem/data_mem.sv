@@ -23,7 +23,8 @@ module data_mem #(
         data_out = '0;
         data_not_found = 1'b0;
         if (req_bytes == ZERO) begin    // dont do anything if zero
-        end else if ((data_addr + req_bytes) > MEM_SIZE_BYTES) begin
+        // changed: 33-bit compare, the 32-bit sum wrapped (e.g. 0xFFFFFFFE + 4 = 2) and let out-of-range accesses through
+        end else if (({1'b0, data_addr} + 33'(req_bytes)) > 33'(MEM_SIZE_BYTES)) begin
             data_not_found = 1'b1;
         end else begin
             case (req_bytes)    // DATA_WIDTH IN BYTES MUST BE >= THAN ALL ReqBytes CASES
