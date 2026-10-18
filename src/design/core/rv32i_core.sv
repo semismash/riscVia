@@ -379,7 +379,7 @@ module rv32i_core (
         .i_valid_instr    (d_valid_instr),
         .i_br_taken_predict (if_id_br_taken_predict),
         .i_br_history       (if_id_br_history),
-        .i_btb_hit          (if_id_btb_hit)
+        .i_btb_hit          (if_id_btb_hit),
         // output
         .o_pc             (id_ex_pc),
         .o_opcode         (id_ex_opcode),
