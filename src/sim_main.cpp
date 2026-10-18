@@ -10,7 +10,7 @@
 #include "Vtop___024root.h"
 
 constexpr size_t RAM_SIZE = 65536;
-constexpr size_t MAX_CYCLE_COUNT = 10000; // maximum safe cycle count for CPU before automatically crashing
+constexpr size_t MAX_CYCLE_COUNT = 20000; // maximum safe cycle count for CPU before automatically crashing
 constexpr bool AUTO_STOP = true; // automatically injects an 0xFFFFFFFF word in the end of the program to signal the CPU simulation to stop at the end
 constexpr size_t PIPELINE_STAGES = 5;
 
