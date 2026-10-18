@@ -72,5 +72,4 @@ design_module_ref.sv
 design_module_ref.sv.bak
 !test.txt
 hazard_unit_old.sv
-local/
 obj_dir/
