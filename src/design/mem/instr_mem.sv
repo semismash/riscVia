@@ -7,7 +7,7 @@ module instr_mem #(
     input Word instr_addr,  // instruction memory address
 
     output Word instr_out,   // output fetched instruction
-    output logic instr_not_found, // if instruction not found, raise fault
+    output logic instr_not_found // if instruction not found, raise fault
 );
 
     localparam INST_SIZE_BYTES = DATA_WIDTH >> 3;
@@ -22,7 +22,7 @@ module instr_mem #(
     always_comb begin
         instr_out = '0;
         instr_not_found = 1'b0;
-        if (instr_addr >= MEM_SIZE_BYTES - INST_SIZE_BYTES) instr_not_found = 1'b1;
+        if (instr_addr > MEM_SIZE_BYTES - INST_SIZE_BYTES) instr_not_found = 1'b1;
         else instr_out =  {  
             container[instr_addr + 3], // do INST_SIZE_BYTES times
             container[instr_addr + 2], 

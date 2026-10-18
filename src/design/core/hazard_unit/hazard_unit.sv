@@ -1,3 +1,5 @@
+import rv32i::*;
+
 module hazard_unit (
     // IF/ID (incl. OpCode bits)
     input OpCode if_id_opcode,  // x
@@ -19,6 +21,8 @@ module hazard_unit (
     // TO FORWARDING UNIT DIRECTLY
     input logic ex_mem_reg_write,   // x
     input logic mem_wb_reg_write,   // x
+    // STOP SQUASH
+    input logic stop_in_flight,     // x
     // OUTPUTS
     // STALLING
     output logic pc_enable,     // x
@@ -33,7 +37,8 @@ module hazard_unit (
     // METADATA
     output logic meta_branch_flush, // x
     output logic meta_is_stall,     // x
-    output logic meta_is_l_use      // x
+    output logic meta_is_l_use,     // x
+    output logic meta_is_instr      // x
 );
 
     // connecting ports between dep analyzer and fwd unit/stall unit
@@ -104,6 +109,7 @@ module hazard_unit (
         // if read registers are even valid to begin with
         .if_id_rs1_valid           (if_id_rs1_valid),
         .if_id_rs2_valid           (if_id_rs2_valid),
+        .stop_in_flight            (stop_in_flight),
         // OUTPUTS
         .pc_enable                 (pc_enable),     // x
         .if_id_enable              (if_id_enable),  // x
@@ -112,7 +118,8 @@ module hazard_unit (
         // METADATA
         .meta_branch_flush         (meta_branch_flush), // x
         .meta_is_stall             (meta_is_stall),     // x
-        .meta_is_l_use             (meta_is_l_use)      // x
+        .meta_is_l_use             (meta_is_l_use),     // x 
+        .meta_is_instr             (meta_is_instr)      // x
     );
 
     fwd_unit u_fwd_unit (

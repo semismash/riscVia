@@ -11,7 +11,7 @@
 
 constexpr size_t RAM_SIZE = 65536;
 constexpr size_t MAX_CYCLE_COUNT = 10000; // maximum safe cycle count for CPU before automatically crashing
-constexpr bool AUTO_STOP = true; // automatically injects an 0xFFFFFFFF word in the end of the program to signal the CPU simulation to stop at the end
+constexpr bool AUTO_STOP = true; // automatically injects EBREAK (0x00100073) instead, 0xFFFFFFFF is an illegal instruction (HALT) now
 constexpr size_t PIPELINE_STAGES = 5;
 
 // --- GPR TRACKING CONFIGURATION (Compile-Time Validated) ---
@@ -82,14 +82,17 @@ int main(int argc, char** argv) {
     }
 
     if (AUTO_STOP && (ram_buffer.size() + 4 <= RAM_SIZE)) {
+        const uint8_t ebreak_bytes[4] = {0x73, 0x00, 0x10, 0x00};   // EBREAK = 0x00100073, little-endian byte order
         for (size_t b = 0; b < 4; ++b) {
-            DUT->rootp->top__DOT__u_instr_mem__DOT__container[ram_buffer.size() + b] = (char)0xFF;
+            DUT->rootp->top__DOT__u_instr_mem__DOT__container[ram_buffer.size() + b] = ebreak_bytes[b];
         }
     }
 
     // reset in the beginning to initialize, and set clk to 0
-    DUT->rst_n = 0;
+    DUT->rst_n = 1;     // start de-asserted so the next line produces a real negedge (rst_n powers up at 0, so the async reset never fired before)
     DUT->clk = 0;
+    DUT->eval();        // settle with reset de-asserted
+    DUT->rst_n = 0;     // 1 -> 0 edge actually triggers the async reset now
     DUT->eval(); 
     trace->dump(0);
     

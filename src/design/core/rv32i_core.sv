@@ -22,7 +22,7 @@ module rv32i_core (
     output MetaCount meta_instr_count,
     output MetaCount meta_stall_count,
     output MetaCount meta_l_use_count,
-    output MetaCount meta_br_flush_count,
+    output MetaCount meta_br_flush_count
 );
 
     // hazard unit
@@ -33,10 +33,12 @@ module rv32i_core (
     logic hz_meta_is_stall;
     logic hz_meta_is_l_use;
     logic hz_meta_branch_flush;
+    logic hz_meta_is_instr;
 
     // fetch
     logic if_fault_out;
     Instruction instr;
+    logic if_id_fault;
 
     // Reg File
     logic   reg_w_enable;
@@ -67,7 +69,6 @@ module rv32i_core (
     logic d_is_jal;
     logic d_is_jalr;
     logic d_stop;
-    logic d_valid_instr;
 
     // imm
     Word imm_val;
@@ -98,7 +99,7 @@ module rv32i_core (
     logic id_ex_imm_to_reg;
     logic id_ex_mem_to_reg;
     logic id_ex_stop;
-    logic id_ex_valid_instr;
+    logic id_ex_illegal;
 
     // alu
     AluOp alu_op;
@@ -121,7 +122,6 @@ module rv32i_core (
     logic ex_mem_reg_write;
     logic ex_mem_mem_to_reg;
     logic ex_mem_stop;
-    logic ex_mem_valid_instr;
 
     // lsu
     logic [2:0] funct3;
@@ -134,7 +134,6 @@ module rv32i_core (
     Word mem_wb_rd_data;
     logic mem_wb_reg_write;
     logic mem_wb_stop;
-    logic mem_wb_valid_instr;
 
     // forwarding unit
     logic fwd_alu_in1_ex_mem;
@@ -145,6 +144,12 @@ module rv32i_core (
     // temp fix
     Word ex_result;
     Word pc_plus4;
+
+    Word fwd_jalr_rs1;          // forwarded rs1 for the JALR target adder in the PC (previously took the stale id_ex_rs1_data)
+    logic stop_in_flight;       // ECALL/EBREAK in EX, MEM, WB or already latched in meta -> squash anything younger in ID
+
+    assign fwd_jalr_rs1 = fwd_alu_in1_ex_mem ? ex_mem_result : fwd_alu_in1_mem_wb ? mem_wb_rd_data : id_ex_rs1_data;   // same EX/MEM-over-MEM/WB priority as the ALU
+    assign stop_in_flight = id_ex_stop | ex_mem_stop | mem_wb_stop | stop;
 
     assign pc_plus4  = id_ex_pc + 32'd4;
     assign ex_result = (id_ex_is_jal || id_ex_is_jalr) ? pc_plus4 : alu_out;
@@ -174,7 +179,7 @@ module rv32i_core (
         .pcinc_in1_pcor (id_ex_pc_in1_sel),
         .pcinc_in2_doi  (pc_in2_sel),
         // from reg and imm gen, based on decoder signal
-        .rs1_in         (id_ex_rs1_data),
+        .rs1_in         (fwd_jalr_rs1),
         .pc_in          (id_ex_pc),
         .imm_in         (id_ex_imm_val),
         // out
@@ -226,6 +231,8 @@ module rv32i_core (
     // TO FORWARDING UNIT DIRECTLY
     .ex_mem_reg_write      (ex_mem_reg_write),
     .mem_wb_reg_write      (mem_wb_reg_write),
+    // STOP SQUASH
+    .stop_in_flight        (stop_in_flight),
     // OUTPUTS
     // STALLING
     .pc_enable             (hz_pc_enable),
@@ -240,7 +247,8 @@ module rv32i_core (
     // METADATA
     .meta_branch_flush     (hz_meta_branch_flush),
     .meta_is_stall         (hz_meta_is_stall),
-    .meta_is_l_use         (hz_meta_is_l_use)
+    .meta_is_l_use         (hz_meta_is_l_use),
+    .meta_is_instr         (hz_meta_is_instr)
 );
 
     fetch u_fetch(  // x
@@ -263,9 +271,11 @@ module rv32i_core (
         // input
         .i_pc           (if_addr),
         .i_instr        (instr),
+        .i_fault        (if_fault_out),
         // output
         .o_pc           (if_id_pc),
-        .o_instr        (if_id_instr)
+        .o_instr        (if_id_instr),
+        .o_fault        (if_id_fault)
     );
 
     // direct primitive slice (does not require explicit decoding)
@@ -305,8 +315,7 @@ module rv32i_core (
         .funct3         (funct3),
         // panic
         .illegal_instr  (illegal_instr),
-        .stop           (d_stop),
-        .valid_instr    (d_valid_instr)
+        .stop           (d_stop)
     );
 
     id_ex u_id_ex (
@@ -339,7 +348,7 @@ module rv32i_core (
         .i_imm_to_reg     (imm_to_reg),
         .i_mem_to_reg     (mem_to_reg),
         .i_is_stop        (d_stop),
-        .i_valid_instr    (d_valid_instr),
+        .i_illegal        (illegal_instr | if_id_fault),
         // output
         .o_pc             (id_ex_pc),
         .o_opcode         (id_ex_opcode),
@@ -364,7 +373,7 @@ module rv32i_core (
         .o_imm_to_reg     (id_ex_imm_to_reg),
         .o_mem_to_reg     (id_ex_mem_to_reg),
         .o_is_stop        (id_ex_stop),
-        .o_valid_instr    (id_ex_valid_instr)
+        .o_illegal        (id_ex_illegal)
     );
 
     alu u_alu(  // x
@@ -426,7 +435,6 @@ module rv32i_core (
         .i_reg_write    (id_ex_reg_write),
         .i_mem_to_reg   (id_ex_mem_to_reg),
         .i_is_stop      (id_ex_stop),
-        .i_valid_instr  (id_ex_valid_instr),
         // output
         .o_rs2_val      (ex_mem_rs2_val),
         .o_rd_addr      (ex_mem_rd_addr),
@@ -436,8 +444,7 @@ module rv32i_core (
         .o_funct3       (ex_mem_funct3),
         .o_reg_write    (ex_mem_reg_write),
         .o_mem_to_reg   (ex_mem_mem_to_reg),
-        .o_is_stop      (ex_mem_stop),
-        .o_valid_instr  (ex_mem_valid_instr)
+        .o_is_stop      (ex_mem_stop)
     );
 
     lsu u_lsu(
@@ -468,20 +475,18 @@ module rv32i_core (
         .i_rd_data      (reg_write_data),
         .i_reg_write    (ex_mem_reg_write),
         .i_is_stop      (ex_mem_stop),
-        .i_valid_instr  (ex_mem_valid_instr),
         // output
         .o_rd_addr      (mem_wb_rd_addr),
         .o_rd_data      (mem_wb_rd_data),
         .o_reg_write    (mem_wb_reg_write),
-        .o_is_stop      (mem_wb_stop),
-        .o_valid_instr  (mem_wb_valid_instr)
+        .o_is_stop      (mem_wb_stop)
     );
 
     meta u_meta (
         .clk                    (clk),
         .rst_n                  (rst_n),
         .stop_in                (mem_wb_stop),
-        .valid_instr            (mem_wb_valid_instr),
+        .is_instr               (hz_meta_is_instr),
         .is_stall               (hz_meta_is_stall),
         .is_l_use               (hz_meta_is_l_use),
         .is_br_flush            (hz_meta_branch_flush),
@@ -492,6 +497,6 @@ module rv32i_core (
         .meta_br_flush_count    (meta_br_flush_count)
     );
 
-    assign halt = if_fault_out | data_fault | illegal_instr;
+    assign halt = id_ex_illegal | data_fault;
 
 endmodule
