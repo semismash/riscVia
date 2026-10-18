@@ -88,6 +88,7 @@ module rv32i_core (
 
     // ID/EX
     Word id_ex_pc;
+    OpCode id_ex_opcode;
     RegAddr id_ex_rs1_addr;
     RegAddr id_ex_rs2_addr;
     RegAddr id_ex_rd_addr;
@@ -354,6 +355,7 @@ module rv32i_core (
         .clear            (hz_id_ex_clear),
         // input
         .i_pc             (if_id_pc),
+        .i_opcode         (if_id_opcode),
         .i_rs1_addr       (rs1_addr),
         .i_rs2_addr       (rs2_addr),
         .i_rd_addr        (rdst_addr),
@@ -382,6 +384,7 @@ module rv32i_core (
         .i_opcode           (if_id_opcode),
         // output
         .o_pc             (id_ex_pc),
+        .o_opcode         (id_ex_opcode),
         .o_rs1_addr       (id_ex_rs1_addr),
         .o_rs2_addr       (id_ex_rs2_addr),
         .o_rd_addr        (id_ex_rd_addr),
