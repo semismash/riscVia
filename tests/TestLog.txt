@@ -1,4 +1,7 @@
-Extras -
+LEGEND -
+RESULT -> Pipelined, no forwarding or branch prediction
+RESULT(FWD) -> Pipelined, forwarding but no branch prediction
+RESULT(BRPD) -> Pipelined, both forwarding and branch prediction
 
 1. add.s -
 RESULT: PASS
@@ -75,6 +78,44 @@ Total Branch Flush Cycles:0
  ------------------- SIMULATION SPEED ---------------------
 Elapsed Compute Time:     0.062754 seconds
 Simulation Frequency:     350.58 Hz
+========================================================
+
+RESULT (BRPD): PASS
+
+========================================================
+[CYCLE 22]  Executing at PC: 0x00000058
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x000000fa | x04: 0xffffff6a
+ -> x05: 0xffffffce | x06: 0x00000000 | x07: 0x000000fa | x08: 0xffffffce
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       22
+Instructions Retired:     18
+Measured CPI (w/ Overhead): 1.22
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:             0
+ -> Structural/ALU Stalls:       0
+ -> Total Branches Resolved:     6
+ -> Total Branch Mispredictions: 0
+ -> Total Branch Flush Cycles:   0
+ -> Branch Predictor Accuracy:   100.000%
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.041713 seconds
+Simulation Frequency:     527.41 Hz
 ========================================================
 
 
@@ -155,6 +196,44 @@ Elapsed Compute Time:     0.056298 seconds
 Simulation Frequency:     337.49 Hz
 ========================================================
 
+RESULT(BRPD): PASS
+
+========================================================
+[CYCLE 19]  Executing at PC: 0x0000004c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x000000fa | x03: 0xffffffce | x04: 0xffffff6a
+ -> x05: 0x00000000 | x06: 0x000000fa | x07: 0xffffffce | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       19
+Instructions Retired:     15
+Measured CPI (w/ Overhead): 1.27
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:             0
+ -> Structural/ALU Stalls:       0
+ -> Total Branches Resolved:     5
+ -> Total Branch Mispredictions: 0
+ -> Total Branch Flush Cycles:   0
+ -> Branch Predictor Accuracy:   100.000%
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.043749 seconds
+Simulation Frequency:     434.30 Hz
+========================================================
+
 
 3. and.s -
 RESULT: PASS
@@ -231,6 +310,44 @@ Total Branch Flush Cycles:0
  ------------------- SIMULATION SPEED ---------------------
 Elapsed Compute Time:     0.041134 seconds
 Simulation Frequency:     364.66 Hz
+========================================================
+
+RESULT(BRPD): PASS
+
+========================================================
+[CYCLE 15]  Executing at PC: 0x0000003c
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000064 | x02: 0x00000096 | x03: 0x00000004 | x04: 0x00000000
+ -> x05: 0x00000004 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       15
+Instructions Retired:     11
+Measured CPI (w/ Overhead): 1.36
+Steady-State CPI (True):    1.00
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:             0
+ -> Structural/ALU Stalls:       0
+ -> Total Branches Resolved:     3
+ -> Total Branch Mispredictions: 0
+ -> Total Branch Flush Cycles:   0
+ -> Branch Predictor Accuracy:   100.000%
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.042244 seconds
+Simulation Frequency:     355.08 Hz
 ========================================================
 
 
@@ -623,6 +740,44 @@ Elapsed Compute Time:     0.069949 seconds
 Simulation Frequency:     271.62 Hz
 ========================================================
 
+RESULT(BRPD): PASS
+
+========================================================
+[CYCLE 19]  Executing at PC: 0x00000044
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000032 | x02: 0x00000064 | x03: 0xffffffce | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       19
+Instructions Retired:     11
+Measured CPI (w/ Overhead): 1.73
+Steady-State CPI (True):    1.36
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:             0
+ -> Structural/ALU Stalls:       0
+ -> Total Branches Resolved:     5
+ -> Total Branch Mispredictions: 2
+ -> Total Branch Flush Cycles:   4
+ -> Branch Predictor Accuracy:   60.000%
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.039950 seconds
+Simulation Frequency:     475.60 Hz
+========================================================
+
 
 9. blt.s -
 RESULT: PASS
@@ -699,6 +854,44 @@ Total Branch Flush Cycles:2
  ------------------- SIMULATION SPEED ---------------------
 Elapsed Compute Time:     0.050276 seconds
 Simulation Frequency:     338.14 Hz
+========================================================
+
+RESULT(BRPD): PASS
+
+========================================================
+[CYCLE 17]  Executing at PC: 0x00000040
+ -> Raw Instruction Hex:  0x05d00893
+ -------------------- REGISTER FILE --------------------
+ -> x01: 0x00000032 | x02: 0x00000064 | x03: 0xffffffce | x04: 0x00000000
+ -> x05: 0x00000000 | x06: 0x00000000 | x07: 0x00000000 | x08: 0x00000000
+ -> x09: 0x00000000 | x10: 0x00000000 | x11: 0x00000000 | x12: 0x00000000
+ -> x13: 0x00000000 | x14: 0x00000000 | x15: 0x00000000 | x16: 0x00000000
+ -> x17: 0x0000005d | x18: 0x00000000 | x19: 0x00000000 | x20: 0x00000000
+ ----------------------- CONTROLS ----------------------
+ -> Data Memory Access:   [READ] Addr: 0x5d | WData: 0x0
+
+========================================================
+[TB INFO] CPU core stopped safety and reached a safe STOP signal.
+[FINAL STATUS]
+ -> Final Data Address: 0x5d
+ -> Final Data Out:     0x0
+
+------------------- PERFORMANCE METRICS -------------------
+Total Clock Cycles:       17
+Instructions Retired:     11
+Measured CPI (w/ Overhead): 1.55
+Steady-State CPI (True):    1.18
+ ------------------ MICROARCHITECTURAL STATS --------------
+Total Stall Cycles:       0 (0.0% of cycles)
+ -> Load-Use Stalls:             0
+ -> Structural/ALU Stalls:       0
+ -> Total Branches Resolved:     5
+ -> Total Branch Mispredictions: 1
+ -> Total Branch Flush Cycles:   2
+ -> Branch Predictor Accuracy:   80.000%
+ ------------------- SIMULATION SPEED ---------------------
+Elapsed Compute Time:     0.033508 seconds
+Simulation Frequency:     507.35 Hz
 ========================================================
 
 
