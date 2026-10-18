@@ -75,6 +75,7 @@ module rv32i_core (
 
     // ID/EX
     Word id_ex_pc;
+    OpCode id_ex_opcode;
     RegAddr id_ex_rs1_addr;
     RegAddr id_ex_rs2_addr;
     RegAddr id_ex_rd_addr;
@@ -237,9 +238,9 @@ module rv32i_core (
     .fwd_alu_in1_mem_wb    (fwd_alu_in1_mem_wb),    // forward to alu in 1 from src res in ex mem (X)
     .fwd_alu_in2_mem_wb    (fwd_alu_in2_mem_wb),    // forward to alu in 2 from src res in ex mem (X)
     // METADATA
-    .meta_branch_flush     (meta_branch_flush),
-    .meta_is_stall         (meta_is_stall),
-    .meta_is_l_use         (meta_is_l_use)
+    .meta_branch_flush     (hz_meta_branch_flush),
+    .meta_is_stall         (hz_meta_is_stall),
+    .meta_is_l_use         (hz_meta_is_l_use)
 );
 
     fetch u_fetch(  // x
@@ -316,6 +317,7 @@ module rv32i_core (
         .clear            (hz_id_ex_clear),
         // input
         .i_pc             (if_id_pc),
+        .i_opcode         (if_id_opcode),
         .i_rs1_addr       (rs1_addr),
         .i_rs2_addr       (rs2_addr),
         .i_rd_addr        (rdst_addr),
@@ -340,6 +342,7 @@ module rv32i_core (
         .i_valid_instr    (d_valid_instr),
         // output
         .o_pc             (id_ex_pc),
+        .o_opcode         (id_ex_opcode),
         .o_rs1_addr       (id_ex_rs1_addr),
         .o_rs2_addr       (id_ex_rs2_addr),
         .o_rd_addr        (id_ex_rd_addr),
